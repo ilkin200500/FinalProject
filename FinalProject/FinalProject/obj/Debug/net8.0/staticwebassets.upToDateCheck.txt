@@ -1,0 +1,2 @@
+wwwroot\images\images.jpg
+wwwroot\css\style.css

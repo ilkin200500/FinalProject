@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="logo-area">
+                    <i class="fa-solid fa-graduation-cap logo-icon"></i>
+                    <span class="logo-text">UniVerse SIS</span>
+                </div>
+
+                <nav class="nav-menu">
+                    <a href="#" class="nav-item active">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fa-solid fa-user-graduate"></i>
+                        <span>Tələbələr</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                        <span>Müəllimlər</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fa-solid fa-book"></i>
+                        <span>Fənlər & Dərslər</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fa-solid fa-star"></i>
+                        <span>Qiymətlər</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="sidebar-profile">
+                <div class="profile-info">
+                    <div class="profile-avatar">AA</div>
+                    <div>
+                        <h4 class="profile-name">Admin Panel</h4>
+                        <span class="profile-email">admin@universe.edu</span>
+                    </div>
+                </div>
+                <a href="#" class="logout-btn">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </a>
+            </div>
+        </aside>
+    <div>
+        @RenderBody()
+    </div>
+        <footer class="app-footer">
+            <div class="footer-left">
+                <p>&copy; 2026 <strong>UniVerse SIS</strong>. Bütün hüquqlar qorunur.</p>
+            </div>
+            <div class="footer-right">
+                <a href="#" class="footer-link">Dəstək</a>
+                <span class="footer-divider">|</span>
+                <a href="#" class="footer-link">İstifadəçi Qaydaları</a>
+                <span class="footer-divider">|</span>
+                <span class="version-badge">v1.0.0 (MVC)</span>
+            </div>
+        </footer>
+
+
+
+    </div>
+    </main>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+﻿@using FinalProject.Models
+@model List<Member>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+                    <h2 class="welcome-text">Xoş gəldiniz, Admin!</h2>
+                </div>
+                <div class="topbar-right">
+                    <button class="notification-btn">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="badge"></span>
+                    </button>
+                    <span class="date-text">
+                        <i class="fa-regular fa-calendar"></i> 4 İyul, 2026
+                    </span>
+                </div>
+            </header>
+
+            <div class="content-body">
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div>
+                            <span class="stat-title">Ümumi Tələbə</span>
+                            <h3 class="stat-value">1,240</h3>
+                        </div>
+                        <div class="stat-icon icon-blue">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div>
+                            <span class="stat-title">Aktiv Müəllim</span>
+                            <h3 class="stat-value">84</h3>
+                        </div>
+                        <div class="stat-icon icon-green">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div>
+                            <span class="stat-title">Mövcud Fənlər</span>
+                            <h3 class="stat-value">42</h3>
+                        </div>
+                        <div class="stat-icon icon-amber">
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div>
+                            <span class="stat-title">Ortalama Müvəffəqiyyət</span>
+                            <h3 class="stat-value">84.5%</h3>
+                        </div>
+                        <div class="stat-icon icon-red">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-header">
+                        <div>
+                            <h3 class="table-title">Son Qeydiyyatdan Keçən Tələbələr</h3>
+                            <p class="table-subtitle">Sistemə ən son daxil olan tələbələrin məlumatı</p>
+                        </div>
+                        <button class="view-all-btn">Hamısına bax</button>
+                    </div>
+
+                    <div class="responsive-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tələbə</th>
+                                    <th>Tedris</th>
+                                    <th>Ortalama</th>
+                                    
+                                    <th class="text-right">Əməliyyat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        @foreach(var item in Model)
+                        {
+                            <tr>
+                                <td class="user-cell">
+                                    <div class="user-avatar"><img src="~/images/@item.ImageUrl" /></div>
+                                    <div>
+                                        <p class="user-name">@item.FullName</p>
+                                        <p class="user-email">@item.Email</p>
+                                    </div>
+                                </td>
+                                <td class="font-medium">@item.Speciality</td>
+                                <td>@item.Average</td>
+                                
+                                <td class="actions-cell">
+                                    <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        }
+                        
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
