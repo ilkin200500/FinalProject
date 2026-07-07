@@ -6,6 +6,7 @@ namespace FinalProject.Controllers
 {
     public class HomeController : Controller
     {
+        
         private CourseDbContext _context { get; }
         public HomeController(CourseDbContext context)
         {
@@ -15,6 +16,12 @@ namespace FinalProject.Controllers
         {
             List<Member>members=_context.members.Where(t=>!t.isDeleted).ToList();
             return View(members);
+        }
+
+        public IActionResult StudentsPage()
+        {
+            List<Student> students = _context.students.Where(t => !t.isDeleted).ToList();
+            return View(students);
         }
     }
 }

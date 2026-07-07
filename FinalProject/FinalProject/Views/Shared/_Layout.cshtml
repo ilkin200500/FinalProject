@@ -6,6 +6,7 @@
     <title>Student Information System</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/css/style.css">
 </head>
 <body>
@@ -20,15 +21,15 @@
                 </div>
 
                 <nav class="nav-menu">
-                    <a href="#" class="nav-item active">
+                    <a asp-controller="Home" asp-action="Index" class="nav-item active">
                         <i class="fa-solid fa-chart-pie"></i>
                         <span>Home</span>
                     </a>
-                    <a href="#" class="nav-item">
+                    <a asp-controller="Home" asp-action="StudentsPage" class="nav-item">
                         <i class="fa-solid fa-user-graduate"></i>
                         <span>Tələbələr</span>
                     </a>
-                    <a href="#" class="nav-item">
+                    <a asp-controller="Teacher" asp-action="Index" class="nav-item">
                         <i class="fa-solid fa-chalkboard-user"></i>
                         <span>Müəllimlər</span>
                     </a>
@@ -51,31 +52,39 @@
                         <span class="profile-email">admin@universe.edu</span>
                     </div>
                 </div>
-                <a href="#" class="logout-btn">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                </a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Account" asp-action="Logout" class="logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login"> <i class="fa-solid fa-user"></i></a>
+                }
+
             </div>
         </aside>
-    <div>
-        @RenderBody()
-    </div>
-        <footer class="app-footer">
-            <div class="footer-left">
-                <p>&copy; 2026 <strong>UniVerse SIS</strong>. Bütün hüquqlar qorunur.</p>
+
+        <main class="main-content">
+            <div class="content-body">
+                @RenderBody()
             </div>
-            <div class="footer-right">
-                <a href="#" class="footer-link">Dəstək</a>
-                <span class="footer-divider">|</span>
-                <a href="#" class="footer-link">İstifadəçi Qaydaları</a>
-                <span class="footer-divider">|</span>
-                <span class="version-badge">v1.0.0 (MVC)</span>
-            </div>
-        </footer>
 
+            <footer class="app-footer">
+                <div class="footer-left">
+                    <p>&copy; 2026 <strong>UniVerse SIS</strong>. Bütün hüquqlar qorunur.</p>
+                </div>
+                <div class="footer-right">
+                    <a href="#" class="footer-link">Dəstək</a>
+                    <span class="footer-divider">|</span>
+                    <a href="#" class="footer-link">İstifadəçi Qaydaları</a>
+                    <span class="footer-divider">|</span>
+                    <span class="version-badge">v1.0.0 (MVC)</span>
+                </div>
+            </footer>
+        </main>
 
-
-    </div>
-    </main>
     </div>
 
 </body>

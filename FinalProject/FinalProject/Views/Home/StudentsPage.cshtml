@@ -1,0 +1,67 @@
+﻿
+@using FinalProject.Models
+@model List<Student>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Telebelerin Siyahisi</h4>
+            
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            
+                            <th>
+                                Ad Soyad
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Ixtisas
+                            </th>
+                            <th>
+                                Ortalama
+                            </th>
+                            <th>
+                                Emeliyyat
+                            </th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model)
+                        {
+                            <tr>
+                               
+                                <td>
+                                    @item.FullName
+                                </td>
+                                <td>
+                                    @item.Email
+                                </td>
+                                <td>
+                                    @item.Speciality
+                                </td>
+                                <td>
+                                    @item.Average
+                                </td>
+                                <td>
+                                    <a>
+                                        <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+                                       
+                                    </a>
+                                    <a>
+                                        <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                       
+                  
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
