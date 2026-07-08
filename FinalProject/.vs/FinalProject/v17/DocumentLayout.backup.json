@@ -3,116 +3,44 @@
   "WorkspaceRootPath": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\controllers\\teachercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\controllers\\teachercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\views\\member\\showteacherstable.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\views\\member\\showteacherstable.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\views\\teacher\\update.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\views\\teacher\\update.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\models\\teacher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\models\\teacher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\views\\student\\update.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\views\\student\\update.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\views\\member\\showstudentstable.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\views\\member\\showstudentstable.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\views\\teacher\\showteacherstable.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\views\\teacher\\showteacherstable.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\controllers\\membercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\controllers\\membercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\views\\student\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\views\\student\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\viewmodels\\updatevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\viewmodels\\updatevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\viewmodels\\createvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\viewmodels\\createvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\views\\teacher\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\views\\teacher\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\controllers\\rolecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\controllers\\rolecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\finalproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\finalproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\views\\home\\studentspage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\views\\home\\studentspage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\models\\member.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\models\\member.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\viewmodel\\loginvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\viewmodel\\loginvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\areas\\adminpanel\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\areas\\adminpanel\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\scaffoldingreadme.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\scaffoldingreadme.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\models\\basemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\models\\basemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\migrations\\20260706163336_updatetable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\migrations\\20260706163336_updatetable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|c:\\users\\ikoya\\onedrive\\desktop\\finalproject(important)\\finalproject\\finalproject\\migrations\\20260707074530_updatedatabase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B9374292-E46F-49F0-942C-D032A52E6451}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\migrations\\20260707074530_updatedatabase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -122,278 +50,102 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 17,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Teacher.cs",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Models\\Teacher.cs",
-              "RelativeDocumentMoniker": "FinalProject\\Models\\Teacher.cs",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Models\\Teacher.cs",
-              "RelativeToolTip": "FinalProject\\Models\\Teacher.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:45:53.063Z",
+              "Title": "Update.cshtml",
+              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Student\\Update.cshtml",
+              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\Views\\Student\\Update.cshtml",
+              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Student\\Update.cshtml",
+              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\Views\\Student\\Update.cshtml",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABAAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-08T13:06:26.217Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ShowTeachersTable.cshtml",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Member\\ShowTeachersTable.cshtml",
-              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\Views\\Member\\ShowTeachersTable.cshtml",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Member\\ShowTeachersTable.cshtml",
-              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\Views\\Member\\ShowTeachersTable.cshtml",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABoAAAAhAAAAAAAAAA==",
+              "Title": "Update.cshtml",
+              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Teacher\\Update.cshtml",
+              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\Views\\Teacher\\Update.cshtml",
+              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Teacher\\Update.cshtml",
+              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\Views\\Teacher\\Update.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-07T14:42:23.503Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Student.cs",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Models\\Student.cs",
-              "RelativeDocumentMoniker": "FinalProject\\Models\\Student.cs",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Models\\Student.cs",
-              "RelativeToolTip": "FinalProject\\Models\\Student.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:33:42.654Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "UpdateVM.cs",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\ViewModels\\UpdateVM.cs",
-              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\ViewModels\\UpdateVM.cs",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\ViewModels\\UpdateVM.cs",
-              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\ViewModels\\UpdateVM.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:26:33.131Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "CreateVM.cs",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\ViewModels\\CreateVM.cs",
-              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\ViewModels\\CreateVM.cs",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\ViewModels\\CreateVM.cs",
-              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\ViewModels\\CreateVM.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T14:26:24.672Z",
+              "WhenOpened": "2026-07-08T13:05:50.098Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ShowStudentsTable.cshtml",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Member\\ShowStudentsTable.cshtml",
-              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\Views\\Member\\ShowStudentsTable.cshtml",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Member\\ShowStudentsTable.cshtml",
-              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\Views\\Member\\ShowStudentsTable.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Title": "ShowTeachersTable.cshtml",
+              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Teacher\\ShowTeachersTable.cshtml",
+              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\Views\\Teacher\\ShowTeachersTable.cshtml",
+              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Teacher\\ShowTeachersTable.cshtml",
+              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\Views\\Teacher\\ShowTeachersTable.cshtml",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-07T11:43:25.864Z",
+              "WhenOpened": "2026-07-08T12:55:36.905Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "MemberController.cs",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Controllers\\MemberController.cs",
-              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\Controllers\\MemberController.cs",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Controllers\\MemberController.cs",
-              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\Controllers\\MemberController.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAYwBsAAAAVAAAAAAAAAA==",
+              "Title": "StudentController.cs",
+              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Controllers\\StudentController.cs",
+              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\Controllers\\StudentController.cs",
+              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Controllers\\StudentController.cs",
+              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\Controllers\\StudentController.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T11:37:09.829Z",
+              "WhenOpened": "2026-07-08T12:49:08.647Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "FinalProject\\Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "FinalProject\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T10:21:31.185Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "FinalProject",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\FinalProject.csproj",
-              "RelativeDocumentMoniker": "FinalProject\\FinalProject.csproj",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\FinalProject.csproj",
-              "RelativeToolTip": "FinalProject\\FinalProject.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-07-07T09:54:23.949Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "RoleController.cs",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Controllers\\RoleController.cs",
-              "RelativeDocumentMoniker": "FinalProject\\Controllers\\RoleController.cs",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Controllers\\RoleController.cs",
-              "RelativeToolTip": "FinalProject\\Controllers\\RoleController.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAkwCQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T08:26:25.433Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "20260707074530_Updatedatabase.cs",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Migrations\\20260707074530_Updatedatabase.cs",
-              "RelativeDocumentMoniker": "FinalProject\\Migrations\\20260707074530_Updatedatabase.cs",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Migrations\\20260707074530_Updatedatabase.cs",
-              "RelativeToolTip": "FinalProject\\Migrations\\20260707074530_Updatedatabase.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-07T07:45:30.839Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "FinalProject\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "FinalProject\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAACcAAAAAAAAAAAAAADoAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-07T07:18:03.934Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "StudentsPage.cshtml",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Views\\Home\\StudentsPage.cshtml",
-              "RelativeDocumentMoniker": "FinalProject\\Views\\Home\\StudentsPage.cshtml",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Views\\Home\\StudentsPage.cshtml",
-              "RelativeToolTip": "FinalProject\\Views\\Home\\StudentsPage.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-07T07:17:55.004Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "Login.cshtml",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Views\\Account\\Login.cshtml",
-              "RelativeDocumentMoniker": "FinalProject\\Views\\Account\\Login.cshtml",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Views\\Account\\Login.cshtml",
-              "RelativeToolTip": "FinalProject\\Views\\Account\\Login.cshtml",
-              "ViewState": "AgIAAD8AAAAAAAAAAAAAAEsAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-07T07:17:30.299Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "20260706163336_UpdateTable.cs",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Migrations\\20260706163336_UpdateTable.cs",
-              "RelativeDocumentMoniker": "FinalProject\\Migrations\\20260706163336_UpdateTable.cs",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Migrations\\20260706163336_UpdateTable.cs",
-              "RelativeToolTip": "FinalProject\\Migrations\\20260706163336_UpdateTable.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T16:33:36.513Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "_ViewImports.cshtml",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\_ViewImports.cshtml",
-              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\Views\\_ViewImports.cshtml",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\_ViewImports.cshtml",
-              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\Views\\_ViewImports.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-06T09:46:52.618Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "_ViewStart.cshtml",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\_ViewStart.cshtml",
-              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\Views\\_ViewStart.cshtml",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\_ViewStart.cshtml",
-              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\Views\\_ViewStart.cshtml",
+              "DocumentIndex": 5,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Student\\Create.cshtml",
+              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\Views\\Student\\Create.cshtml",
+              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Student\\Create.cshtml",
+              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\Views\\Student\\Create.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-06T09:46:44.702Z"
+              "WhenOpened": "2026-07-08T12:49:05.237Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAKUAAAAAAAAAAAAAALkAAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-06T09:43:39.063Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Dashboard\\Index.cshtml",
-              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\Views\\Dashboard\\Index.cshtml",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Dashboard\\Index.cshtml",
-              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\Views\\Dashboard\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-06T09:43:00.209Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "DashboardController.cs",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Controllers\\DashboardController.cs",
-              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\Controllers\\DashboardController.cs",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Controllers\\DashboardController.cs",
-              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\Controllers\\DashboardController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
+              "Title": "TeacherController.cs",
+              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Controllers\\TeacherController.cs",
+              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\Controllers\\TeacherController.cs",
+              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Controllers\\TeacherController.cs",
+              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\Controllers\\TeacherController.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAswEwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T09:42:28.753Z",
+              "WhenOpened": "2026-07-08T12:48:25.071Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "ScaffoldingReadMe.txt",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\ScaffoldingReadMe.txt",
-              "RelativeDocumentMoniker": "FinalProject\\ScaffoldingReadMe.txt",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\ScaffoldingReadMe.txt",
-              "RelativeToolTip": "FinalProject\\ScaffoldingReadMe.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2026-07-06T09:39:41.171Z"
+              "DocumentIndex": 6,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Teacher\\Create.cshtml",
+              "RelativeDocumentMoniker": "FinalProject\\Areas\\AdminPanel\\Views\\Teacher\\Create.cshtml",
+              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Areas\\AdminPanel\\Views\\Teacher\\Create.cshtml",
+              "RelativeToolTip": "FinalProject\\Areas\\AdminPanel\\Views\\Teacher\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-08T12:37:48.591Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 9,
               "Title": "LoginVM.cs",
               "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\ViewModel\\LoginVM.cs",
               "RelativeDocumentMoniker": "FinalProject\\ViewModel\\LoginVM.cs",
@@ -405,56 +157,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "FinalProject\\Controllers\\AccountController.cs",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "FinalProject\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAAD4AAAAAAAAAAAAswE8AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T09:25:01.226Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "Member.cs",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Models\\Member.cs",
-              "RelativeDocumentMoniker": "FinalProject\\Models\\Member.cs",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Models\\Member.cs",
-              "RelativeToolTip": "FinalProject\\Models\\Member.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-05T11:44:57.494Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "BaseModel.cs",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Models\\BaseModel.cs",
-              "RelativeDocumentMoniker": "FinalProject\\Models\\BaseModel.cs",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Models\\BaseModel.cs",
-              "RelativeToolTip": "FinalProject\\Models\\BaseModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-05T10:50:51.696Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "_ViewStart.cshtml",
-              "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Views\\_ViewStart.cshtml",
-              "RelativeDocumentMoniker": "FinalProject\\Views\\_ViewStart.cshtml",
-              "ToolTip": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Views\\_ViewStart.cshtml",
-              "RelativeToolTip": "FinalProject\\Views\\_ViewStart.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-04T16:56:02.84Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 7,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "FinalProject\\Views\\Home\\Index.cshtml",
@@ -462,12 +165,11 @@
               "RelativeToolTip": "FinalProject\\Views\\Home\\Index.cshtml",
               "ViewState": "AgIAABoAAAAAAAAAAAAmwE8AAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-04T15:02:55.1Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-04T15:02:55.1Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 8,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\ikoya\\OneDrive\\Desktop\\FinalProject(important)\\FinalProject\\FinalProject\\Program.cs",
               "RelativeDocumentMoniker": "FinalProject\\Program.cs",

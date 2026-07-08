@@ -14,18 +14,9 @@ namespace FinalProject.Areas.AdminPanel.Controllers
             _context = context;
             
         }
-        public IActionResult ShowStudentsTable()
-        {
-            List<Student>students=_context.students.Where(t=>!t.isDeleted).ToList();
-            
-            return View(students);
-        }
+        
+       
 
-        public IActionResult ShowTeachersTable()
-        {
-            List<Teacher> teacher = _context.teachers.Where(t => !t.isDeleted).ToList();
-
-            return View(teacher);
-        }
+       
     }
 }

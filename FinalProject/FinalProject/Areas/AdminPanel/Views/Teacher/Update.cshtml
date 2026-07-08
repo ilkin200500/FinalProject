@@ -1,0 +1,41 @@
+﻿@using FinalProject.Areas.AdminPanel.ViewModels
+@model UpdateTeacherVM
+<div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Muellimi Duzelis et</h4>
+
+            <form class="forms-sample" method="post">
+                <div class="form-group">
+                    <label asp-for="FullName">Muellim</label>
+                    <input asp-for="FullName" class="form-control" placeholder="Muellim">
+                    <span style="color:red" asp-validation-for="FullName"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email">Email</label>
+                    <input asp-for="Email" class="form-control" placeholder="Email">
+                    <span style="color:red" asp-validation-for="Email"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Speciality">Ixtisas</label>
+                    <input asp-for="Speciality" class="form-control" placeholder="Ixtisas">
+                    <span style="color:red" asp-validation-for="Speciality"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Salary">Ortalama</label>
+                    <input asp-for="Salary" class="form-control" placeholder="Ortalama">
+                    <span style="color:red" asp-validation-for="Salary"></span>
+                </div>
+
+                <div class="form-check form-check-flat form-check-primary">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input">
+                        Remember me
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                <button class="btn btn-light" asp-controller="Teacher" asp-action="ShowTeachersTable">Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>

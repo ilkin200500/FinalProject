@@ -1,0 +1,85 @@
+﻿@using FinalProject.Models
+@model List<Student>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+@{
+    int Count = 1;
+}
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="card-title mb-0" style="font-weight: 600; color: #343a40;">
+                    <i class="fa-solid fa-graduation-cap me-2 text-primary"></i> Tələbələrin Siyahısı
+                </h4>
+                <a asp-controller="Student" asp-action="Create" class="btn btn-primary btn-md shadow-sm">
+                    <i class="fa-solid fa-plus me-1"></i> Tələbə əlavə et
+                </a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-striped align-middle border">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-center" style="width: 5%;">#</th>
+                            <th>Tələbə</th>
+                            <th>Email</th>
+                            <th>İxtisas</th>
+                            <th class="text-center">Ortalama</th>
+                            <th class="text-center" style="width: 15%;">Əməliyyat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center font-weight-bold text-muted">@Count</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="bg-light rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 35px; height: 35px;">
+                                            <i class="fa-solid fa-user text-secondary"></i>
+                                        </div>
+                                        <span>@item.FullName</span>
+                                    </div>
+                                </td>
+                                <td><i class="fa-regular fa-envelope me-1 text-muted"></i> @item.Email</td>
+                                <td><span class="badge bg-info text-dark opacity-75">@item.Speciality</span></td>
+                                <td class="text-center">
+                                    <span class="badge @(item.Average >= 51 ? "bg-success" : "bg-danger")">
+                                        @item.Average
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group" role="group">
+                                        <a asp-controller="Student" asp-action="Update" asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-warning me-1 rounded" title="Redaktə et">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+                                        <a asp-controller="Student" asp-action="Delete" asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-danger rounded" title="Sil"
+                                           onclick="return confirm('Bu tələbəni silmək istədiyinizdən əminsiniz?')">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            Count++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            @if (!Model.Any())
+            {
+                <div class="text-center py-5 text-muted">
+                    <i class="fa-regular fa-folder-open fa-3x mb-3"></i>
+                    <p>Sistemdə heç bir tələbə tapılmadı.</p>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+

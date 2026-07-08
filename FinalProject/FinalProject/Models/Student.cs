@@ -5,8 +5,7 @@ namespace FinalProject.Models
     public class Student:BaseModel
     {
 
-        [Required]
-        public string ImageUrl { get; set; }
+        
         [Required]
         public string FullName { get; set; }
         [Required, DataType(DataType.EmailAddress)]

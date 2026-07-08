@@ -32,16 +32,32 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5QYW5lbFxWaWV3c1xEYXNoYm9hcmRcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ikoya/OneDrive/Desktop/FinalProject(important)/FinalProject/FinalProject/Areas/AdminPanel/Views/Member/ShowStudentsTable.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5QYW5lbFxWaWV3c1xNZW1iZXJcU2hvd1N0dWRlbnRzVGFibGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/ikoya/OneDrive/Desktop/FinalProject(important)/FinalProject/FinalProject/Areas/AdminPanel/Views/Member/ShowTeachersTable.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5QYW5lbFxWaWV3c1xNZW1iZXJcU2hvd1RlYWNoZXJzVGFibGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/ikoya/OneDrive/Desktop/FinalProject(important)/FinalProject/FinalProject/Areas/AdminPanel/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5QYW5lbFxWaWV3c1xTaGFyZWRcX0xheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ikoya/OneDrive/Desktop/FinalProject(important)/FinalProject/FinalProject/Areas/AdminPanel/Views/Student/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5QYW5lbFxWaWV3c1xTdHVkZW50XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ikoya/OneDrive/Desktop/FinalProject(important)/FinalProject/FinalProject/Areas/AdminPanel/Views/Student/ShowStudentsTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5QYW5lbFxWaWV3c1xTdHVkZW50XFNob3dTdHVkZW50c1RhYmxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ikoya/OneDrive/Desktop/FinalProject(important)/FinalProject/FinalProject/Areas/AdminPanel/Views/Student/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5QYW5lbFxWaWV3c1xTdHVkZW50XFVwZGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ikoya/OneDrive/Desktop/FinalProject(important)/FinalProject/FinalProject/Areas/AdminPanel/Views/Teacher/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5QYW5lbFxWaWV3c1xUZWFjaGVyXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ikoya/OneDrive/Desktop/FinalProject(important)/FinalProject/FinalProject/Areas/AdminPanel/Views/Teacher/ShowTeachersTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5QYW5lbFxWaWV3c1xUZWFjaGVyXFNob3dUZWFjaGVyc1RhYmxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ikoya/OneDrive/Desktop/FinalProject(important)/FinalProject/FinalProject/Areas/AdminPanel/Views/Teacher/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5QYW5lbFxWaWV3c1xUZWFjaGVyXFVwZGF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ikoya/OneDrive/Desktop/FinalProject(important)/FinalProject/FinalProject/Areas/AdminPanel/Views/_ViewImports.cshtml]

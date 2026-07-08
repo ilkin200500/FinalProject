@@ -1,0 +1,43 @@
+﻿@using FinalProject.Areas.AdminPanel.ViewModels
+@using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor
+@model CreateStudentVM
+
+<div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Telebe Yarat</h4>
+           
+            <form class="forms-sample"method="post">
+                <div class="form-group">
+                    <label asp-for="FullName">Telebe</label>
+                    <input asp-for="FullName" class="form-control"  placeholder="Telebe">
+                    <span style="color:red" asp-validation-for="FullName"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email">Email</label>
+                    <input asp-for="Email" class="form-control" placeholder="Email">
+                    <span style="color:red" asp-validation-for="Email"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Speciality">Ixtisas</label>
+                    <input asp-for="Speciality" class="form-control" placeholder="Ixtisas">
+                    <span style="color:red" asp-validation-for="Speciality"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Average">Ortalama</label>
+                    <input asp-for="Average" class="form-control" placeholder="Ortalama">
+                    <span style="color:red" asp-validation-for="Average"></span>
+                </div>
+
+                <div class="form-check form-check-flat form-check-primary">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input">
+                        Remember me
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                <button class="btn btn-light" asp-controller="Student" asp-action="ShowStudentsTable">Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System.ComponentModel.DataAnnotations;
 
-namespace FinalProject.Models
+namespace FinalProject.Areas.AdminPanel.ViewModels
 {
-    public class Teacher:BaseModel
+    public class UpdateStudentVM
     {
 
         
@@ -13,6 +14,6 @@ namespace FinalProject.Models
         [Required]
         public string Speciality { get; set; }  //ixtisas
         [Required]
-        public int Salary { get; set; }
+        public int Average { get; set; }
     }
 }

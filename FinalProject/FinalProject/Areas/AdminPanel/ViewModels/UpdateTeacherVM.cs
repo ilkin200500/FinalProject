@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FinalProject.Models
+namespace FinalProject.Areas.AdminPanel.ViewModels
 {
-    public class Teacher:BaseModel
+    public class UpdateTeacherVM
     {
-
-        
         [Required]
         public string FullName { get; set; }
         [Required, DataType(DataType.EmailAddress)]
