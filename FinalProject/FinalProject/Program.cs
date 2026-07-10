@@ -1,36 +1,40 @@
-using FinalProject.DAL;
+﻿using FinalProject.DAL;
 using FinalProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
+
+builder.Services.AddIdentity<Member, IdentityRole<int>>(options => // 💡 IdentityRole<int> etdik
 {
     options.Password.RequiredLength = 5;
     options.Lockout.MaxFailedAccessAttempts = 5;
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(25);
 }).AddDefaultTokenProviders().AddEntityFrameworkStores<CourseDbContext>();
+
 builder.Services.AddDbContext<CourseDbContext>(options =>
 {
     options.UseSqlServer("Server=LENOVO\\SQLEXPRESS01;Database=FinalProjectDb;Trusted_Connection=True;TrustServerCertificate=True");
 });
+
 builder.Services.AddControllersWithViews();
+
 var app = builder.Build();
+
+app.UseStaticFiles();
+app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseStaticFiles();
 
 app.MapControllerRoute(
-            name: "areas",
-            pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
-          );
+    name: "areas",
+    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
+);
+
 app.MapControllerRoute(
-    
-    name:"default",
-    pattern:"{controller=Home}/{action=Index}"
-    
-    );
-
-
+    name: "default",
+    pattern: "{controller=Account}/{action=Login}"
+);
 
 app.Run();

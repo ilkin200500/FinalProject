@@ -7,15 +7,17 @@ namespace FinalProject.Controllers
 {
     public class AccountController : Controller
     {
-       private UserManager<AppUser> _userManager { get; }
-        private SignInManager<AppUser> _signInManager { get; }
-        private RoleManager<IdentityRole> _roleManager { get; }
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager)
+        private readonly UserManager<Member> _userManager;
+        private readonly SignInManager<Member> _signInManager;
+        private readonly RoleManager<IdentityRole<int>> _roleManager; // 💡 <int> əlavə etdik
+
+        public AccountController(UserManager<Member> userManager, SignInManager<Member> signInManager, RoleManager<IdentityRole<int>> roleManager)
         {
-            _userManager= userManager;
-            _signInManager= signInManager;
-            _roleManager= roleManager;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _roleManager = roleManager;
         }
+
         public IActionResult Login()
         {
             return View();
@@ -27,29 +29,34 @@ namespace FinalProject.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Nəsə səhv oldu");
                 return View(user);
             }
 
-            AppUser existUser = await _userManager.FindByEmailAsync(user.Email);
+            // 1. İstifadəçini Member sinfi üzərindən tapırıq
+            Member existUser = await _userManager.FindByEmailAsync(user.Email);
             if (existUser == null)
             {
-                ModelState.AddModelError("", "Belə bir istifadəçi yoxdur");
+                ModelState.AddModelError("", "Belə bir istifadəçi yoxdur və ya məlumatlar yanlışdır.");
                 return View(user);
             }
 
-            // Giriş cəhdi
+            // 2. İstifadəçinin hesabı aktivdirmi? (Member modelinə əlavə etdiyimiz isActivated işə düşür)
+            if (!existUser.isActivated)
+            {
+                ModelState.AddModelError("", "Hesabınız admin tərəfindən deaktiv edilib. Girişə icazə yoxdur.");
+                return View(user);
+            }
+
+            // 3. Şifrəni yoxlayıb daxil oluruq
             var signInResult = await _signInManager.PasswordSignInAsync(existUser, user.Password, true, true);
 
             if (signInResult.Succeeded)
             {
-                // İstifadəçinin rollarını alırıq
+                // Rollara görə yönləndirmə prosesi
                 var roles = await _userManager.GetRolesAsync(existUser);
 
-                // Rollara görə yönləndirmə
                 if (roles.Contains("Admin"))
                 {
-                    // DIQQƏT: Area üçün ən zəmanətli yönləndirmə üsulu budur:
                     return RedirectToRoute(new { area = "AdminPanel", controller = "Dashboard", action = "Index" });
                 }
                 else if (roles.Contains("Teacher"))
@@ -64,7 +71,7 @@ namespace FinalProject.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // Əgər giriş uğursuz olubsa
+            // Kilidlənmə və digər xətaların idarə olunması
             if (signInResult.IsLockedOut)
             {
                 ModelState.AddModelError("", "Hesabınız çoxsaylı uğursuz cəhdə görə müvəqqəti bloklanıb.");
@@ -76,12 +83,11 @@ namespace FinalProject.Controllers
 
             return View(user);
         }
+
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Login", "Account"); // Çıxış edəndən sonra birbaşa Login-ə atsın
         }
-
-
     }
 }

@@ -1,6 +1,7 @@
 ﻿using FinalProject.Areas.AdminPanel.ViewModels;
 using FinalProject.DAL;
 using FinalProject.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,26 +10,30 @@ namespace FinalProject.Areas.AdminPanel.Controllers
     [Area("AdminPanel")]
     public class StudentController : Controller
     {
-        // readonly etmək təhlükəsizlik üçün yaxşı təcrübədir (best practice)
         private readonly CourseDbContext _context;
+        private readonly UserManager<Member> _userManager;
 
-        public StudentController(CourseDbContext context)
+        public StudentController(CourseDbContext context, UserManager<Member> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // Giriş səhifəsi - Tələbələrin Siyahısı
         public IActionResult ShowStudentsTable()
         {
-            // Cədvəl adının (students) böyük-kiçik hərfinə bazada necədirsə elə diqqət et
-            List<Student> students = _context.students.Where(t => !t.isDeleted).ToList();
+            List<Student> students = _context.students
+                .Include(s => s.Group)
+                .Where(t => !t.isDeleted)
+                .ToList();
 
             return View(students);
         }
 
-        // Tələbə yaratmaq üçün səhifəni açan GET metodu
+        // Tələbə yaratmaq üçün GET metodu
         public IActionResult Create()
         {
+            ViewBag.Groups = _context.Groups.Where(g => !g.isDeleted).ToList();
             return View();
         }
 
@@ -39,69 +44,126 @@ namespace FinalProject.Areas.AdminPanel.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Daxil etdiyiniz məlumatda səhv var.");
+                ViewBag.Groups = _context.Groups.Where(g => !g.isDeleted).ToList();
                 return View(vm);
             }
 
-            Student newStudent = new Student
+            // 1. ADDIM: Identity cədvəli üçün Member obyektini qururuq
+            Member newIdentityUser = new Member
             {
-                FullName = vm.FullName,
+                FullName=vm.FullName,
+                UserName = vm.Email,
                 Email = vm.Email,
-                Speciality = vm.Speciality,
-                Average = vm.Average,
-                
+                NormalizedEmail = vm.Email.ToUpper().Trim(),
+                NormalizedUserName = vm.Email.ToUpper().Trim(),
+                isActivated = true,
+                EmailConfirmed = true,
+               
             };
 
-            // Düzəliş: Müvafiq DbSet-ə (students cədvəlinə) sinxron Add edildi
-            _context.students.Add(newStudent);
+            // Şifrəni Identity metodu ilə bazaya yazırıq
+            var identityResult = await _userManager.CreateAsync(newIdentityUser, "Student123!");
 
-            // Asinxron olaraq bazada dəyişikliklər qeyd edilir
-            await _context.SaveChangesAsync();
+            if (identityResult.Succeeded)
+            {
+                // Tələbəyə sistemdə "Student" rolunu veririk
+                await _userManager.AddToRoleAsync(newIdentityUser, "Student");
 
-            // Düzəliş: Parametrlərin sırası düzəldildi -> ("Action", "Controller")
-            return RedirectToAction("ShowStudentsTable", "Student");
+                // 2. ADDIM: Profil məlumatlarını dbo.students cədvəlinə yazırıq
+                Student newStudent = new Student
+                {
+                    FullName = vm.FullName,
+                    Email = vm.Email,
+                    Speciality = vm.Speciality,
+                    Average = vm.Average,
+                    BirthDate = vm.BirthDate,
+                    PhoneNumber = vm.PhoneNumber,
+                    Gender = vm.Gender,
+                    GroupId = vm.GroupId,
+                    StudentCode = vm.StudentCode,
+
+                    // 💡 DÜZƏLİŞ: Artıq int.Parse ehtiyac yoxdur, hər iki ID rəqəmdir (int)
+                    MemberId = newIdentityUser.Id
+                };
+
+                _context.students.Add(newStudent);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("ShowStudentsTable", "Student");
+            }
+
+            // Əgər Identity tərəfdə nəsə xəta olarsa
+            ViewBag.Groups = _context.Groups.Where(g => !g.isDeleted).ToList();
+            foreach (var error in identityResult.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View(vm);
         }
 
-        public  async Task<IActionResult> Delete(int? id)
+        // Tələbəni silən (Soft Delete) metod
+        public async Task<IActionResult> Delete(int? id)
         {
-            Student existStudent = _context.students.Where(t => !t.isDeleted).FirstOrDefault(c=>c.Id==id);
+            if (id == null) return BadRequest();
+
+            Student existStudent = _context.students.Where(t => !t.isDeleted).FirstOrDefault(c => c.Id == id);
+            if (existStudent == null) return NotFound();
+
             existStudent.isDeleted = true;
             await _context.SaveChangesAsync();
             return RedirectToAction("ShowStudentsTable", "Student");
         }
 
-
-        public IActionResult Update(int?id)
+        // Tələbəni redaktə etmək üçün GET metodu
+        public IActionResult Update(int? id)
         {
+            if (id == null) return BadRequest();
+
             Student existStudent = _context.students.Where(t => !t.isDeleted).FirstOrDefault(c => c.Id == id);
+            if (existStudent == null) return NotFound();
+
+            ViewBag.Groups = _context.Groups.Where(g => !g.isDeleted).ToList();
+
             UpdateStudentVM vm = new UpdateStudentVM
             {
                 FullName = existStudent.FullName,
                 Email = existStudent.Email,
                 Speciality = existStudent.Speciality,
                 Average = existStudent.Average,
+                PhoneNumber = existStudent.PhoneNumber,
+                Gender = existStudent.Gender,
+                GroupId = existStudent.GroupId
             };
             return View(vm);
-
         }
 
+        // Redaktə olunmuş məlumatları qəbul edən POST metodu
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult>Update(int?id,UpdateStudentVM vm)
+        public async Task<IActionResult> Update(int? id, UpdateStudentVM vm)
         {
+            if (id == null) return BadRequest();
+
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "daxil etdiyiniz melumat yalnisdir");
+                ViewBag.Groups = _context.Groups.Where(g => !g.isDeleted).ToList();
                 return View(vm);
             }
+
             Student existStudent = _context.students.Where(t => !t.isDeleted).FirstOrDefault(c => c.Id == id);
-            existStudent.FullName=vm.FullName;
-            existStudent.Speciality=vm.Speciality;
-            existStudent.Email=vm.Email;
-            existStudent.Average=vm.Average;
+            if (existStudent == null) return NotFound();
+
+            existStudent.FullName = vm.FullName;
+            existStudent.Speciality = vm.Speciality;
+            existStudent.Email = vm.Email;
+            existStudent.Average = vm.Average;
+            existStudent.PhoneNumber = vm.PhoneNumber;
+            existStudent.Gender = vm.Gender;
+            existStudent.GroupId = vm.GroupId;
+
             await _context.SaveChangesAsync();
             return RedirectToAction("ShowStudentsTable", "Student");
-
         }
     }
 }

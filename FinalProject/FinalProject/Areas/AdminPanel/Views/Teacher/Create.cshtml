@@ -3,38 +3,55 @@
 <div class="col-md-6 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Muellim Elave Et</h4>
+            <h4 class="card-title">Müəllim Əlavə Et</h4>
 
             <form class="forms-sample" method="post">
-                <div class="form-group">
-                    <label asp-for="FullName">Muellim</label>
-                    <input asp-for="FullName" class="form-control" placeholder="Muellim">
-                    <span style="color:red" asp-validation-for="FullName"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Email">Email</label>
-                    <input asp-for="Email" class="form-control" placeholder="Email">
-                    <span style="color:red" asp-validation-for="Email"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Speciality">Ixtisas</label>
-                    <input asp-for="Speciality" class="form-control" placeholder="Tedris etdiyi fenn">
-                    <span style="color:red" asp-validation-for="Speciality"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Salary">Maas</label>
-                    <input asp-for="Salary" class="form-control" placeholder="Maas">
-                    <span style="color:red" asp-validation-for="Salary"></span>
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="FullName">Müəllimin Adı və Soyadı</label>
+                    <input asp-for="FullName" class="form-control" placeholder="Ad və Soyad daxil edin">
+                    <span class="text-danger" asp-validation-for="FullName"></span>
                 </div>
 
-                <div class="form-check form-check-flat form-check-primary">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input">
-                        Remember me
-                    </label>
+                <div class="form-group mb-3">
+                    <label asp-for="Email">Email Ünvanı</label>
+                    <input asp-for="Email" type="email" class="form-control" placeholder="Email daxil edin">
+                    <span class="text-danger" asp-validation-for="Email"></span>
                 </div>
-                <button type="submit" class="btn btn-primary me-2">Submit</button>
-                <button class="btn btn-light" asp-controller="Teacher" asp-action="ShowTeachersTable">Cancel</button>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Speciality">İxtisas (Fənn)</label>
+                    <input asp-for="Speciality" class="form-control" placeholder="Məs: Proqramlaşdırma, Riyaziyyat">
+                    <span class="text-danger" asp-validation-for="Speciality"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Salary">Maaş</label>
+                    <input asp-for="Salary" type="number" class="form-control" placeholder="Aylıq maaş miqdarı">
+                    <span class="text-danger" asp-validation-for="Salary"></span>
+                </div>
+
+                @if (ViewBag.Departments != null)
+                {
+                    <div class="form-group mb-3">
+                        <label asp-for="DepartmentId">Kafedra / Departament</label>
+                        <select asp-for="DepartmentId" class="form-control"
+                                asp-items="@(new SelectList(ViewBag.Departments, "Id", "DepartmentName"))">
+                            <option value="">-- Kafedra Seçin --</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="DepartmentId"></span>
+                    </div>
+                }
+
+                <input type="hidden" asp-for="MemberId" value="1" />
+                <input type="hidden" asp-for="Password" value="Teacher123!" />
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary me-2">Əlavə Et</button>
+                    <a class="btn btn-light" asp-controller="Teacher" asp-action="ShowTeachersTable">Ləğv Et</a>
+                </div>
             </form>
         </div>
     </div>

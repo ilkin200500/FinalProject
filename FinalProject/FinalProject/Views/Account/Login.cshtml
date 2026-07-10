@@ -7,19 +7,12 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Majestic Admin</title>
-    <!-- plugins:css -->
     <link rel="stylesheet" href="~/AdminPanel/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="~/AdminPanel/vendors/base/vendor.bundle.base.css">
-    <!-- endinject -->
-    <!-- plugin css for this page -->
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
     <link rel="stylesheet" href="~/AdminPanel/css/style.css">
-    <!-- endinject -->
     <link rel="shortcut icon" href="~/AdminPanel/images/favicon.png" />
 </head>
 
@@ -35,7 +28,12 @@
                             </div>
                             <h4>Welcome back!</h4>
                             <h6 class="font-weight-light">Happy to see you again!</h6>
-                            <form class="pt-3"method="post" asp-controller="Account" asp-action="Login">
+
+                            <form class="pt-3" method="post" asp-controller="Account" asp-action="Login">
+                                @Html.AntiForgeryToken()
+
+                                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
                                 <div class="form-group">
                                     <label asp-for="Email">Email</label>
                                     <div class="input-group">
@@ -44,10 +42,11 @@
                                                 <i class="mdi mdi-account-outline text-primary"></i>
                                             </span>
                                         </div>
-                                        <input asp-for="Email" class="form-control form-control-lg border-left-0" placeholder="Email">
-                                        <span style="color:red" asp-validation-for="Email"></span>
+                                        <input asp-for="Email" type="email" class="form-control form-control-lg border-left-0" placeholder="Email">
                                     </div>
+                                    <span style="color:red" asp-validation-for="Email"></span>
                                 </div>
+
                                 <div class="form-group">
                                     <label asp-for="Password">Password</label>
                                     <div class="input-group">
@@ -56,10 +55,11 @@
                                                 <i class="mdi mdi-lock-outline text-primary"></i>
                                             </span>
                                         </div>
-                                        <input asp-for="Password" class="form-control form-control-lg border-left-0" placeholder="Password">
-                                        <span style="color:red" asp-validation-for="Password"></span>
+                                        <input asp-for="Password" type="password" class="form-control form-control-lg border-left-0" placeholder="Password">
                                     </div>
+                                    <span style="color:red" asp-validation-for="Password"></span>
                                 </div>
+
                                 <div class="my-2 d-flex justify-content-between align-items-center">
                                     <div class="form-check">
                                         <label class="form-check-label text-muted">
@@ -69,31 +69,25 @@
                                     </div>
                                     <a href="#" class="auth-link text-black">Forgot password?</a>
                                 </div>
+
                                 <div class="my-3">
                                     <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">LOGIN</button>
                                 </div>
-                               
                             </form>
                         </div>
                     </div>
                     <div class="col-lg-6 login-half-bg d-flex flex-row">
-                        <p class="text-white font-weight-medium text-center flex-grow align-self-end">Copyright &copy; 2020  All rights reserved.</p>
+                        <p class="text-white font-weight-medium text-center flex-grow align-self-end">Copyright &copy; 2026 All rights reserved.</p>
                     </div>
                 </div>
             </div>
-            <!-- content-wrapper ends -->
         </div>
-        <!-- page-body-wrapper ends -->
     </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
+
     <script src="~/AdminPanel/vendors/base/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- inject:js -->
     <script src="~/AdminPanel/js/off-canvas.js"></script>
     <script src="~/AdminPanel/js/hoverable-collapse.js"></script>
     <script src="~/AdminPanel/js/template.js"></script>
-    <!-- endinject -->
 </body>
 
 </html>
