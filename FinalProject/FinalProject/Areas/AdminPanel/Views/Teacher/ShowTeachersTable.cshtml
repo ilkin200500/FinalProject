@@ -1,7 +1,6 @@
 ﻿@using FinalProject.Models
 @model List<Teacher>
 
-<!-- Font Awesome 6.5.2 (Daha stabil və geniş yayılmış versiya) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
 @{
@@ -10,10 +9,8 @@
 
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card shadow-sm border-0">
-        <!-- Kiçik kölgə və təmiz kənarlar əlavə edildi -->
         <div class="card-body p-4">
-            <!-- Daxili məsafə artırıldı -->
-            <!-- Başlıq və Düymə bölməsi fleksibilləşdirildi -->
+
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h4 class="card-title mb-0" style="font-weight: 600; color: #343a40;">
                     <i class="fa-solid fa-chalkboard-user me-2 text-primary"></i> Müəllimlərin Siyahısı
@@ -23,65 +20,85 @@
                 </a>
             </div>
 
-            <div class="table-responsive">
-                <!-- table-hover və align-middle əlavə edildi -->
-                <table class="table table-hover table-striped align-middle border">
-                    <thead class="table-light">
-                        <!-- Başlıq fonu bir az tündləşdirildi -->
-                        <tr>
-                            <th class="text-center" style="width: 5%;">#</th>
-                            <th>Müəllim</th>
-                            <th>Tədris etdiyi Fənn</th>
-                            <th class="text-center">Maaş</th>
-                            <th class="text-center" style="width: 15%;">Əməliyyat</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td class="text-center font-weight-bold text-muted">@Count</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <!-- Müəllim adı üçün kiçik bir avatar simvolu -->
-                                        <div class="bg-light rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 35px; height: 35px;">
-                                            <i class="fa-solid fa-user-tie text-secondary"></i>
-                                        </div>
-                                        <span>@item.FullName</span>
-                                    </div>
-                                </td>
-                                <td><span class="badge bg-secondary text-dark opacity-75">@item.Speciality</span></td>
-                                <td class="text-center font-weight-bold text-success">
-                                    @item.Salary AZN
-                                </td>
-                                <td class="text-center">
-                                    <div class="btn-group" role="group">
-                                        <!-- Redaktə düyməsi -->
-                                        <a asp-controller="Teacher" asp-action="Update" asp-route-id="@item.Id"
-                                           class="btn btn-sm btn-outline-warning me-1 rounded" title="Redaktə et">
-                                            <i class="fa-solid fa-pen"></i>
-                                        </a>
-                                        <!-- Silmə düyməsi -->
-                                        <a asp-controller="Teacher" asp-action="Delete" asp-route-id="@item.Id"
-                                           class="btn btn-sm btn-outline-danger rounded" title="Sil"
-                                           onclick="return confirm('Bu müəllimi silmək istədiyinizdən əminsiniz?')">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                            Count++;
-                        }
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Əgər siyahı boş olarsa istifadəçiyə bildiriş -->
             @if (!Model.Any())
             {
                 <div class="text-center py-5 text-muted">
-                    <i class="fa-regular fa-folder-open fa-3x mb-3"></i>
-                    <p>Sistemdə heç bir müəllim tapılmadı.</p>
+                    <i class="fa-regular fa-folder-open fa-3x mb-3 text-warning"></i>
+                    <h5>Sistemdə heç bir müəllim tapılmadı.</h5>
+                    <p class="small text-muted">Yuxarıdakı düymədən ilk müəllimi əlavə edə bilərsiniz.</p>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped align-middle border">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="text-center" style="width: 5%;">#</th>
+                                <th>Müəllim / Kafedra</th>
+                                <th>İxtisas & Keçdiyi Dərslər</th>
+                                <th class="text-center">Maaş</th>
+                                <th class="text-center" style="width: 15%;">Əməliyyat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center font-weight-bold text-muted">@Count</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                                                <i class="fa-solid fa-user-tie text-secondary"></i>
+                                            </div>
+                                            <div>
+                                                <span class="d-block font-weight-bold">@item.FullName</span>
+                                                <small class="text-muted">
+                                                    <i class="fa-solid fa-building-user me-1 text-info"></i>
+                                                    @(item.Department != null ? item.Department.DepartmentName : "Kafedra təyin edilməyib")
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-dark text-white opacity-75 mb-1">@item.Speciality</span>
+                                        <div class="d-block">
+                                            @if (item.Courses != null && item.Courses.Any())
+                                            {
+                                                @foreach (var course in item.Courses)
+                                                {
+                                                    <span class="badge bg-info text-white me-1 small" style="font-size: 11px;">
+                                                        <i class="fa-solid fa-book me-1"></i> @course.CourseName
+                                                    </span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <small class="text-danger font-italic">Hələ dərs təyin edilməyib</small>
+                                            }
+                                        </div>
+                                    </td>
+                                    <td class="text-center font-weight-bold text-success">
+                                        @item.Salary AZN
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group">
+                                            <a asp-controller="Teacher" asp-action="Update" asp-route-id="@item.Id"
+                                               class="btn btn-sm btn-outline-warning me-1 rounded" title="Redaktə et">
+                                                <i class="fa-solid fa-pen"></i>
+                                            </a>
+                                            <a asp-controller="Teacher" asp-action="Delete" asp-route-id="@item.Id"
+                                               class="btn btn-sm btn-outline-danger rounded" title="Sil"
+                                               onclick="return confirm('Bu müəllimi silmək istədiyinizdən əminsiniz?')">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                Count++;
+                            }
+                        </tbody>
+                    </table>
                 </div>
             }
 

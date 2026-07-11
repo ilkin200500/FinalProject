@@ -1,5 +1,6 @@
 ﻿@using FinalProject.Areas.AdminPanel.ViewModels
 @model CreateTeacherVM
+
 <div class="col-md-6 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
@@ -7,7 +8,8 @@
 
             <form class="forms-sample" method="post">
                 @Html.AntiForgeryToken()
-                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
                 <div class="form-group mb-3">
                     <label asp-for="FullName">Müəllimin Adı və Soyadı</label>
@@ -22,7 +24,7 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label asp-for="Speciality">İxtisas (Fənn)</label>
+                    <label asp-for="Speciality">İxtisas (Əsas İstiqamət)</label>
                     <input asp-for="Speciality" class="form-control" placeholder="Məs: Proqramlaşdırma, Riyaziyyat">
                     <span class="text-danger" asp-validation-for="Speciality"></span>
                 </div>
@@ -39,13 +41,24 @@
                         <label asp-for="DepartmentId">Kafedra / Departament</label>
                         <select asp-for="DepartmentId" class="form-control"
                                 asp-items="@(new SelectList(ViewBag.Departments, "Id", "DepartmentName"))">
-                            <option value="">-- Kafedra Seçin --</option>
+                            <option value="">-- Kafedra Seçin (Məcburi deyil) --</option>
                         </select>
                         <span class="text-danger" asp-validation-for="DepartmentId"></span>
                     </div>
                 }
 
-                <input type="hidden" asp-for="MemberId" value="1" />
+                @if (ViewBag.Courses != null)
+                {
+                    <div class="form-group mb-3">
+                        <label asp-for="CourseIds">Tədris Edəcəyi Fənlər</label>
+                        <select asp-for="CourseIds" class="form-control" multiple style="height: 120px;"
+                                asp-items="@(new SelectList(ViewBag.Courses, "Id", "CourseName"))">
+                        </select>
+                        <small class="text-muted">Birdən çox dərs seçmək üçün Ctrl düyməsini sıxıb saxlayın.</small>
+                        <span class="text-danger" asp-validation-for="CourseIds"></span>
+                    </div>
+                }
+
                 <input type="hidden" asp-for="Password" value="Teacher123!" />
 
                 <div class="mt-4">

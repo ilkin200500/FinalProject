@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@{
+    // 🎯 Cari Controller, Action və Area adlarını avtomatik tuturuq
+    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    string currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+    string currentArea = ViewContext.RouteData.Values["area"]?.ToString() ?? "";
+}
+
+<!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="UTF-8">
@@ -6,8 +13,18 @@
     <title>Student Information System</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/css/style.css">
+
+    <style>
+        /* 🎨 Əgər CSS-də yoxdursa, aktiv keçidin soluna kiçik xətt effekti və rəng qatırıq */
+        .nav-menu .nav-item.active {
+            background-color: rgba(78, 115, 223, 0.1);
+            color: #4e73df;
+            font-weight: 600;
+            border-left: 4px solid #4e73df;
+            padding-left: 16px; /* xətt gəldiyi üçün dizayn sürüşməsin deyə */
+        }
+    </style>
 </head>
 <body>
 
@@ -21,48 +38,93 @@
                 </div>
 
                 <nav class="nav-menu">
-                    <a asp-controller="Home" asp-action="Index" class="nav-item active">
+                    <a asp-controller="Home" asp-action="Index" class="nav-item @(currentController == "Home" && currentAction == "Index" ? "active" : "")">
                         <i class="fa-solid fa-chart-pie"></i>
-                        <span>Home</span>
+                        <span>Ana Səhifə</span>
                     </a>
-                    <a asp-controller="Home" asp-action="StudentsPage" class="nav-item">
-                        <i class="fa-solid fa-user-graduate"></i>
-                        <span>Tələbələr</span>
-                    </a>
-                    <a asp-controller="Teacher" asp-action="Index" class="nav-item">
-                        <i class="fa-solid fa-chalkboard-user"></i>
-                        <span>Müəllimlər</span>
-                    </a>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-area="AdminPanel" asp-controller="Dashboard" asp-action="Index" class="nav-item @(currentArea == "AdminPanel" && currentController == "Dashboard" ? "active" : "")">
+                                <i class="fa-solid fa-gauge"></i>
+                                <span>Admin Panel</span>
+                            </a>
+
+                            <a asp-area="AdminPanel" asp-controller="Teacher" asp-action="ShowTeachersTable" class="nav-item @(currentArea == "AdminPanel" && currentController == "Teacher" ? "active" : "")">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                                <span>Müəllim İdarəsi</span>
+                            </a>
+
+                            <a asp-controller="Home" asp-action="StudentsPage" class="nav-item @(currentController == "Home" && currentAction == "StudentsPage" ? "active" : "")">
+                                <i class="fa-solid fa-user-graduate"></i>
+                                <span>Tələbə İdarəsi</span>
+                            </a>
+                        }
+
+                        @if (User.IsInRole("Teacher"))
+                        {
+                            <a asp-controller="Teacher" asp-action="Index" class="nav-item @(currentController == "Teacher" && currentAction == "Index" && currentArea != "AdminPanel" ? "active" : "")">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                                <span>Dərslərim</span>
+                            </a>
+                            <a href="#" class="nav-item">
+                                <i class="fa-solid fa-star"></i>
+                                <span>Qiymətləndirmə</span>
+                            </a>
+                        }
+
+                        @if (User.IsInRole("Student"))
+                        {
+                            <a asp-controller="Student" asp-action="Index" class="nav-item @(currentController == "Student" && currentAction == "Index" ? "active" : "")">
+                                <i class="fa-solid fa-book-reader"></i>
+                                <span>Semestr Qiymətlərim</span>
+                            </a>
+                        }
+                    }
+
                     <a href="#" class="nav-item">
                         <i class="fa-solid fa-book"></i>
                         <span>Fənlər & Dərslər</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i class="fa-solid fa-star"></i>
-                        <span>Qiymətlər</span>
                     </a>
                 </nav>
             </div>
 
             <div class="sidebar-profile">
                 <div class="profile-info">
-                    <div class="profile-avatar">AA</div>
-                    <div>
-                        <h4 class="profile-name">Admin Panel</h4>
-                        <span class="profile-email">admin@universe.edu</span>
-                    </div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="profile-avatar">
+                            @(User.Identity.Name?.Substring(0, Math.Min(2, User.Identity.Name.Length)).ToUpper() ?? "US")
+                        </div>
+                        <div>
+                            <h4 class="profile-name">@User.Identity.Name</h4>
+                            <span class="profile-email">Giriş edilib</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="profile-avatar">??</div>
+                        <div>
+                            <h4 class="profile-name">Qonaq</h4>
+                            <span class="profile-email">Giriş edilməyib</span>
+                        </div>
+                    }
                 </div>
+
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a asp-controller="Account" asp-action="Logout" class="logout-btn">
+                    <a asp-area="" asp-controller="Account" asp-action="Logout" class="logout-btn" title="Çıxış et">
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </a>
                 }
                 else
                 {
-                    <a asp-controller="Account" asp-action="Login"> <i class="fa-solid fa-user"></i></a>
+                    <a asp-area="" asp-controller="Account" asp-action="Login" class="logout-btn" title="Giriş et">
+                        <i class="fa-solid fa-user"></i>
+                    </a>
                 }
-
             </div>
         </aside>
 

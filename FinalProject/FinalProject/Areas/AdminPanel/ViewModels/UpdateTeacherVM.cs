@@ -1,44 +1,28 @@
-﻿using System.ComponentModel.DataAnnotations;
-using FinalProject.Models;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace FinalProject.Areas.AdminPanel.ViewModels
 {
     public class UpdateTeacherVM
     {
-        [Required(ErrorMessage = "Ad və Soyad mütləq daxil edilməlidir.")]
-        [StringLength(100)]
+        // 🎯 Xətanı aradan qaldıran əsas sətir:
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "Ad və Soyad mütləqdir.")]
         public string FullName { get; set; }
 
-        [Required(ErrorMessage = "Email ünvanı mütləqdir.")]
-        [DataType(DataType.EmailAddress)]
-        [EmailAddress(ErrorMessage = "Düzgün bir email ünvanı daxil edin.")]
+        [Required(ErrorMessage = "Email mütləqdir.")]
+        [EmailAddress(ErrorMessage = "Düzgün email ünvanı daxil edin.")]
         public string Email { get; set; }
 
-        // Müəllimin sistemə daxil ola bilməsi üçün şifrə sahəsi
-        [Required(ErrorMessage = "Şifrə mütləqdir.")]
-        [DataType(DataType.Password)]
-        [StringLength(100, MinimumLength = 6, ErrorMessage = "Şifrə ən az 6 simvoldan ibarət olmalıdır.")]
-        public string Password { get; set; }
+        [Required(ErrorMessage = "İxtisas mütləqdir.")]
+        public string Speciality { get; set; }
 
-        [Required(ErrorMessage = "İxtisas sahəsi mütləqdir.")]
-        public string Speciality { get; set; } // İxtisas (məs: Proqramlaşdırma)
-
-        [Required(ErrorMessage = "Maaş qeyd edilməlidir.")]
-        [Range(0, int.MaxValue, ErrorMessage = "Maaş mənfi ola bilməz.")]
+        [Required(ErrorMessage = "Maaş mütləqdir.")]
         public int Salary { get; set; }
 
-        [Required]
-        public int MemberId { get; set; }
-
-
-        // --- ƏLAVƏ OLUNAN ƏLAQƏLƏR (RELATIONSHIPS) ---
-
-        // 1. Müəllimin aid olduğu Kafedra/Fakültə (İstəyə bağlı, amma idarəetmə üçün yaxşıdır)
         public int? DepartmentId { get; set; }
-        public Department Department { get; set; }
 
-        // 2. Müəllimin tədris etdiyi fənlərin/dərslərin siyahısı
-        // Bu obyekt vasitəsilə müəllim öz panelində hansı dərsləri keçdiyini görə biləcək
-        public ICollection<Course> Courses { get; set; } = new List<Course>();
+        public List<int> CourseIds { get; set; }
     }
 }
