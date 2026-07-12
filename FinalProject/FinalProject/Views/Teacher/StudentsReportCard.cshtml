@@ -1,88 +1,103 @@
 ﻿@model IEnumerable<FinalProject.Models.Grade>
 
 @{
-    ViewData["Title"] = ViewBag.CourseName + " - Qiymətləndirmə";
+    ViewData["Title"] = ViewBag.CourseName + " - Qiymət Jurnalı";
 }
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Fənn: <span class="text-primary">@ViewBag.CourseName</span></h2>
-        <a asp-action="Index" class="btn btn-outline-secondary"><i class="fas fa-arrow-left"></i> Fənlərə Qayıt</a>
+<div class="container-fluid pt-4">
+    <div class="mb-4">
+        <a asp-action="Index" class="btn btn-light btn-sm text-muted font-weight-bold mb-3" style="border-radius: 8px; border: 1px solid #ddd;">
+            <i class="mdi mdi-arrow-left me-1"></i> Fənlərə Geri Dön
+        </a>
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2 class="text-dark font-weight-bold" style="font-size: 24px; margin: 0;">@ViewBag.CourseName</h2>
+                <p class="text-muted small mb-0">Bu fənni götürən tələbələrin akademik göstəriciləri</p>
+            </div>
+        </div>
     </div>
 
     @if (TempData["Success"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            @TempData["Success"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div class="alert alert-success alert-dismissible fade show font-weight-bold" role="alert">
+            <i class="mdi mdi-check-circle me-1"></i> @TempData["Success"]
         </div>
     }
     @if (TempData["Error"] != null)
     {
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            @TempData["Error"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div class="alert alert-danger alert-dismissible fade show font-weight-bold" role="alert">
+            <i class="mdi mdi-alert-circle me-1"></i> @TempData["Error"]
         </div>
     }
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <table class="table table-bordered table-hover align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>Tələbə ID / Məlumat</th>
-                        <th style="width: 15%;">Giriş Balı (Mids)</th>
-                        <th style="width: 15%;">Final Balı</th>
-                        <th>Yekun (Total)</th>
-                        <th>Hərf Qiyməti</th>
-                        <th>Semestr</th>
-                        <th>Əməliyyat</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (!Model.Any())
-                    {
-                        <tr>
-                            <td colspan="7" class="text-center text-muted">Bu fənn üzrə qiymət qeydi tapılmadı.</td>
+    <div class="card shadow-sm border-0" style="border-radius: 12px; overflow: hidden;">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0" style="font-size: 14px;">
+                    <thead class="bg-light" style="border-bottom: 2px solid #e3e6f0;">
+                        <tr class="text-primary font-weight-bold">
+                            <th style="padding: 15px 20px;">Tələbənin Tam Adı</th>
+                            <th style="padding: 15px; text-align: center; width: 120px;">Giriş Balı (Mids)</th>
+                            <th style="padding: 15px; text-align: center; width: 120px;">Final Balı</th>
+                            <th style="padding: 15px; text-align: center; width: 100px;">Yekun Bal</th>
+                            <th style="padding: 15px; text-align: center; width: 100px;">Hərf</th>
+                            <th style="padding: 15px; text-align: center; width: 200px;">Əməliyyat</th>
                         </tr>
-                    }
-                    else
-                    {
-                        @foreach (var grade in Model)
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var grade in Model)
+                            {
+                                <tr>
+                                    <td style="padding: 15px 20px;" class="font-weight-medium text-dark">
+                                        @grade.Student?.FullName
+                                    </td>
+
+                                    <form asp-action="AssignGrade" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="studentId" value="@grade.StudentId" />
+                                        <input type="hidden" name="courseId" value="@ViewBag.CourseId" />
+
+                                    <td style="padding: 10px; text-align: center;">
+                                        <input type="number" name="mids" class="form-control form-control-sm text-center mx-auto" style="max-width: 80px; font-weight: 600;" min="0" max="50" value="@grade.Mids" required />
+                                    </td>
+
+                                    <td style="padding: 10px; text-align: center;">
+                                        <input type="number" name="final" class="form-control form-control-sm text-center mx-auto" style="max-width: 80px; font-weight: 600;" min="0" max="50" value="@grade.Final" />
+                                    </td>
+
+                                    <td style="padding: 15px; text-align: center;" class="font-weight-bold">
+                                        <span class="text-@(grade.Total >= 51 ? "success" : "danger")">@grade.Total</span>
+                                    </td>
+
+                                    <td style="padding: 15px; text-align: center;">
+                                        <span class="badge bg-@(grade.Total >= 51 ? "success" : "danger") text-white font-weight-bold px-2 py-1">
+                                            @grade.LetterGrade
+                                        </span>
+                                    </td>
+
+                                    <td style="padding: 15px; text-align: center;">
+                                        <button type="submit" class="btn btn-sm btn-success font-weight-bold text-white shadow-sm w-100" style="border-radius: 6px;">
+                                            <i class="mdi mdi-content-save-outline me-1"></i> Yadda Saxla
+                                        </button>
+                                    </td>
+                                    </form>
+                                </tr>
+                            }
+                        }
+                        else
                         {
                             <tr>
-                                <td>Tələbə #@grade.StudentId</td>
-                                <form asp-action="AssignGrade" method="post">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="studentId" value="@grade.StudentId" />
-                                    <input type="hidden" name="courseId" value="@ViewBag.CourseId" />
-
-                                <td>
-                                    <input type="number" name="mids" value="@grade.Mids" class="form-control form-control-sm" min="0" max="100" required />
+                                <td colspan="6" class="text-center py-4 text-muted">
+                                    <i class="mdi mdi-account-off-outline d-block mb-2" style="font-size: 28px;"></i>
+                                    Bu fənnə hələ ki, heç bir tələbə qeydiyyatdan keçməyib.
                                 </td>
-                                <td>
-                                    <input type="number" name="final" value="@grade.Final" class="form-control form-control-sm" min="0" max="100" required />
-                                </td>
-                                <td>
-                                    <span class="badge @(grade.Total >= 51 ? "bg-success" : "bg-danger")">@grade.Total</span>
-                                </td>
-                                <td>
-                                    <strong>@grade.LetterGrade</strong>
-                                </td>
-                                <td>
-                                    <input type="text" name="semester" value="@grade.Semester" class="form-control form-control-sm" style="max-width: 110px;" />
-                                </td>
-                                <td>
-                                    <button type="submit" class="btn btn-sm btn-success w-100">
-                                        <i class="fas fa-save"></i> Yadda saxla
-                                    </button>
-                                </td>
-                                </form>
                             </tr>
                         }
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
