@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Information System</title>
+    <title>@ViewData["Title"] - UniVerse SIS</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="~/css/style.css">
@@ -37,14 +37,17 @@
                 </div>
 
                 <nav class="nav-menu">
-                    <a asp-controller="Home" asp-action="Index" class="nav-item @(currentController == "home" && currentAction == "index" ? "active" : "")">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-item @(currentArea == "" && currentController == "home" && currentAction == "index" ? "active" : "")">
                         <i class="fa-solid fa-chart-pie"></i>
                         <span>Ana Səhifə</span>
                     </a>
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        @if (User.IsInRole("Admin"))
+                        @* ==========================================
+                           🛡 ADMIN MENYUSU
+                           ========================================== *@
+                        if (User.IsInRole("Admin"))
                         {
                             <a asp-area="AdminPanel" asp-controller="Dashboard" asp-action="Index" class="nav-item @(currentArea == "adminpanel" && currentController == "dashboard" ? "active" : "")">
                                 <i class="fa-solid fa-gauge"></i>
@@ -56,36 +59,41 @@
                                 <span>Müəllim İdarəsi</span>
                             </a>
 
-                            <a asp-controller="Home" asp-action="StudentsPage" class="nav-item @(currentController == "home" && currentAction == "studentspage" ? "active" : "")">
+                            <a asp-area="" asp-controller="Home" asp-action="StudentsPage" class="nav-item @(currentController == "home" && currentAction == "studentspage" ? "active" : "")">
                                 <i class="fa-solid fa-user-graduate"></i>
                                 <span>Tələbə İdarəsi</span>
                             </a>
                         }
 
-                        @if (User.IsInRole("Teacher"))
+                        @* ==========================================
+                           👨‍🏫 MÜƏLLİM MENYUSU
+                           ========================================== *@
+                        if (User.IsInRole("Teacher"))
                         {
-                            <a asp-controller="Teacher" asp-action="Index" class="nav-item @(currentController == "teacher" && currentAction == "index" ? "active" : "")">
+                            <a asp-area="" asp-controller="Teacher" asp-action="Index" class="nav-item @(currentController == "teacher" && (currentAction == "index" || currentAction == "studentsreportcard") ? "active" : "")">
                                 <i class="fa-solid fa-chalkboard-user"></i>
-                                <span>Dərslərim</span>
-                            </a>
-
-                            <a asp-controller="Teacher" asp-action="Index" class="nav-item @(currentController == "teacher" && currentAction == "studentsreportcard" ? "active" : "")">
-                                <i class="fa-solid fa-star"></i>
-                                <span>Qiymətləndirmə</span>
+                                <span>Tədris Fənlərim</span>
                             </a>
                         }
 
-                        @if (User.IsInRole("Student"))
+                        @* ==========================================
+                           🎓 TƏLƏBƏ MENYUSU
+                           ========================================== *@
+                        if (User.IsInRole("Student"))
                         {
-                            <a asp-controller="Student" asp-action="Index" class="nav-item @(currentController == "student" && currentAction == "index" ? "active" : "")">
+                            <a asp-area="" asp-controller="Student" asp-action="Index" class="nav-item @(currentController == "student" && currentAction == "index" ? "active" : "")">
                                 <i class="fa-solid fa-book-reader"></i>
                                 <span>Semestr Qiymətlərim</span>
                             </a>
 
-                            @* 🎯 BDU Məntiqi: Fənn seçimi düyməsini yalnız tələbəyə göstəririk və lazımi Action-a bağlayırıq *@
-                            <a asp-controller="Student" asp-action="AvailableCourses" class="nav-item @(currentController == "student" && currentAction == "availablecourses" ? "active" : "")">
+                            <a asp-area="" asp-controller="Student" asp-action="AvailableCourses" class="nav-item @(currentController == "student" && currentAction == "availablecourses" ? "active" : "")">
                                 <i class="fa-solid fa-book"></i>
-                                <span>Fənlər & Dərslər</span>
+                                <span>Fənn Seçimi (Portal)</span>
+                            </a>
+
+                            <a asp-area="" asp-controller="Attendance" asp-action="StudentReport" class="nav-item @(currentController == "attendance" && currentAction == "studentreport" ? "active" : "")">
+                                <i class="fa-solid fa-clipboard-user"></i>
+                                <span>Davamiyyət Hesabatı</span>
                             </a>
                         }
                     }

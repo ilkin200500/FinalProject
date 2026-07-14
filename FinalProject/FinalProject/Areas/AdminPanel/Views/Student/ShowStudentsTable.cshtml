@@ -27,6 +27,9 @@
                             <th>Tələbə</th>
                             <th>Email</th>
                             <th>İxtisas</th>
+
+                            <th>Qrup</th>
+
                             <th class="text-center">Ortalama</th>
                             <th class="text-center" style="width: 15%;">Əməliyyat</th>
                         </tr>
@@ -46,6 +49,18 @@
                                 </td>
                                 <td><i class="fa-regular fa-envelope me-1 text-muted"></i> @item.Email</td>
                                 <td><span class="badge bg-info text-dark opacity-75">@item.Speciality</span></td>
+
+                                <td>
+                                    @if (item.Group != null)
+                                    {
+                                        <span class="badge bg-primary text-white opacity-75">@item.Group.GroupName</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small"><i>Təyin edilməyib</i></span>
+                                    }
+                                </td>
+
                                 <td class="text-center">
                                     <span class="badge @(item.Average >= 51 ? "bg-success" : "bg-danger")">
                                         @item.Average
@@ -82,4 +97,3 @@
         </div>
     </div>
 </div>
-

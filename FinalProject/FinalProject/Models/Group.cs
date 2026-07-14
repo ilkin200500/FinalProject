@@ -1,15 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace FinalProject.Models
 {
-    public class Group:BaseModel
+    public class Group : BaseModel
     {
         [Required(ErrorMessage = "Qrup adı mütləq daxil edilməlidir.")]
         [StringLength(50)]
-        public string GroupName { get; set; } // Məsələn: P324, 611.23 və s.
+        public string GroupName { get; set; }
 
-        // Bu qrupda oxuyan tələbələrin siyahısı (One-to-Many əlaqəsi üçün)
-        // Bir qrupda çoxlu tələbə ola bilər
+        // Bu qrupda oxuyan tələbələrin siyahısı
         public ICollection<Student> Students { get; set; } = new List<Student>();
+
+        // YENİ ƏLAVƏ: Bu qrupun dərs cədvəlinin siyahısı (One-to-Many)
+        public ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
     }
 }

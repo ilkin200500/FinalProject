@@ -1,0 +1,72 @@
+﻿@model IEnumerable<FinalProject.Models.Schedule>
+
+@{
+    ViewData["Title"] = "Dərs Cədvəli Siyahısı";
+}
+
+<div class="container-fluid mt-4">
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Ümumi Dərs Cədvəli</h1>
+        <a asp-action="Create" class="btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-plus fa-sm text-white-50"></i> Yeni Cədvəl Əlavə Et
+        </a>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped" width="100%" cellspacing="0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Qrup</th>
+                            <th>Gün</th>
+                            <th>Saat</th>
+                            <th>Fənn (Kod)</th>
+                            <th>Müəllim</th>
+                            <th>Auditoriya</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><strong>@item.Group?.GroupName</strong></td>
+                                    <td>@item.DayOfWeek.ToString()</td>
+                                    <td>@item.StartTime.ToString(@"hh\:mm") - @item.EndTime.ToString(@"hh\:mm")</td>
+                                    <td>@item.Course.CourseName (@item.Course.CourseCode)</td>
+                                    <td>
+                                        @* 🎯 DÜZƏLİŞ: Müəllim məlumatını birbaşa item.Teacher üzərindən çəkirik *@
+                                        @(item.Teacher != null ? item.Teacher.FullName : "Müəllim təyin olunmayıb")
+                                    </td>
+                                    <td><span class="badge bg-info text-dark">@item.Classroom</span></td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center text-muted">Hələ ki cədvələ heç bir dərs əlavə edilməyib.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

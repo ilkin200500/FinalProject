@@ -88,9 +88,23 @@
                     </li>
 
                     <li class="nav-item">
+                        <a class="nav-link" asp-area="AdminPanel" asp-controller="Group" asp-action="Index">
+                            <i class="mdi mdi-layers menu-icon"></i>
+                            <span class="menu-title">Qruplar</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link" asp-area="AdminPanel" asp-controller="Course" asp-action="Index">
                             <i class="mdi mdi-book-open-page-variant menu-icon"></i>
                             <span class="menu-title">Fənlər</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="AdminPanel" asp-controller="Schedule" asp-action="Index">
+                            <i class="mdi mdi-calendar-clock menu-icon"></i>
+                            <span class="menu-title">Dərs Cədvəli</span>
                         </a>
                     </li>
                 </ul>
@@ -114,6 +128,8 @@
     <script src="~/AdminPanel/js/off-canvas.js"></script>
     <script src="~/AdminPanel/js/hoverable-collapse.js"></script>
     <script src="~/AdminPanel/js/template.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 
 </html>

@@ -36,14 +36,14 @@
                             <th style="padding: 15px;">Fənn Kodu</th>
                             <th style="padding: 15px;">Fənnin Adı</th>
                             <th style="padding: 15px; text-align: center;">Kredit</th>
-                            <th style="padding: 15px;">Təyin Olunmuş Müəllim</th>
+                            @* 🎯 DÜZƏLİŞ: Köhnə 'Təyin Olunmuş Müəllim' sütun başlığı buradan silindi *@
                         </tr>
                     </thead>
                     <tbody>
                         @if (Model == null || !Model.Any())
                         {
                             <tr>
-                                <td colspan="4" class="text-center text-muted py-5">
+                                <td colspan="3" class="text-center text-muted py-5">
                                     <i class="mdi mdi-folder-open-outline d-block mb-2" style="font-size: 32px;"></i>
                                     Sistemdə hələ ki heç bir fənn yaradılmayıb.
                                 </td>
@@ -65,18 +65,7 @@
                                     <td style="padding: 15px; text-align: center;" class="text-muted font-weight-medium">
                                         @course.Credits
                                     </td>
-                                    <td style="padding: 15px;" class="text-secondary font-weight-medium">
-                                        @if (course.Teacher != null)
-                                        {
-                                            <i class="mdi mdi-account-tie text-primary mr-2" style="font-size: 16px;"></i>
-                                            @course.Teacher.FullName
-                                        }
-                                        else
-                                        {
-                                            <i class="mdi mdi-account-remove text-danger mr-2" style="font-size: 16px;"></i>
-                                            <span class="text-danger italic small">Müəllim təyin olunmayıb</span>
-                                        }
-                                    </td>
+                                    @* 🎯 DÜZƏLİŞ: Müəllim yoxlaması və sütun hüceyrəsi (td) buradan tamamilə təmizləndi *@
                                 </tr>
                             }
                         }

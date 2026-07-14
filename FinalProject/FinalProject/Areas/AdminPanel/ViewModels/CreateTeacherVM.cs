@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FinalProject.Areas.AdminPanel.ViewModels
 {
@@ -29,7 +28,6 @@ namespace FinalProject.Areas.AdminPanel.ViewModels
         // Seçilən kafedranın ID-si (Məcburi deyil)
         public int? DepartmentId { get; set; }
 
-        // Formdan birdən çox fənn seçə bilmək üçün ID siyahısı
-        public List<int> CourseIds { get; set; } = new List<int>();
+        // 🎯 DÜZƏLİŞ: 'CourseIds' siyahısı buradan tamamilə silindi!
     }
 }

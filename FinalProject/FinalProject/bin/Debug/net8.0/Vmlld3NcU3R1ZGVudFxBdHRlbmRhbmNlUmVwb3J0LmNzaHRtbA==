@@ -1,0 +1,178 @@
+﻿@model List<FinalProject.Controllers.AttendanceReportViewModel>
+
+
+
+@{
+
+    ViewData["Title"] = "Davamiyyət Hesabatı";
+
+    // Əgər sistem ViewBag oxuyursa, onu da bura məcburi bərabər edirik
+
+    var dövrEdiləcəkSiyahı = Model ?? ViewBag.Report as List<FinalProject.Controllers.AttendanceReportViewModel>;
+
+}
+
+
+
+<div class="container-fluid pt-4 px-4">
+
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-5 pb-3 border-bottom">
+
+        <div>
+
+            <div class="d-flex align-items-center gap-2 mb-1">
+
+                <i class="fa-solid fa-clipboard-user text-primary" style="font-size: 28px;"></i>
+
+                <h2 class="text-dark font-weight-bold m-0" style="font-size: 28px; letter-spacing: -0.5px;">Davamiyyət Hesabatım</h2>
+
+            </div>
+
+            <p class="text-muted small mb-0">Hörmətli <strong>@ViewBag.StudentName</strong>, cari semestr üzrə qayıb (QB) və iştirak statistikanız aşağıdakı kimidir.</p>
+
+        </div>
+
+        <div>
+
+            <span class="badge bg-light text-secondary border px-3 py-2 rounded-pill shadow-sm" style="font-size: 13px;">
+
+                <i class="fa-solid fa-circle-info text-primary me-1"></i> Qayıb Limiti: Maksimum 8 dərs
+
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    @if (dövrEdiləcəkSiyahı == null || !dövrEdiləcəkSiyahı.Any())
+
+    {
+
+        <div class="col-12 text-center py-5">
+
+            <div class="p-5 bg-white shadow-sm rounded-4 border-0" style="max-width: 550px; margin: 0 auto; border-radius: 16px;">
+
+                <div class="mb-4 bg-light d-inline-flex align-items-center justify-content-center rounded-circle" style="width: 90px; height: 90px;">
+
+                    <i class="fa-solid fa-calendar-check text-muted" style="font-size: 40px;"></i>
+
+                </div>
+
+                <h5 class="font-weight-bold text-dark mb-2" style="font-size: 20px;">Davamiyyət qeydi tapılmadı</h5>
+
+                <p class="text-muted small mb-0 px-3">Hələ ki, qeydiyyatdan keçdiyiniz fənlər üzrə müəllimlər tərəfindən heç bir davamiyyət (qayıb) daxil edilməyib.</p>
+
+            </div>
+
+        </div>
+
+    }
+
+    else
+
+    {
+
+        <div class="card shadow-sm border-0" style="border-radius: 16px; overflow: hidden; background: #ffffff;">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light text-secondary" style="font-weight: 600; font-size: 14px; background-color: #f8f9fc;">
+
+                        <tr>
+
+                            <th class="ps-4 py-3">Fənnin Adı</th>
+
+                            <th class="text-center py-3">Keçirilən Ümumi Dərs</th>
+
+                            <th class="text-center py-3">Alınan QB Sayı</th>
+
+                            <th class="text-center py-3" style="width: 280px;">İştirak Faizi</th>
+
+                            <th class="text-center pe-4 py-3">Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody style="font-size: 15px; color: #4e5d78;">
+
+                        @foreach (var item in dövrEdiləcəkSiyahı)
+
+                        {
+
+                            <tr style="transition: background-color 0.2s;">
+
+                                <td class="ps-4 py-3 text-dark font-weight-bold" style="font-size: 16px;">
+
+                                    @item.CourseName
+
+                                </td>
+
+
+
+                                <td class="text-center py-3 font-weight-semibold">
+
+                                    @item.TotalClasses
+
+                                </td>
+
+
+
+                                <td class="text-center py-3 text-danger font-weight-bold" style="background-color: rgba(255,0,0,0.05) !important;">
+
+                                    @item.AbsentCount dənə QB var
+
+                                </td>
+
+
+
+                                <td class="text-center py-3">
+
+                                    <div class="d-flex align-items-center gap-3">
+
+                                        <div class="progress flex-fill" style="height: 8px; border-radius: 10px; background-color: #eaecf4;">
+
+                                            <div class="progress-bar @(item.IsFailed ? "bg-danger" : "bg-success")"
+                                                 role="progressbar"
+                                                 style="width: @item.Percentage%; border-radius: 10px; transition: width 0.5s ease;"></div>
+
+                                        </div>
+
+                                        <span class="small font-weight-bold @(item.IsFailed ? "text-danger" : "text-success")" style="font-size: 14px; min-width: 40px;">
+
+                                            @item.Percentage%
+
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+
+
+                                <td class="text-center pe-4 py-3 font-weight-bold">
+
+                                    @(item.IsFailed ? "KƏSİLDİNİZ" : "KEÇİR")
+
+                                </td>
+
+                            </tr>
+
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    }
+
+</div> 
+

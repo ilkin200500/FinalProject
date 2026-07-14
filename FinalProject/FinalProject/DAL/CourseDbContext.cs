@@ -20,5 +20,7 @@ namespace FinalProject.DAL
         public DbSet<Course> courses { get; set; }
         public DbSet<Grade> grades { get; set; }
         public DbSet<CourseRegistration> courseRegistrations { get; set; }
+        public DbSet<Attendance> attendances { get; set; }
+        public DbSet<Schedule> schedules { get; set; }
     }
 }

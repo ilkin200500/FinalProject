@@ -1,0 +1,89 @@
+﻿@model List<FinalProject.ViewModels.AttendanceReportVM>
+
+@{
+    ViewData["Title"] = "Davamiyyət Hesabatı";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 pb-3 border-bottom">
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <i class="fa-solid fa-clipboard-user text-success" style="font-size: 28px;"></i>
+                <h2 class="text-dark font-weight-bold m-0" style="font-size: 28px; letter-spacing: -0.5px;">Semestr Davamiyyət Hesabatı</h2>
+            </div>
+            <p class="text-muted small mb-0">Cari semestr ərzində daxil olduğunuz fənlər üzrə ümumi qayıb (QB) və kəsilmə limit göstəriciləriniz.</p>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0" style="border-radius: 16px; overflow: hidden; background: #ffffff;">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" style="font-size: 14px;">
+                <thead class="table-light text-secondary" style="font-weight: 600; background-color: #f8f9fc; border-bottom: 2px solid #eaecf4;">
+                    <tr>
+                        <th class="ps-4 py-3">Fənnin Adı</th>
+                        <th class="text-center py-3">Ümumi Dərs Saatı</th>
+                        <th class="text-center py-3">Qayıb Sayı (QB)</th>
+                        <th class="text-center py-3">İştirak Faizi</th>
+                        <th class="text-center pe-4 py-3">Status</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size: 15px; color: #4e5d78;">
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var report in Model)
+                        {
+                            <tr style="transition: background-color 0.2s;">
+                                <td class="ps-4 py-3 text-dark font-weight-bold">
+                                    @report.CourseName
+                                </td>
+                                <td class="text-center py-3 text-secondary font-weight-medium">
+                                    @report.TotalClasses saat
+                                </td>
+                                <td class="text-center py-3 font-weight-bold @(report.AbsentCount > 0 ? "text-danger" : "text-muted")">
+                                    @report.AbsentCount
+                                </td>
+                                <td class="text-center py-3">
+                                    <div class="d-flex align-items-center justify-content-center gap-2">
+                                        <div class="progress" style="width: 100px; height: 8px; border-radius: 10px; background-color: #f0f0f0;">
+                                            <div class="progress-bar @(report.IsFailed ? "bg-danger" : "bg-success")"
+                                                 role="progressbar"
+                                                 style="width: @report.Percentage%; border-radius: 10px;"
+                                                 aria-valuenow="@report.Percentage"
+                                                 aria-valuemin="0"
+                                                 aria-valuemax="100">
+                                            </div>
+                                        </div>
+                                        <span class="font-weight-bold" style="font-size: 13px;">@report.Percentage%</span>
+                                    </div>
+                                </td>
+                                <td class="text-center pe-4 py-3">
+                                    @if (report.IsFailed)
+                                    {
+                                        <span class="badge bg-danger-subtle text-danger border px-3 py-2 rounded-pill font-weight-bold" style="font-size: 12px;">
+                                            <i class="fa-solid fa-circle-xmark me-1"></i> Limit Keçilib (F)
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success-subtle text-success border px-3 py-2 rounded-pill font-weight-bold" style="font-size: 12px;">
+                                            <i class="fa-solid fa-circle-check me-1"></i> Normal
+                                        </span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-5">
+                                <i class="fa-regular fa-folder-open d-block mb-2" style="font-size: 32px; color: #dddfeb;"></i>
+                                Davamiyyət hesabatı tapılmadı və ya fənn seçimi edilməyib.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

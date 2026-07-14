@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace FinalProject.Models
 {
@@ -36,8 +38,8 @@ namespace FinalProject.Models
         public int? DepartmentId { get; set; }
         public Department Department { get; set; }
 
-        // 2. Müəllimin tədris etdiyi fənlərin/dərslərin siyahısı
-        // Bu obyekt vasitəsilə müəllim öz panelində hansı dərsləri keçdiyini görə biləcək
-        public ICollection<Course> Courses { get; set; } = new List<Course>();
+        // 2. 🎯 DÜZƏLİŞ: Fənn asılılığını tamamilə silib, yerinə Schedule (Cədvəl) əlaqəsini qoyuruq.
+        // Bu obyekt vasitəsilə müəllim öz cədvəlində ona təyin olunmuş dərsləri görə biləcək.
+        public ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
     }
 }

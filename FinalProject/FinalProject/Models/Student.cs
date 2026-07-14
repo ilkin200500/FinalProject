@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-using Microsoft.Extensions.Diagnostics.HealthChecks;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FinalProject.Models
 {
@@ -16,16 +15,17 @@ namespace FinalProject.Models
         public string Speciality { get; set; }  // İxtisas
 
         [Required]
-        public int Average { get; set; } // int-dən double-a dəyişdik (kəsr qiymətlər üçün)
+        
+        public int Average { get; set; }
 
         [Required]
         public int MemberId { get; set; }
 
         [Required]
-        public string StudentCode { get; set; } // StudentId-ni StudentCode etdik (Baza xətası verməsin deyə)
+        public string StudentCode { get; set; }
 
         [Required]
-        public DateTime BirthDate { get; set; } // BirtDate-dəki hərf səhvi BirthDate olaraq düzəldildi
+        public DateTime BirthDate { get; set; }
 
         [Required]
         public string PhoneNumber { get; set; }
@@ -34,8 +34,11 @@ namespace FinalProject.Models
         public string Gender { get; set; }
 
         // --- ƏLAQƏLƏR ---
-        [Required]
+        [Required(ErrorMessage = "Zəhmət olmasa qrupu seçin.")]
         public int GroupId { get; set; }
-        public Group Group { get; set; }
+
+        // Validation xətası verməməsi üçün nullable (?) etdik. 
+        // Çünki tələbə yaradılan zaman bu obyekt deyil, yalnız id-si (GroupId) göndərilir.
+        public Group? Group { get; set; }
     }
 }

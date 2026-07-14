@@ -1,0 +1,36 @@
+﻿@model FinalProject.Models.Group
+
+@{
+    ViewData["Title"] = "Yeni Qrup Yarat";
+    // 🎯 Səhifənin düzgün Layout-a bağlanmasını təmin edirik:
+    Layout = "~/Areas/AdminPanel/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid mt-4">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Yeni Akademik Qrup Əlavə Et</h6>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="form-group mb-4">
+                    <label asp-for="GroupName" class="form-label font-weight-bold">Qrup Adı:</label>
+                    <input asp-for="GroupName" class="form-control" placeholder="Məsələn: P324, 611.23 və s." />
+                    <span asp-validation-for="GroupName" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Qrupu Yarat</button>
+                <a asp-action="Index" class="btn btn-secondary">Geri Qayıt</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+}

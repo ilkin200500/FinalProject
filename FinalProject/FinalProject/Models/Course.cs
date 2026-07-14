@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace FinalProject.Models
 {
@@ -17,10 +17,12 @@ namespace FinalProject.Models
         [Range(1, 10, ErrorMessage = "Kredit 1 ilə 10 arasında olmalıdır.")]
         public int Credits { get; set; } // Fənnin kredit sayı (Məs: 4-6)
 
-        // Müəllim ilə əlaqə (One-to-Many)
-        // Hər fənnin bir müəllimi ola bilər (və ya hələ təyin olunmayıb - null)
-        public int? TeacherId { get; set; }
-        public Teacher Teacher { get; set; }
+
+        // --- ƏLAVƏ OLUNAN ƏLAQƏLƏR (RELATIONSHIPS) ---
+
+        // 🎯 DÜZƏLİŞ: Birbaşa müəllim əlaqəsini sildik.
+        // Onun əvəzinə bu fənnin hansı dərslərdə (Schedule) istifadə olunduğunu izləmək üçün cədvəl kolleksiyası əlavə edirik.
+        public ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
 
         // Entity Framework üçün naviqasiya property-si
         // Bu fənn üzrə yazılan bütün qiymətlərin siyahısı

@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FinalProject.Areas.AdminPanel.ViewModels
 {
     public class UpdateTeacherVM
     {
-        // 🎯 Xətanı aradan qaldıran əsas sətir:
+        // Xətanı aradan qaldıran əsas sətir:
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Ad və Soyad mütləqdir.")]
@@ -23,6 +22,6 @@ namespace FinalProject.Areas.AdminPanel.ViewModels
 
         public int? DepartmentId { get; set; }
 
-        public List<int> CourseIds { get; set; }
+        // 🎯 DÜZƏLİŞ: 'CourseIds' siyahısı buradan tamamilə silindi!
     }
 }

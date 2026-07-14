@@ -49,17 +49,7 @@
                     </div>
                 }
 
-                @if (ViewBag.Courses != null)
-                {
-                    <div class="form-group mb-3">
-                        <label asp-for="CourseIds">Tədris Edəcəyi Fənlər</label>
-                        <select asp-for="CourseIds" class="form-control" multiple style="height: 120px;"
-                                asp-items="@(new SelectList(ViewBag.Courses, "Id", "CourseName"))">
-                        </select>
-                        <small class="text-muted">Dəyişiklik etmək və ya çoxlu seçmək üçün Ctrl düyməsini sıxıb saxlayın.</small>
-                        <span class="text-danger" asp-validation-for="CourseIds"></span>
-                    </div>
-                }
+                @* 🎯 DÜZƏLİŞ: Köhnə 'CourseIds' (Redaktə zamanı fənn seçimi) bölməsi buradan tamamilə təmizləndi! *@
 
                 <div class="mt-4">
                     <button type="submit" class="btn btn-success me-2">Yenilə</button>

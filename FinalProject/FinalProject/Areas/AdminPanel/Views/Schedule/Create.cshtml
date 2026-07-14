@@ -1,0 +1,91 @@
+﻿@using FinalProject.ViewModels
+@model CreateScheduleVM
+
+@{
+    ViewData["Title"] = "Yeni Cədvəl Əlavə Et";
+}
+
+<div class="container-fluid mt-4">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Dərs Cədvəlinə Yeni Plan Əlavə Et</h6>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label font-weight-bold">Fənni Seçin:</label>
+                    <select asp-for="CourseId" class="form-control" asp-items="ViewBag.Courses">
+                        <option value="">-- Fənn Seçin --</option>
+                    </select>
+                    <span asp-validation-for="CourseId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="GroupId" class="form-label font-weight-bold">Qrupu Seçin:</label>
+                    <select asp-for="GroupId" class="form-control" asp-items="ViewBag.Groups">
+                        <option value="">-- Qrup Seçin --</option>
+                    </select>
+                    <span asp-validation-for="GroupId" class="text-danger"></span>
+                </div>
+
+                @* 🎯 YENİ ƏLAVƏ EDİLDİ: Müəllim Seçim Qutusu *@
+                <div class="form-group mb-3">
+                    <label asp-for="TeacherId" class="form-label font-weight-bold">Dərsi Keçəcək Müəllim:</label>
+                    <select asp-for="TeacherId" class="form-control" asp-items="ViewBag.Teachers">
+                        <option value="">-- Müəllim Seçin --</option>
+                    </select>
+                    <span asp-validation-for="TeacherId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="DayOfWeek" class="form-label font-weight-bold">Həftənin Günü:</label>
+                    <select asp-for="DayOfWeek" class="form-control">
+                        <option value="1">Bazar Ertəsi</option>
+                        <option value="2">Çərşənbə Axşamı</option>
+                        <option value="3">Çərşənbə</option>
+                        <option value="4">Cümə Axşamı</option>
+                        <option value="5">Cümə</option>
+                        <option value="6">Şənbə</option>
+                    </select>
+                    <span asp-validation-for="DayOfWeek" class="text-danger"></span>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="StartTime" class="form-label font-weight-bold">Başlama Saatı:</label>
+                            <input asp-for="StartTime" type="time" class="form-control" />
+                            <span asp-validation-for="StartTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="EndTime" class="form-label font-weight-bold">Bitmə Saatı:</label>
+                            <input asp-for="EndTime" type="time" class="form-control" />
+                            <span asp-validation-for="EndTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label asp-for="Classroom" class="form-label font-weight-bold">Auditoriya / Otaq:</label>
+                    <input asp-for="Classroom" class="form-control" placeholder="Məsələn: 302, Lab-4" />
+                    <span asp-validation-for="Classroom" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Cədvələ Əlavə Et</button>
+                <a asp-action="Index" class="btn btn-secondary">Geri Qayıt</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

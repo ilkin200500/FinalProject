@@ -16,7 +16,7 @@
         <div class="stat-card" style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.03); border-left: 5px solid #4e73df; display: flex; justify-content: space-between; align-items: center;">
             <div>
                 <span style="color: #858796; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Götürülən Fənlər</span>
-                <h3 style="font-size: 26px; margin: 5px 0 0 0; color: #5a5c69; font-weight: 600;">@Model.Count()</h3>
+                <h3 style="font-size: 26px; margin: 5px 0 0 0; color: #5a5c69; font-weight: 600;">@(Model != null ? Model.Count() : 0)</h3>
             </div>
             <i class="fa-solid fa-book-bookmark" style="font-size: 28px; color: #dddfeb;"></i>
         </div>
@@ -25,7 +25,7 @@
             <div>
                 <span style="color: #858796; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Semestr Orta Balı</span>
                 <h3 style="font-size: 26px; margin: 5px 0 0 0; color: #1cc88a; font-weight: 600;">
-                    @(Model.Any() ? string.Format("{0:0.00}", Model.Average(g => g.Total)) : "0.00")
+                    @(Model != null && Model.Any() ? string.Format("{0:0.00}", Model.Average(g => g.Total)) : "0.00")
                 </h3>
             </div>
             <i class="fa-solid fa-chart-line" style="font-size: 28px; color: #dddfeb;"></i>
@@ -34,7 +34,9 @@
         <div class="stat-card" style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.03); border-left: 5px solid #e74a3b; display: flex; justify-content: space-between; align-items: center;">
             <div>
                 <span style="color: #858796; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Kəsir Sayı</span>
-                <h3 style="font-size: 26px; margin: 5px 0 0 0; color: #e74a3b; font-weight: 600;">@Model.Count(g => g.Total < 51)</h3>
+                <h3 style="font-size: 26px; margin: 5px 0 0 0; color: #e74a3b; font-weight: 600;">
+                    @(Model != null ? Model.Count(g => g.Total < 51) : 0)
+                </h3>
             </div>
             <i class="fa-solid fa-triangle-exclamation" style="font-size: 28px; color: #dddfeb;"></i>
         </div>
@@ -46,7 +48,7 @@
                 <i class="fa-solid fa-graduation-cap" style="color: #4e73df; margin-right: 8px;"></i> Akademik Qiymət Jurnalı
             </h3>
             <span style="background: #eaecf4; color: #4e73df; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">
-                @(Model.FirstOrDefault()?.Semester ?? "Cari Semestr")
+                @(Model != null && Model.Any() ? (Model.FirstOrDefault()?.Semester ?? "Cari Semestr") : "Cari Semestr")
             </span>
         </div>
 
@@ -69,9 +71,9 @@
                         foreach (var grade in Model)
                         {
                             <tr style="border-bottom: 1px solid #e3e6f0; transition: background 0.2s;" onmouseover="this.style.backgroundColor='#f8f9fc'" onmouseout="this.style.backgroundColor='transparent'">
-                                <td style="padding: 15px; font-weight: 600; color: #4e73df;">@grade.Course?.CourseCode</td>
-                                <td style="padding: 15px; color: #5a5c69; font-weight: 500;">@grade.Course?.CourseName</td>
-                                <td style="padding: 15px; text-align: center; color: #858796;">@grade.Course?.Credits</td>
+                                <td style="padding: 15px; font-weight: 600; color: #4e73df;">@(grade.Course?.CourseCode ?? "N/A")</td>
+                                <td style="padding: 15px; color: #5a5c69; font-weight: 500;">@(grade.Course?.CourseName ?? "Təyin olunmayıb")</td>
+                                <td style="padding: 15px; text-align: center; color: #858796;">@(grade.Course?.Credits.ToString() ?? "-")</td>
                                 <td style="padding: 15px; text-align: center; font-weight: 600; color: #5a5c69;">@grade.Mids / 50</td>
                                 <td style="padding: 15px; text-align: center; font-weight: 600; color: #5a5c69;">@grade.Final / 50</td>
                                 <td style="padding: 15px; text-align: center; font-weight: 700; font-size: 15px; color: @(grade.Total >= 51 ? "#1cc88a" : "#e74a3b")">
@@ -81,7 +83,7 @@
                                     <span style="padding: 6px 14px; border-radius: 30px; font-weight: 700; font-size: 12px; display: inline-block; min-width: 35px; text-align: center;
                                                           background-color: @(grade.Total >= 51 ? "rgba(28, 200, 138, 0.15)" : "rgba(231, 74, 59, 0.15)");
                                                           color: @(grade.Total >= 51 ? "#1cc88a" : "#e74a3b");">
-                                        @grade.LetterGrade
+                                        @(string.IsNullOrEmpty(grade.LetterGrade) ? "F" : grade.LetterGrade)
                                     </span>
                                 </td>
                             </tr>

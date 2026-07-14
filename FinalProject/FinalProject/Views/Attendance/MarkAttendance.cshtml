@@ -1,0 +1,112 @@
+﻿@model FinalProject.ViewModels.RollCallVM
+
+@{
+    ViewData["Title"] = "Davamiyyət Qeydiyyatı";
+}
+
+<div class="container-fluid mt-4 px-4">
+    <div class="card shadow-sm border-0 mb-4" style="border-radius: 16px;">
+        <div class="card-body p-4">
+            <div class="d-flex align-items-center gap-3 mb-3">
+                <i class="fa-solid fa-calendar-days text-success" style="font-size: 32px;"></i>
+                <div>
+                    <h2 class="text-dark font-weight-bold m-0" style="letter-spacing: -0.5px;">Davamiyyət Qeydiyyatı</h2>
+                    <p class="text-muted small mb-0">Tələbələrin dərsdə iştirakını qeyd edin və tarixi təsdiqləyin.</p>
+                </div>
+            </div>
+
+            <form asp-action="MarkAttendance" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="CourseId" />
+
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <label asp-for="Date" class="form-label font-weight-bold text-secondary">Dərs Tarixi:</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="fa-regular fa-calendar text-muted"></i></span>
+                            <input type="date" asp-for="Date" class="form-control border-start-0" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm" style="border-radius: 12px; overflow: hidden;">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light text-secondary" style="font-weight: 600; background-color: #f8f9fc;">
+                                <tr>
+                                    <th class="ps-4 py-3" style="font-size: 14px;">Tələbənin Adı və Soyadı</th>
+                                    <th class="text-center py-3" style="width: 180px; font-size: 14px;">
+                                        <div class="form-check d-inline-block">
+                                            <input type="checkbox" id="selectAll" class="form-check-input" checked style="transform: scale(1.2); cursor: pointer;" />
+                                            <label class="form-check-label font-weight-bold text-dark ms-1" for="selectAll" style="cursor: pointer;">Hamısı İştirak Edir</label>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.Students.Count; i++)
+                                {
+                                    <tr style="transition: background-color 0.2s;">
+                                        <td class="ps-4 py-3 text-dark font-weight-semibold">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="avatar-placeholder rounded-circle bg-success-subtle text-success d-flex align-items-center justify-content-center font-weight-bold" style="width: 35px; height: 35px; font-size: 13px;">
+                                                    @Model.Students[i].StudentName.Substring(0, Math.Min(2, Model.Students[i].StudentName.Length)).ToUpper()
+                                                </div>
+                                                <span>@Model.Students[i].StudentName</span>
+                                            </div>
+
+                                            <input type="hidden" asp-for="@Model.Students[i].StudentId" />
+                                            <input type="hidden" asp-for="@Model.Students[i].StudentName" />
+                                        </td>
+                                        <td class="text-center py-3">
+                                            <div class="form-check d-inline-block">
+                                                <input type="checkbox" asp-for="@Model.Students[i].IsPresent" class="form-check-input student-checkbox" style="transform: scale(1.4); cursor: pointer;" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 mt-4">
+                    <button type="submit" class="btn btn-success px-4 py-2 font-weight-bold shadow-sm rounded-pill">
+                        <i class="fa-solid fa-floppy-disk me-1"></i> Davamiyyəti Yadda Saxla
+                    </button>
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-light border px-4 py-2 font-weight-semibold text-secondary rounded-pill">
+                        Ləğv Et
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('selectAll').addEventListener('change', function() {
+            var checkboxes = document.querySelectorAll('.student-checkbox');
+            for (var checkbox of checkboxes) {
+                checkbox.checked = this.checked;
+            }
+        });
+
+        // Əgər tələbələrdən birinin checkbox-ı əllə söndürülsə, başdakı "Hamısını Seç" də avtomatik söndürülsün
+        var studentCheckboxes = document.querySelectorAll('.student-checkbox');
+        for (var checkbox of studentCheckboxes) {
+            checkbox.addEventListener('change', function() {
+                var selectAll = document.getElementById('selectAll');
+                if (!this.checked) {
+                    selectAll.checked = false;
+                } else {
+                    var allChecked = true;
+                    for (var cb of studentCheckboxes) {
+                        if (!cb.checked) allChecked = false;
+                    }
+                    selectAll.checked = allChecked;
+                }
+            });
+        }
+    </script>
+}

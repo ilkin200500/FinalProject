@@ -36,7 +36,7 @@
                             <tr>
                                 <th class="text-center" style="width: 5%;">#</th>
                                 <th>Müəllim / Kafedra</th>
-                                <th>İxtisas & Keçdiyi Dərslər</th>
+                                <th>İxtisas</th>
                                 <th class="text-center">Maaş</th>
                                 <th class="text-center" style="width: 15%;">Əməliyyat</th>
                             </tr>
@@ -61,22 +61,8 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <span class="badge bg-dark text-white opacity-75 mb-1">@item.Speciality</span>
-                                        <div class="d-block">
-                                            @if (item.Courses != null && item.Courses.Any())
-                                            {
-                                                @foreach (var course in item.Courses)
-                                                {
-                                                    <span class="badge bg-info text-white me-1 small" style="font-size: 11px;">
-                                                        <i class="fa-solid fa-book me-1"></i> @course.CourseName
-                                                    </span>
-                                                }
-                                            }
-                                            else
-                                            {
-                                                <small class="text-danger font-italic">Hələ dərs təyin edilməyib</small>
-                                            }
-                                        </div>
+                                        @* 🎯 DÜZƏLİŞ: Köhnə 'Courses' dövrü və dərslər siyahısı tamamilə təmizləndi. Artıq yalnız ixtisas göstərilir *@
+                                        <span class="badge bg-dark text-white opacity-75">@item.Speciality</span>
                                     </td>
                                     <td class="text-center font-weight-bold text-success">
                                         @item.Salary AZN
