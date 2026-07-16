@@ -1,5 +1,5 @@
-﻿@using FinalProject.Models
-@model List<Student>
+﻿@using FinalProject.ViewModels
+@model StudentListVM
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
@@ -10,6 +10,7 @@
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card shadow-sm border-0">
         <div class="card-body p-4">
+
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h4 class="card-title mb-0" style="font-weight: 600; color: #343a40;">
                     <i class="fa-solid fa-graduation-cap me-2 text-primary"></i> Tələbələrin Siyahısı
@@ -17,6 +18,34 @@
                 <a asp-controller="Student" asp-action="Create" class="btn btn-primary btn-md shadow-sm">
                     <i class="fa-solid fa-plus me-1"></i> Tələbə əlavə et
                 </a>
+            </div>
+
+            <div class="mb-4 p-3 bg-light rounded border">
+                <form method="get" asp-action="ShowStudentsTable" asp-controller="Student" asp-area="AdminPanel">
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0">
+                                    <i class="fa-solid fa-magnifying-glass text-muted"></i>
+                                </span>
+                                <input type="text" name="search" class="form-control border-start-0"
+                                       placeholder="Tələbənin adını yazın..."
+                                       value="@Model.SearchText" />
+                            </div>
+                        </div>
+                        <div class="col-md-auto">
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="fa-solid fa-filter me-1"></i> Axtar
+                            </button>
+                            @if (!string.IsNullOrEmpty(Model.SearchText))
+                            {
+                                <a asp-action="ShowStudentsTable" asp-controller="Student" asp-area="AdminPanel" class="btn btn-secondary px-3 ms-1">
+                                    <i class="fa-solid fa-rotate-left me-1"></i> Təmizlə
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </form>
             </div>
 
             <div class="table-responsive">
@@ -27,15 +56,13 @@
                             <th>Tələbə</th>
                             <th>Email</th>
                             <th>İxtisas</th>
-
                             <th>Qrup</th>
-
                             <th class="text-center">Ortalama</th>
                             <th class="text-center" style="width: 15%;">Əməliyyat</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.Students)
                         {
                             <tr>
                                 <td class="text-center font-weight-bold text-muted">@Count</td>
@@ -86,11 +113,11 @@
                 </table>
             </div>
 
-            @if (!Model.Any())
+            @if (!Model.Students.Any())
             {
                 <div class="text-center py-5 text-muted">
-                    <i class="fa-regular fa-folder-open fa-3x mb-3"></i>
-                    <p>Sistemdə heç bir tələbə tapılmadı.</p>
+                    <i class="fa-regular fa-folder-open fa-3x mb-3 text-secondary"></i>
+                    <p class="mb-0" style="font-size: 1.1rem;">Axtarışınıza uyğun heç bir tələbə tapılmadı.</p>
                 </div>
             }
 

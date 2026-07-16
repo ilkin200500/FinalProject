@@ -42,14 +42,14 @@
     {
         <div class="card shadow-sm border-0" style="border-radius: 16px; overflow: hidden; background: #ffffff;">
             <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
+                <table class="table table-hover align-middle mb-0" style="table-layout: fixed; width: 100%;">
                     <thead class="table-light text-secondary" style="font-weight: 600; font-size: 14px; background-color: #f8f9fc; border-bottom: 2px solid #eaecf4;">
                         <tr>
                             <th class="ps-4 py-3" style="width: 180px;">Həftənin Günü</th>
-                            <th class="py-3">Fənnin Adı</th>
-                            <th class="py-3">Müəllim</th>
-                            <th class="text-center py-3" style="width: 110px;">Otaq / Sinif</th>
-                            <th class="text-center pe-4 py-3" style="width: 200px;">Dərs Saatı</th>
+                            <th class="py-3" style="width: 25%;">Fənnin Adı</th>
+                            <th class="py-3" style="width: 20%;">Müəllim</th>
+                            <th class="text-center py-3" style="width: 130px;">Otaq / Sinif</th>
+                            <th class="text-center pe-4 py-3" style="width: 180px;">Dərs Saatı</th>
                         </tr>
                     </thead>
                     <tbody style="font-size: 15px; color: #4e5d78;">
@@ -70,25 +70,31 @@
                                                 <i class="fa-regular fa-clock me-1 text-secondary"></i> @dayItem.DayName
                                             </td>
                                         }
+
                                         <td class="py-3 text-dark font-weight-bold" style="font-size: 15px;">
                                             @(lesson.Course?.CourseName ?? "Bilinməyən Fənn")
-                                            <span class="badge bg-light text-secondary border ms-2 small" style="font-size: 11px;">
+                                            <span class="d-inline-block text-secondary border ms-2 px-2 py-0.5 small"
+                                                  style="font-size: 11px; background-color: #f8f9fc; border-radius: 4px; border-color: #dee2e6 !important;">
                                                 @(lesson.Course?.CourseCode)
                                             </span>
                                         </td>
+
                                         <td class="py-3 text-secondary">
                                             <i class="fa-solid fa-chalkboard-user me-1 text-muted"></i>
-                                            @* 🎯 Müəllim məlumatı birbaşa Schedule (lesson) modelindən çəkilir *@
                                             @(lesson.Teacher != null ? lesson.Teacher.FullName : "Təyin olunmayıb")
                                         </td>
-                                        <td class="text-center py-3 font-weight-semibold">
-                                            <span class="badge bg-secondary-subtle text-secondary border px-2 py-1 rounded">
+
+                                        <td class="text-center py-3">
+                                            <span class="d-inline-block text-secondary border px-3 py-1 font-weight-bold"
+                                                  style="background-color: #f8f9fc; border-radius: 8px; font-size: 13px; min-width: 80px; text-align: center; border-color: #dee2e6 !important;">
                                                 @(string.IsNullOrEmpty(lesson.Classroom) ? "Onlayn" : lesson.Classroom)
                                             </span>
                                         </td>
+
                                         <td class="text-center pe-4 py-3">
-                                            <span class="badge bg-primary text-white font-weight-bold px-3 py-2 shadow-sm" style="font-size: 13px; border-radius: 6px;">
-                                                @lesson.StartTime.ToString("HH:mm") - @lesson.EndTime.ToString("HH:mm")
+                                            <span class="d-inline-block text-white px-3 py-1.5 font-weight-bold"
+                                                  style="background-color: #0d6efd; border-radius: 8px; font-size: 13px; min-width: 110px; text-align: center; box-shadow: 0 2px 4px rgba(13, 110, 253, 0.15);">
+                                                @lesson.StartTime.ToString(@"hh\:mm") - @lesson.EndTime.ToString(@"hh\:mm")
                                             </span>
                                         </td>
                                     </tr>

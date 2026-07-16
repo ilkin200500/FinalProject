@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using FinalProject.DAL;
 using FinalProject.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -23,9 +24,9 @@ namespace FinalProject.Controllers
             _userManager = userManager;
         }
 
-        // ==========================================
-        // 1. MÜƏLLİMİN ÖZ FƏNLƏRİNİN SİYAHISI
-        // ==========================================
+        // =======================================================
+        // 1. MÜƏLLİMİN ÖZ FƏNLƏRİNİN SİYAHISI (Index.cshtml-i açır)
+        // =======================================================
         public async Task<IActionResult> Index()
         {
             var currentMember = await _userManager.GetUserAsync(User);
@@ -44,9 +45,9 @@ namespace FinalProject.Controllers
             return View(myCourses);
         }
 
-        // ==========================================
-        // 2. SEÇİLMİŞ FƏNN ÜZRƏ TƏLƏBƏLƏRİN SİYAHISI (DÜZƏLDİLDİ 🎯)
-        // ==========================================
+        // =======================================================
+        // 2. SEÇİLMİŞ FƏNN ÜZRƏ TƏLƏBƏLƏRİN SİYAHISI (Qiymət Səhifəsi)
+        // =======================================================
         public async Task<IActionResult> StudentsReportCard(int courseId)
         {
             var course = await _context.courses.FirstOrDefaultAsync(c => c.Id == courseId);
@@ -55,13 +56,17 @@ namespace FinalProject.Controllers
             ViewBag.CourseId = courseId;
             ViewBag.CourseName = course.CourseName;
 
-            // Səhvə səbəb olan .ThenInclude(s => s.Member) hissəsi tamamilə silindi.
-            // Çünki tələbənin FullName sahəsi elə Student modelinin özündədir.
             var registeredStudents = await _context.courseRegistrations
                 .Include(cr => cr.Student)
                 .Where(cr => cr.CourseId == courseId && cr.Student != null)
                 .Select(cr => cr.Student)
                 .ToListAsync();
+
+            if (registeredStudents == null || !registeredStudents.Any())
+            {
+                TempData["Error"] = "Diqqət: Bu fənnə qeydiyyatdan keçmiş tələbə tapılmadı.";
+                return RedirectToAction("Index");
+            }
 
             var currentGrades = await _context.grades
                 .Where(g => g.CourseId == courseId)
@@ -85,32 +90,35 @@ namespace FinalProject.Controllers
         }
 
         // ==========================================
-        // 3. QİYMƏT DAXİL ETMƏK VƏ YA YENİLƏMƏK
+        // 3. QİYMƏT DAXİL ETMƏK VƏ YA YENİLƏMƏK (AJAX POST)
         // ==========================================
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AssignGrade(int studentId, int courseId, int mids, int? final, string semester = "2026 Yaz")
         {
             var currentMember = await _userManager.GetUserAsync(User);
-            if (currentMember == null) return Unauthorized();
+            if (currentMember == null) return Json(new { success = false, message = "Sessiya müddəti bitib, yenidən daxil olun!" });
 
             var teacher = await _context.teachers.FirstOrDefaultAsync(t => t.MemberId == currentMember.Id);
-            if (teacher == null)
-            {
-                TempData["Error"] = "Sistemdə müəllim profiliniz tapılmadı!";
-                return RedirectToAction(nameof(StudentsReportCard), new { courseId = courseId });
-            }
+            if (teacher == null) return Json(new { success = false, message = "Sistemdə müəllim profiliniz tapılmadı!" });
 
             if (mids < 0 || mids > 50 || (final.HasValue && (final.Value < 0 || final.Value > 50)))
             {
-                TempData["Error"] = "Giriş balı və Final balı 0 ilə 50 arasında olmalıdır!";
-                return RedirectToAction(nameof(StudentsReportCard), new { courseId = courseId });
+                return Json(new { success = false, message = "Giriş balı və Final balı 0 ilə 50 arasında olmalıdır!" });
             }
+
+            var course = await _context.courses.FirstOrDefaultAsync(c => c.Id == courseId);
+            string courseName = course?.CourseName ?? "Fənn";
 
             var existingGrade = await _context.grades
                 .FirstOrDefaultAsync(g => g.StudentId == studentId && g.CourseId == courseId);
 
-            if (existingGrade != null)
+            int total = mids + (final ?? 0);
+            string letterGrade = CalculateLetterGrade(total);
+
+            bool isNewGrade = existingGrade == null;
+
+            if (!isNewGrade)
             {
                 existingGrade.Mids = mids;
                 existingGrade.Final = final;
@@ -118,7 +126,6 @@ namespace FinalProject.Controllers
                 existingGrade.TeacherId = teacher.Id;
 
                 _context.Update(existingGrade);
-                TempData["Success"] = "Ballar uğurla yeniləndi.";
             }
             else
             {
@@ -134,11 +141,51 @@ namespace FinalProject.Controllers
                 };
 
                 await _context.AddAsync(newGrade);
-                TempData["Success"] = "İlk qiymət uğurla daxil edildi.";
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(StudentsReportCard), new { courseId = courseId });
+
+            // 🔔 Bildiriş göndərmə məntiqi
+            try
+            {
+                string notifTitle = isNewGrade ? "Yeni Qiymət Daxil Edildi" : "Qiymətiniz Yeniləndi";
+                string finalScoreText = final.HasValue ? final.Value.ToString() : "Daxil edilməyib";
+                string notifMessage = isNewGrade
+                    ? $"\"{courseName}\" fənnindən qiymətiniz daxil edildi. Giriş: {mids}, Final: {finalScoreText}. Ümumi: {total} ({letterGrade})."
+                    : $"\"{courseName}\" fənnindən qiymətiniz yeniləndi. Yeni Giriş: {mids}, Final: {finalScoreText}. Ümumi: {total} ({letterGrade}).";
+
+                var notification = new Notification
+                {
+                    StudentId = studentId,
+                    TeacherId = teacher.Id,
+                    Title = notifTitle,
+                    Message = notifMessage,
+                    IsRead = false,
+                    CreatedAt = DateTime.Now
+                };
+
+                await _context.notifications.AddAsync(notification);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception) { /* Log xətası */ }
+
+            return Json(new
+            {
+                success = true,
+                message = "Ballar uğurla yadda saxlanıldı.",
+                total = total,
+                letterGrade = letterGrade
+            });
+        }
+
+        private string CalculateLetterGrade(int score)
+        {
+            if (score >= 91) return "A";
+            if (score >= 81) return "B";
+            if (score >= 71) return "C";
+            if (score >= 61) return "D";
+            if (score >= 51) return "E";
+            return "F";
         }
     }
 }

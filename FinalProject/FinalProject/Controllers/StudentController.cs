@@ -24,7 +24,7 @@ namespace FinalProject.Controllers
         }
 
         // ==========================================
-        // 1. TƏLƏBƏNİN SEMESTR QİYMƏTLƏRİ
+        // 1. TƏLƏBƏNİN SEMESTR QİYMƏTLƏRİ (INDEX)
         // ==========================================
         public async Task<IActionResult> Index()
         {
@@ -44,7 +44,7 @@ namespace FinalProject.Controllers
         }
 
         // ==========================================
-        // 2. TƏLƏBƏ ÜÇÜN SEÇƏ BİLƏCƏYİ FƏNLƏRİN SİYAHISI (TAM DÜZƏLDİLDİ 🎯)
+        // 2. TƏLƏBƏ ÜÇÜN SEÇƏ BİLƏCƏYİ FƏNLƏRİN SİYAHISI
         // ==========================================
         public async Task<IActionResult> AvailableCourses()
         {
@@ -54,27 +54,31 @@ namespace FinalProject.Controllers
             var student = await _context.students.FirstOrDefaultAsync(s => s.MemberId == currentMember.Id);
             if (student == null) return NotFound("Tələbə profili tapılmadı.");
 
-            // 1. Tələbənin artıq qeydiyyatdan keçdiyi fənlərin ID-lərini alırıq
+            // Tələbənin artıq qeydiyyatdan keçdiyi fənlərin ID-lərini alırıq
             var enrolledCourseIds = await _context.courseRegistrations
                 .Where(cr => cr.StudentId == student.Id)
                 .Select(cr => cr.CourseId)
                 .ToListAsync();
 
-            // 2. Tələbənin qrupuna aid olan dərs cədvəllərindən fənləri və müəllimləri birlikdə çəkirik
-            var availableCourses = await _context.schedules
-                .Include(s => s.Course)     // Fənni gətiririk
-                .Include(s => s.Teacher)    // Müəllimi gətiririk
+            // Cari tələbənin qrupuna aid və hələ seçmədiyi fənləri birbaşa gətiririk
+            var availableSchedules = await _context.schedules
+                .Include(s => s.Course)
                 .Where(s => s.GroupId == student.GroupId && !enrolledCourseIds.Contains(s.CourseId))
-                .Select(s => s.Course)      // View-nun List<Course> gözləməsi ehtimalına qarşı Course obyektini seçirik
-                .Distinct()
                 .ToListAsync();
 
+            // Eyni fənnin fərqli günlərdəki cədvəllərinin təkrarlanmasının qarşısını alırıq
+            var uniqueSchedules = availableSchedules
+                .GroupBy(s => s.CourseId)
+                .Select(g => g.First())
+                .ToList();
+
             ViewBag.StudentName = student.FullName;
-            return View(availableCourses);
+
+            return View(uniqueSchedules);
         }
 
         // ==========================================
-        // 3. FƏNNİ GÖTÜR (ENROLL) DÜYMƏSİNİN POST METODU
+        // 3. FƏNNİ GÖTÜR (ENROLL) POST METODU
         // ==========================================
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -95,32 +99,29 @@ namespace FinalProject.Controllers
                 return RedirectToAction(nameof(AvailableCourses));
             }
 
-            // Həmin fənni tədris edən müəllimi tapmaq üçün dərs cədvəlindən (Schedules) məlumatı çəkirik.
             var schedule = await _context.schedules
                 .FirstOrDefaultAsync(s => s.CourseId == courseId && s.GroupId == student.GroupId);
 
             if (schedule == null)
             {
-                TempData["Error"] = "Bu fənn üçün aktiv dərs cədvəli və ya müəllim tapılmadı!";
+                TempData["Error"] = "Bu fənn üçün aktiv dərs cədvəli tapılmadı!";
                 return RedirectToAction(nameof(AvailableCourses));
             }
 
-            // Yeni qeydiyyat obyekti yaradılır
             var registration = new CourseRegistration
             {
                 StudentId = student.Id,
                 CourseId = courseId
             };
 
-            // Qiymətlər cədvəlində boş sətir açırıq
             var grade = new Grade
             {
                 StudentId = student.Id,
                 CourseId = courseId,
-                Mids = 0,               // Giriş balı ilkin olaraq 0 təyin edilir
-                Final = null,           // Final imtahanı hələ olmadığı üçün null qalır
-                TeacherId = schedule.TeacherId, // Dərsi keçən müəllim cədvəldən avtomatik götürülür
-                Semester = "2026 Yaz",  // Cari semestr 
+                Mids = 0,
+                Final = null,
+                TeacherId = schedule.TeacherId, // Qiymətləndirmə üçün arxa planda müəllim ID-si hələ də qeyd olunur
+                Semester = "2026 Yaz",
                 CreatedAt = DateTime.Now
             };
 
@@ -151,6 +152,66 @@ namespace FinalProject.Controllers
 
             ViewBag.StudentName = student.FullName;
             return View(registeredCourses);
+        }
+
+        // ==========================================
+        // 5. TƏLƏBƏNİN HƏFTƏLİK DƏRS CƏDVƏLİ (SCHEDULES)
+        // ==========================================
+        public async Task<IActionResult> Schedules()
+        {
+            var currentMember = await _userManager.GetUserAsync(User);
+            if (currentMember == null) return Unauthorized();
+
+            var student = await _context.students
+                .Include(s => s.Group)
+                .FirstOrDefaultAsync(s => s.MemberId == currentMember.Id);
+
+            if (student == null) return NotFound("Tələbə profili tapılmadı.");
+
+            var schedules = await _context.schedules
+                .Include(s => s.Course)
+                .Include(s => s.Teacher)
+                .Where(s => s.GroupId == student.GroupId)
+                .ToListAsync();
+
+            ViewBag.StudentName = student.FullName;
+            ViewBag.GroupName = student.Group != null ? student.Group.GroupName : "Qrup təyin edilməyib";
+
+            return View(schedules);
+        }
+
+        // =======================================================
+        // 🔔 6. TƏLƏBƏNİN BÜTÜN BİLDİRİŞLƏR SƏHİFƏSİ (YENİ)
+        // =======================================================
+        public async Task<IActionResult> Notifications()
+        {
+            var currentMember = await _userManager.GetUserAsync(User);
+            if (currentMember == null) return Unauthorized();
+
+            var student = await _context.students.FirstOrDefaultAsync(s => s.MemberId == currentMember.Id);
+            if (student == null) return NotFound("Tələbə profili tapılmadı.");
+
+            // Tələbənin bütün bildirişlərini tarixinə görə azalan sıra ilə çəkirik
+            var notificationsList = await _context.notifications
+                .Where(n => n.StudentId == student.Id)
+                .OrderByDescending(n => n.CreatedAt)
+                .ToListAsync();
+
+            // Tələbə bu səhifəyə daxil olanda, oxunmamış olan bütün bildirişləri "Oxundu" edirik
+            var unreadNotifications = notificationsList.Where(n => !n.IsRead).ToList();
+            if (unreadNotifications.Any())
+            {
+                foreach (var item in unreadNotifications)
+                {
+                    item.IsRead = true;
+                }
+
+                // Bazada dəyişiklikləri qeyd edirik (kiçik "notifications" DbSet-i ilə)
+                await _context.SaveChangesAsync();
+            }
+
+            ViewBag.StudentName = student.FullName;
+            return View(notificationsList);
         }
     }
 }

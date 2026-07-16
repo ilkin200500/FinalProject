@@ -46,21 +46,26 @@
                             <tbody>
                                 @for (int i = 0; i < Model.Students.Count; i++)
                                 {
+                                    // Tələbənin adının boş olub-olmamasını təhlükəsiz şəkildə yoxlayırıq
+                                    string studentName = Model.Students[i].StudentName ?? "Tələbə";
+                                    string initials = studentName.Length >= 2 ? studentName.Substring(0, 2) : studentName;
+
                                     <tr style="transition: background-color 0.2s;">
                                         <td class="ps-4 py-3 text-dark font-weight-semibold">
                                             <div class="d-flex align-items-center gap-2">
                                                 <div class="avatar-placeholder rounded-circle bg-success-subtle text-success d-flex align-items-center justify-content-center font-weight-bold" style="width: 35px; height: 35px; font-size: 13px;">
-                                                    @Model.Students[i].StudentName.Substring(0, Math.Min(2, Model.Students[i].StudentName.Length)).ToUpper()
+                                                    @initials.ToUpper()
                                                 </div>
-                                                <span>@Model.Students[i].StudentName</span>
+                                                <span>@studentName</span>
                                             </div>
 
-                                            <input type="hidden" asp-for="@Model.Students[i].StudentId" />
-                                            <input type="hidden" asp-for="@Model.Students[i].StudentName" />
+                                            @* asp-for daxilindəki @ simvolları təmizləndi ki, Model Binding xətası verməsin *@
+                                            <input type="hidden" asp-for="Students[i].StudentId" />
+                                            <input type="hidden" asp-for="Students[i].StudentName" />
                                         </td>
                                         <td class="text-center py-3">
                                             <div class="form-check d-inline-block">
-                                                <input type="checkbox" asp-for="@Model.Students[i].IsPresent" class="form-check-input student-checkbox" style="transform: scale(1.4); cursor: pointer;" />
+                                                <input type="checkbox" asp-for="Students[i].IsPresent" class="form-check-input student-checkbox" style="transform: scale(1.4); cursor: pointer;" />
                                             </div>
                                         </td>
                                     </tr>
@@ -74,7 +79,7 @@
                     <button type="submit" class="btn btn-success px-4 py-2 font-weight-bold shadow-sm rounded-pill">
                         <i class="fa-solid fa-floppy-disk me-1"></i> Davamiyyəti Yadda Saxla
                     </button>
-                    <a asp-controller="Home" asp-action="Index" class="btn btn-light border px-4 py-2 font-weight-semibold text-secondary rounded-pill">
+                    <a asp-controller="Teacher" asp-action="Index" class="btn btn-light border px-4 py-2 font-weight-semibold text-secondary rounded-pill">
                         Ləğv Et
                     </a>
                 </div>

@@ -40,5 +40,7 @@ namespace FinalProject.Models
         // Validation xətası verməməsi üçün nullable (?) etdik. 
         // Çünki tələbə yaradılan zaman bu obyekt deyil, yalnız id-si (GroupId) göndərilir.
         public Group? Group { get; set; }
+        // Tələbənin bildirişlərinin siyahısı (One-to-Many)
+        public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
     }
 }

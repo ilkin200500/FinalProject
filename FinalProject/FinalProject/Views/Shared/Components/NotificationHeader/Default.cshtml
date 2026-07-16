@@ -1,0 +1,58 @@
+﻿@model IEnumerable<FinalProject.Models.Notification>
+
+<li class="nav-item dropdown list-unstyled">
+    <a class="nav-link dropdown-toggle position-relative notification-bell-btn text-secondary" href="#" id="alertsDropdown" role="button"
+       data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fa-solid fa-bell"></i>
+
+        @if (ViewBag.UnreadCount > 0)
+        {
+            <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 9px; top: 5px; padding: 3px 6px;">
+                @ViewBag.UnreadCount
+            </span>
+        }
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-0" aria-labelledby="alertsDropdown" style="width: 320px; border-radius: 12px; overflow: hidden; margin-top: 15px;">
+        <li class="dropdown-header bg-primary text-white py-3 font-weight-bold d-flex justify-content-between align-items-center" style="font-size: 14px;">
+            <span><i class="fa-solid fa-bell mr-2"></i> Son Bildirişlər</span>
+            @if (ViewBag.UnreadCount > 0)
+            {
+                <span class="badge bg-light text-primary font-weight-bold">@ViewBag.UnreadCount yeni</span>
+            }
+        </li>
+
+        <div style="max-height: 280px; overflow-y: auto;">
+            @if (Model == null || !Model.Any())
+            {
+                <div class="text-center py-4 text-muted small">
+                    <i class="fa-regular fa-bell-slash d-block mb-2 text-secondary" style="font-size: 24px;"></i>
+                    Yeni bildirişiniz yoxdur.
+                </div>
+            }
+            else
+            {
+                foreach (var notif in Model)
+                {
+                <li>
+                    <a class="dropdown-item py-2 px-3 border-bottom @(notif.IsRead ? "bg-white" : "bg-light")" href="/Student/Notifications" style="white-space: normal;">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="font-weight-bold text-dark" style="font-size: 13px;">@notif.Title</span>
+                            <span class="text-muted" style="font-size: 10px;">@notif.CreatedAt.ToString("HH:mm")</span>
+                        </div>
+                        <p class="text-secondary m-0 text-truncate-2" style="font-size: 12px; line-height: 1.4;">
+                            @notif.Message
+                        </p>
+                    </a>
+                </li>
+            }
+        }
+        </div>
+
+        <li class="text-center py-2 bg-light border-top">
+            <a href="/Student/Notifications" class="text-primary font-weight-bold text-decoration-none small">
+                Bütün Bildirişlərə Bax <i class="fa-solid fa-arrow-right ml-1"></i>
+            </a>
+        </li>
+    </ul>
+</li>

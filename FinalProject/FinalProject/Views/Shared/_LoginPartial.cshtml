@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using FinalProject.Models
+@inject SignInManager<Member> SignInManager
+@inject UserManager<Member> UserManager
+
+<ul class="navbar-nav align-items-center gap-3 pe-3">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item d-flex align-items-center">
+            <span class="text-dark font-weight-bold" style="font-size: 14px; white-space: nowrap;">
+                <i class="mdi mdi-account-circle text-success mr-1" style="font-size: 16px;"></i>
+                @User.Identity?.Name
+            </span>
+        </li>
+
+        <li class="nav-item">
+            <form class="form-inline m-0" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post">
+                <button type="submit" class="btn btn-sm btn-outline-danger font-weight-bold shadow-sm" style="border-radius: 20px; padding: 5px 18px; white-space: nowrap; font-size: 13px;">
+                    <i class="mdi mdi-logout mr-1"></i> Çıxış
+                </button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark font-weight-bold" asp-area="Identity" asp-page="/Account/Login" style="white-space: nowrap;">
+                <i class="mdi mdi-login mr-1"></i> Giriş
+            </a>
+        </li>
+    }
+</ul>

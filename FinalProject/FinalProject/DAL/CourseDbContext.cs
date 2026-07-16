@@ -22,5 +22,7 @@ namespace FinalProject.DAL
         public DbSet<CourseRegistration> courseRegistrations { get; set; }
         public DbSet<Attendance> attendances { get; set; }
         public DbSet<Schedule> schedules { get; set; }
+
+        public DbSet<Notification> notifications { get; set; }
     }
 }

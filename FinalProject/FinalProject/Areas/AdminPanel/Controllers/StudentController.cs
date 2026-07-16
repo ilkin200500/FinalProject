@@ -1,6 +1,9 @@
-﻿using FinalProject.Areas.AdminPanel.ViewModels;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using FinalProject.Areas.AdminPanel.ViewModels;
 using FinalProject.DAL;
 using FinalProject.Models;
+using FinalProject.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,15 +22,29 @@ namespace FinalProject.Areas.AdminPanel.Controllers
             _userManager = userManager;
         }
 
-        // Giriş səhifəsi - Tələbələrin Siyahısı
-        public IActionResult ShowStudentsTable()
+        // Yenilənmiş Siyahı Metodu - Axtarışla Birlikdə
+        public IActionResult ShowStudentsTable(string search)
         {
-            List<Student> students = _context.students
+            // 1. Silinməmiş tələbələri çəkmək üçün query qururuq
+            var studentQuery = _context.students
                 .Include(s => s.Group)
-                .Where(t => !t.isDeleted)
-                .ToList();
+                .Where(t => !t.isDeleted);
 
-            return View(students);
+            // 2. Əgər axtarış qutusuna nəsə yazılıbsa, FullName-ə görə filtrləyirik
+            if (!string.IsNullOrEmpty(search))
+            {
+                studentQuery = studentQuery.Where(s => s.FullName.Contains(search));
+            }
+
+            // 3. ViewModel-i formalaşdırırıq
+            StudentListVM vm = new StudentListVM
+            {
+                SearchText = search,
+                Students = studentQuery.ToList() // Filtrlənmiş siyahını gətirir
+            };
+
+            // 4. ViewModel-i View-ya göndəririk
+            return View(vm);
         }
 
         // Tələbə yaratmaq üçün GET metodu
@@ -51,14 +68,13 @@ namespace FinalProject.Areas.AdminPanel.Controllers
             // 1. ADDIM: Identity cədvəli üçün Member obyektini qururuq
             Member newIdentityUser = new Member
             {
-                FullName=vm.FullName,
+                FullName = vm.FullName,
                 UserName = vm.Email,
                 Email = vm.Email,
                 NormalizedEmail = vm.Email.ToUpper().Trim(),
                 NormalizedUserName = vm.Email.ToUpper().Trim(),
                 isActivated = true,
                 EmailConfirmed = true,
-               
             };
 
             // Şifrəni Identity metodu ilə bazaya yazırıq
@@ -81,8 +97,6 @@ namespace FinalProject.Areas.AdminPanel.Controllers
                     Gender = vm.Gender,
                     GroupId = vm.GroupId,
                     StudentCode = vm.StudentCode,
-
-                    // 💡 DÜZƏLİŞ: Artıq int.Parse ehtiyac yoxdur, hər iki ID rəqəmdir (int)
                     MemberId = newIdentityUser.Id
                 };
 

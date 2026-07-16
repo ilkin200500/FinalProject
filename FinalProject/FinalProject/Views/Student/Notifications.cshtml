@@ -1,0 +1,41 @@
+﻿@model IEnumerable<FinalProject.Models.Notification>
+
+@{
+    ViewData["Title"] = "Bildirişlərim";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm border-0" style="border-radius: 12px;">
+        <div class="card-header bg-primary text-white py-3" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+            <h4 class="m-0 font-weight-bold"><i class="mdi mdi-bell mr-2"></i> Bildirişlərim</h4>
+        </div>
+        <div class="card-body p-4">
+            @if (Model == null || !Model.Any())
+            {
+                <div class="text-center py-5 text-muted">
+                    <i class="mdi mdi-bell-off-outline fs-1 d-block mb-3"></i>
+                    Sizə göndərilmiş hər hansı bir bildiriş tapılmadı.
+                </div>
+            }
+            else
+            {
+                <div class="list-group list-group-flush">
+                    @foreach (var notif in Model)
+                    {
+                        <div class="list-group-item py-3 border-bottom px-1" style="background: transparent;">
+                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                <h5 class="mb-1 font-weight-bold text-dark">
+                                    <i class="mdi mdi-email-open-outline text-primary mr-2"></i> @notif.Title
+                                </h5>
+                                <small class="text-muted">@notif.CreatedAt.ToString("dd.MM.yyyy HH:mm")</small>
+                            </div>
+                            <p class="mb-1 text-secondary mt-2 pl-4" style="font-size: 14px;">
+                                @notif.Message
+                            </p>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

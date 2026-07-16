@@ -17,14 +17,14 @@
 
     <div class="card shadow-sm border-0" style="border-radius: 16px; overflow: hidden; background: #ffffff;">
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0" style="font-size: 14px;">
+            <table class="table table-hover align-middle mb-0" style="font-size: 14px; table-layout: fixed; width: 100%;">
                 <thead class="table-light text-secondary" style="font-weight: 600; background-color: #f8f9fc; border-bottom: 2px solid #eaecf4;">
                     <tr>
-                        <th class="ps-4 py-3">Fənnin Adı</th>
-                        <th class="text-center py-3">Ümumi Dərs Saatı</th>
-                        <th class="text-center py-3">Qayıb Sayı (QB)</th>
-                        <th class="text-center py-3">İştirak Faizi</th>
-                        <th class="text-center pe-4 py-3">Status</th>
+                        <th class="ps-4 py-3" style="width: 30%; text-align: left;">Fənnin Adı</th>
+                        <th class="text-center py-3" style="width: 20%;">Keçirilən Dərs Saatı</th>
+                        <th class="text-center py-3" style="width: 15%;">Qayıb Sayı (QB)</th>
+                        <th class="text-center py-3" style="width: 15%;">Maksimal QB Limiti</th>
+                        <th class="text-center pe-4 py-3" style="width: 20%;">Status</th>
                     </tr>
                 </thead>
                 <tbody style="font-size: 15px; color: #4e5d78;">
@@ -33,40 +33,61 @@
                         foreach (var report in Model)
                         {
                             <tr style="transition: background-color 0.2s;">
-                                <td class="ps-4 py-3 text-dark font-weight-bold">
+                                <td class="ps-4 py-3 text-dark font-weight-bold" style="text-align: left;">
                                     @report.CourseName
                                 </td>
+
                                 <td class="text-center py-3 text-secondary font-weight-medium">
                                     @report.TotalClasses saat
                                 </td>
-                                <td class="text-center py-3 font-weight-bold @(report.AbsentCount > 0 ? "text-danger" : "text-muted")">
-                                    @report.AbsentCount
-                                </td>
+
                                 <td class="text-center py-3">
-                                    <div class="d-flex align-items-center justify-content-center gap-2">
-                                        <div class="progress" style="width: 100px; height: 8px; border-radius: 10px; background-color: #f0f0f0;">
-                                            <div class="progress-bar @(report.IsFailed ? "bg-danger" : "bg-success")"
-                                                 role="progressbar"
-                                                 style="width: @report.Percentage%; border-radius: 10px;"
-                                                 aria-valuenow="@report.Percentage"
-                                                 aria-valuemin="0"
-                                                 aria-valuemax="100">
-                                            </div>
-                                        </div>
-                                        <span class="font-weight-bold" style="font-size: 13px;">@report.Percentage%</span>
-                                    </div>
-                                </td>
-                                <td class="text-center pe-4 py-3">
-                                    @if (report.IsFailed)
+                                    @if (report.AbsentCount > 0)
                                     {
-                                        <span class="badge bg-danger-subtle text-danger border px-3 py-2 rounded-pill font-weight-bold" style="font-size: 12px;">
-                                            <i class="fa-solid fa-circle-xmark me-1"></i> Limit Keçilib (F)
+                                        <span class="d-inline-block text-white px-3 py-1.5 font-weight-bold"
+                                              style="background-color: #dc3545; border-radius: 8px; font-size: 13px; min-width: 65px; text-align: center;">
+                                            @report.AbsentCount QB
                                         </span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-success-subtle text-success border px-3 py-2 rounded-pill font-weight-bold" style="font-size: 12px;">
-                                            <i class="fa-solid fa-circle-check me-1"></i> Normal
+                                        <span class="d-inline-block text-muted border px-3 py-1.5 font-weight-bold"
+                                              style="background-color: #f8f9fc; border-radius: 8px; font-size: 13px; min-width: 65px; text-align: center; border-color: #dee2e6 !important;">
+                                            0 QB
+                                        </span>
+                                    }
+                                </td>
+
+                                <td class="text-center py-3">
+                                    <span class="d-inline-block text-dark border px-3 py-1.5 font-weight-bold"
+                                          style="background-color: #f8f9fc; border-radius: 8px; font-size: 13px; min-width: 65px; text-align: center; border-color: #dee2e6 !important;">
+                                        9 QB
+                                    </span>
+                                </td>
+
+                                <td class="text-center pe-4 py-3">
+                                    @if (report.TotalClasses > 0)
+                                    {
+                                        if (report.IsFailed)
+                                        {
+                                            <span class="text-white px-3 py-2 rounded-pill font-weight-bold d-inline-block text-center"
+                                                  style="background-color: #dc3545 !important; font-size: 12px; min-width: 140px; box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);">
+                                                <i class="fa-solid fa-circle-xmark me-1"></i> Limit Keçilib (F)
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-white px-3 py-2 rounded-pill font-weight-bold d-inline-block text-center"
+                                                  style="background-color: #198754 !important; font-size: 12px; min-width: 140px; box-shadow: 0 2px 4px rgba(25, 135, 84, 0.2);">
+                                                <i class="fa-solid fa-circle-check me-1"></i> Normal
+                                            </span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted px-3 py-2 rounded-pill font-weight-bold bg-light d-inline-block text-center"
+                                              style="font-size: 12px; min-width: 140px;">
+                                            Dərs qeydi yoxdur
                                         </span>
                                     }
                                 </td>
@@ -78,7 +99,7 @@
                         <tr>
                             <td colspan="5" class="text-center text-muted py-5">
                                 <i class="fa-regular fa-folder-open d-block mb-2" style="font-size: 32px; color: #dddfeb;"></i>
-                                Davamiyyət hesabatı tapılmadı və ya fənn seçimi edilməyib.
+                                Davamiyyət hesabatı tapılmadı.
                             </td>
                         </tr>
                     }

@@ -24,7 +24,11 @@ namespace FinalProject.Areas.AdminPanel.Controllers
         // ==========================================
         public async Task<IActionResult> Index()
         {
-            var groupsList = await _context.Groups.ToListAsync();
+            // Sənin modelində "Students" böyük hərflə olduğu üçün bura g.Students yazdıq 🎯
+            var groupsList = await _context.Groups
+                .Include(g => g.Students)
+                .ToListAsync();
+
             return View(groupsList);
         }
 
@@ -62,7 +66,7 @@ namespace FinalProject.Areas.AdminPanel.Controllers
         }
 
         // ==========================================
-        // 4. QRUPU SİLMƏK (POST) - YENİ ƏLAVƏ EDİLDİ 🎯
+        // 4. QRUPU SİLMƏK (POST)
         // ==========================================
         [HttpPost]
         [ValidateAntiForgeryToken]

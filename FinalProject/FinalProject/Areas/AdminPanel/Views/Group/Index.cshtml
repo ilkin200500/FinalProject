@@ -36,6 +36,7 @@
                         <tr>
                             <th style="width: 100px;">ID</th>
                             <th>Qrup Adı</th>
+                            <th style="width: 250px;">Qrupdakı Tələbələr</th>
                             <th class="text-center" style="width: 150px;">Əməliyyatlar</th>
                         </tr>
                     </thead>
@@ -47,6 +48,25 @@
                                 <tr>
                                     <td>@item.Id</td>
                                     <td><strong>@item.GroupName</strong></td>
+
+                                    <td>
+                                        @if (item.Students != null && item.Students.Any())
+                                        {
+                                            <button type="button" class="btn btn-sm btn-info text-white shadow-sm font-weight-bold"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#groupModal-@item.Id">
+                                                <i class="mdi mdi-account-multiple mr-1"></i>
+                                                Tələbələri Göstər (@item.Students.Count)
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted small italic">
+                                                <i class="mdi mdi-information-outline text-warning mr-1"></i> Bu qrupda hələ tələbə yoxdur
+                                            </span>
+                                        }
+                                    </td>
+
                                     <td class="text-center">
                                         <form asp-area="AdminPanel" asp-controller="Group" asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Bu qrupu silmək istədiyinizdən əminsiniz?');" style="display:inline-block;">
                                             @Html.AntiForgeryToken()
@@ -56,12 +76,44 @@
                                         </form>
                                     </td>
                                 </tr>
+
+                                <div class="modal fade" id="groupModal-@item.Id" tabindex="-1" aria-labelledby="modalLabel-@item.Id" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content shadow border-0" style="border-radius: 12px;">
+                                            <div class="modal-header bg-primary text-white" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                                                <h5 class="modal-title font-weight-bold" id="modalLabel-@item.Id">
+                                                    <i class="mdi mdi-account-group mr-2"></i> @item.GroupName Qrupunun Tələbələri
+                                                </h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Bağla"></button>
+                                            </div>
+                                            <div class="modal-body p-4" style="max-height: 400px; overflow-y: auto;">
+                                                <ul class="list-group list-group-flush">
+                                                    @foreach (var student in item.Students)
+                                                    {
+                                                        <li class="list-group-item d-flex align-items-center py-2 px-0 border-bottom">
+                                                            <div class="bg-light text-primary rounded-circle d-flex align-items-center justify-content-center mr-3" style="width: 35px; height: 35px; text-align: center;">
+                                                                <i class="mdi mdi-account fs-5"></i>
+                                                            </div>
+                                                            <div>
+                                                                <span class="font-weight-bold text-dark d-block">@student.FullName</span>
+                                                                <small class="text-muted">E-poçt / İstifadəçi ID: #@student.Id</small>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                            <div class="modal-footer" style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;">
+                                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Bağla</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             }
                         }
                         else
                         {
                             <tr>
-                                <td colspan="3" class="text-center text-muted py-4">Sistemdə hələ heç bir qrup yaradılmayıb.</td>
+                                <td colspan="4" class="text-center text-muted py-4">Sistemdə hələ heç bir qrup yaradılmayıb.</td>
                             </tr>
                         }
                     </tbody>

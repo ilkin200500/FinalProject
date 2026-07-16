@@ -1,6 +1,7 @@
 ﻿using FinalProject.Areas.AdminPanel.ViewModels;
 using FinalProject.DAL;
 using FinalProject.Models;
+using FinalProject.ViewModels; // VM modelinin tapılması üçün əlavə olundu 🎯
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,24 +28,39 @@ namespace FinalProject.Areas.AdminPanel.Controllers
             return View();
         }
 
-        // 1. Siyahıda yalnız kafedranı göstəririk (Courses birbaşa əlaqəsi silindi 🎯)
-        public IActionResult ShowTeachersTable()
+        // 1. DÜZƏLDİLMİŞ SİYAHI METODU (Axtarış və VM Dəstəyi ilə) 🔍
+        public IActionResult ShowTeachersTable(string search)
         {
-            List<Teacher> teachers = _context.teachers
+            // Silinməmiş müəllimləri çəkmək üçün query qururuq
+            var teacherQuery = _context.teachers
                 .Include(t => t.Department)
-                .Where(t => !t.isDeleted)
-                .ToList();
-            return View(teachers);
+                .Where(t => !t.isDeleted);
+
+            // Əgər axtarış parametri gəlibsə, FullName-ə görə süzgəcdən keçiririk
+            if (!string.IsNullOrEmpty(search))
+            {
+                teacherQuery = teacherQuery.Where(t => t.FullName.Contains(search));
+            }
+
+            // Sizin yeni yazdığınız View üçün modeli bura ötürürük 🎯
+            TeacherListVM vm = new TeacherListVM
+            {
+                SearchText = search,
+                Teachers = teacherQuery.ToList()
+            };
+
+            // ViewModel-i View-ya göndəririk (Artıq "The model item passed into..." xətası gəlməyəcək!)
+            return View(vm);
         }
 
-        // 2. Create GET - Seçim qutusu üçün yalnız kafedraları doldururuq (Fənlər siyahısı ləğv edildi)
+        // 2. Create GET
         public IActionResult Create()
         {
             ViewBag.Departments = _context.departments.Where(d => !d.isDeleted).ToList();
             return View();
         }
 
-        // 3. Create POST - Müəllimi və Rolunu qeyd edirik
+        // 3. Create POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateTeacherVM vm)
@@ -109,7 +125,7 @@ namespace FinalProject.Areas.AdminPanel.Controllers
             return RedirectToAction("ShowTeachersTable", "Teacher");
         }
 
-        // 4. Update GET - Mövcud məlumatları gətiririk
+        // 4. Update GET
         public IActionResult Update(int? id)
         {
             if (id == null) return BadRequest();
@@ -134,7 +150,7 @@ namespace FinalProject.Areas.AdminPanel.Controllers
             return View(vm);
         }
 
-        // 5. Update POST - Dəyişiklikləri bazada yeniləyirik
+        // 5. Update POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(UpdateTeacherVM vm, int? id)

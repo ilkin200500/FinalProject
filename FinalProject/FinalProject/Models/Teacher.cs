@@ -41,5 +41,8 @@ namespace FinalProject.Models
         // 2. 🎯 DÜZƏLİŞ: Fənn asılılığını tamamilə silib, yerinə Schedule (Cədvəl) əlaqəsini qoyuruq.
         // Bu obyekt vasitəsilə müəllim öz cədvəlində ona təyin olunmuş dərsləri görə biləcək.
         public ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
+
+        // Müəllimin göndərdiyi bildirişlərin siyahısı (One-to-Many)
+        public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
     }
 }
