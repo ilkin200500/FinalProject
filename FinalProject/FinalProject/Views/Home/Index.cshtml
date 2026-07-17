@@ -1,108 +1,231 @@
 ﻿@using FinalProject.Models
 @model List<Member>
 
-        <main class="main-content">
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
 
-            <header class="topbar">
-                <div class="topbar-left">
-                    <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
-                    <h2 class="welcome-text">Xoş gəldiniz, Admin!</h2>
-                </div>
-                <div class="topbar-right">
-                    <button class="notification-btn">
-                        <i class="fa-regular fa-bell"></i>
-                        <span class="badge"></span>
-                    </button>
-                    <span class="date-text">
-                        <i class="fa-regular fa-calendar"></i> 4 İyul, 2026
-                    </span>
-                </div>
-            </header>
+<main class="main-content position-relative" style="z-index: 2; background: transparent; min-height: 100vh; overflow: hidden; margin: 0; padding: 0;">
 
-            <div class="content-body">
+    <div class="dynamic-bg-container">
+        <div class="dynamic-bg-overlay"></div>
+    </div>
 
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div>
-                            <span class="stat-title">Ümumi Tələbə</span>
-                            <h3 class="stat-value">1,240</h3>
-                        </div>
-                        <div class="stat-icon icon-blue">
-                            <i class="fa-solid fa-user-graduate"></i>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div>
-                            <span class="stat-title">Aktiv Müəllim</span>
-                            <h3 class="stat-value">84</h3>
-                        </div>
-                        <div class="stat-icon icon-green">
-                            <i class="fa-solid fa-chalkboard-user"></i>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div>
-                            <span class="stat-title">Mövcud Fənlər</span>
-                            <h3 class="stat-value">42</h3>
-                        </div>
-                        <div class="stat-icon icon-amber">
-                            <i class="fa-solid fa-book"></i>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div>
-                            <span class="stat-title">Ortalama Müvəffəqiyyət</span>
-                            <h3 class="stat-value">84.5%</h3>
-                        </div>
-                        <div class="stat-icon icon-red">
-                            <i class="fa-solid fa-chart-line"></i>
-                        </div>
-                    </div>
-                </div>
+    <header class="topbar-modern">
+        <div class="topbar-left">
+            <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+            <h2 class="welcome-text-modern">Xoş gəldiniz, Admin!</h2>
+        </div>
+        <div class="topbar-right d-flex align-items-center gap-3">
 
-                <div class="table-container">
-                    <div class="table-header">
-                        <div>
-                            <h3 class="table-title">Son Qeydiyyatdan Keçən Tələbələr</h3>
-                            <p class="table-subtitle">Sistemə ən son daxil olan tələbələrin məlumatı</p>
-                        </div>
-                        <button class="view-all-btn">Hamısına bax</button>
-                    </div>
+            <div class="modern-notification-wrapper">
+                @await Component.InvokeAsync("NotificationHeader")
+            </div>
 
-                    <div class="responsive-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Tələbə</th>
-                                    <th>Tedris</th>
-                                    <th>Ortalama</th>
-                                    
-                                   
-                                </tr>
-                            </thead>
-                            <tbody>
-                        @foreach(var item in Model)
-                        {
-                            <tr>
-                                <td class="user-cell">
-                                  
-                                    <div>
-                                        <p class="user-name">@item.FullName</p>
-                                        <p class="user-email">@item.Email</p>
-                                    </div>
-                                </td>
-                                
-                                
-                                <td class="actions-cell">
-                                    <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        }
-                        
-                               
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <span class="date-text-modern">
+                <i class="fa-regular fa-calendar"></i> 4 İyul, 2026
+            </span>
+        </div>
+    </header>
 
+</main>
+
+<style>
+    /* 🛠 Global Kənar Boşluqların Sıfırlanması */
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background-color: #0f172a !important;
+        overflow-x: hidden;
+    }
+
+    /* 🛠 Arxa Fon Konteyneri */
+    .dynamic-bg-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: background-image 1.8s ease-in-out;
+    }
+
+    .dynamic-bg-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.94), rgba(30, 41, 59, 0.90));
+    }
+
+    /* Müasir Üst Panel */
+    .topbar-modern {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 2.5rem; /* Üst boşluğu bir qədər azaltdıq */
+        margin-top: 0 !important; /* Yuxarıda heç bir zolaq qalmaması üçün */
+        color: #fff;
+    }
+
+    .welcome-text-modern {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin: 0;
+        letter-spacing: -0.5px;
+    }
+
+    .date-text-modern {
+        background: rgba(255, 255, 255, 0.08);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        font-size: 0.9rem;
+        color: #f1f5f9;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* 🔔 Bildiriş və Açılan Dropdown */
+    .modern-notification-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
+        .modern-notification-wrapper a,
+        .modern-notification-wrapper button,
+        .notification-btn-modern {
+            background: rgba(255, 255, 255, 0.08) !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 8px !important;
+            backdrop-filter: blur(8px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.12) !important;
+            font-size: 1rem !important;
+            color: #f1f5f9 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            text-decoration: none !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            height: 38px !important;
+        }
+
+            .modern-notification-wrapper a:hover,
+            .modern-notification-wrapper button:hover,
+            .notification-btn-modern:hover {
+                background: rgba(255, 255, 255, 0.18) !important;
+                color: #fff !important;
+                transform: translateY(-1px);
+            }
+
+        /* Bildiriş Paneli Fonu */
+        .modern-notification-wrapper .dropdown-menu {
+            background: rgba(15, 23, 42, 0.98) !important; /* Tünd və aydın görünən fon */
+            backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border-radius: 14px !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6) !important;
+            padding: 0 !important;
+            margin-top: 10px !important;
+            width: 340px !important;
+            overflow: hidden;
+        }
+
+            /* Panel Başlığı */
+            .modern-notification-wrapper .dropdown-menu .dropdown-header,
+            .modern-notification-wrapper .dropdown-menu li:first-child,
+            .modern-notification-wrapper .dropdown-menu li:first-child a {
+                background: rgba(59, 130, 246, 0.2) !important;
+                color: #93c5fd !important; /* Başlıq yazısı açıq mavi */
+                font-weight: 700 !important;
+                font-size: 0.95rem !important;
+                padding: 12px 16px !important;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+            }
+
+            .modern-notification-wrapper .dropdown-menu li {
+                background: transparent !important;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+            }
+
+                /* Bildirişlərin Mətni (Yazıların tam görünməsi üçün əsas hissə) */
+                .modern-notification-wrapper .dropdown-menu li a,
+                .modern-notification-wrapper .dropdown-menu .dropdown-item {
+                    background: transparent !important;
+                    color: #f1f5f9 !important; /* Yazılar tam ağ-boz rəngdə (parlaq) */
+                    font-size: 0.88rem !important;
+                    line-height: 1.4 !important;
+                    padding: 12px 16px !important;
+                    border: none !important;
+                    border-radius: 0 !important;
+                    backdrop-filter: none !important;
+                    display: block !important;
+                    width: 100% !important;
+                    transition: background 0.2s !important;
+                    text-align: left !important;
+                    white-space: normal !important;
+                }
+
+                    /* Bildiriş mətni daxilində ola biləcək kiçik göy yazıları da ağ rəngə məcbur edirik */
+                    .modern-notification-wrapper .dropdown-menu li a *,
+                    .modern-notification-wrapper .dropdown-menu .dropdown-item * {
+                        color: #f1f5f9 !important;
+                    }
+
+                    .modern-notification-wrapper .dropdown-menu .dropdown-item:hover,
+                    .modern-notification-wrapper .dropdown-menu li a:hover {
+                        background: rgba(255, 255, 255, 0.08) !important;
+                        color: #ffffff !important;
+                    }
+
+                /* Aşağıdakı "Hamısına Bax" düyməsinin dizaynı */
+                .modern-notification-wrapper .dropdown-menu li:last-child,
+                .modern-notification-wrapper .dropdown-menu li:last-child a {
+                    background: rgba(255, 255, 255, 0.02) !important;
+                    color: #60a5fa !important;
+                    text-align: center !important;
+                    font-weight: 600 !important;
+                    border-bottom: none !important;
+                    padding: 12px 16px !important;
+                }
+
+                    .modern-notification-wrapper .dropdown-menu li:last-child a:hover {
+                        color: #93c5fd !important;
+                        background: rgba(59, 130, 246, 0.1) !important;
+                    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const images = [
+            "/images/studentphoto2.jpg",
+            "/images/Studenphoto3.jpg",
+            "/images/studentphoto6.jpg",
+            "/images/StudentPhoto5.jpg"
+        ];
+
+        let currentIndex = 0;
+        const bgContainer = document.querySelector('.dynamic-bg-container');
+
+        if (bgContainer && images.length > 0) {
+            bgContainer.style.backgroundImage = `url('${images[currentIndex]}')`;
+
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % images.length;
+                bgContainer.style.backgroundImage = `url('${images[currentIndex]}')`;
+            }, 5000);
+        }
+    });
+</script>

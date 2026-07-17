@@ -61,7 +61,7 @@ namespace FinalProject.Controllers
                 }
                 else if (roles.Contains("Teacher"))
                 {
-                    return RedirectToAction("Index", "Teacher");
+                    return RedirectToAction("Index", "Home");
                 }
                 else if (roles.Contains("Student"))
                 {
