@@ -9,6 +9,10 @@ namespace FinalProject.Models
         [StringLength(50)]
         public string GroupName { get; set; }
 
+        // 🎯 int? (Nullable) edirik ki, köhnə qruplar üçün xəta verməsin
+        public int? SpecialityId { get; set; }
+        public Speciality Speciality { get; set; }
+
         // Bu qrupda oxuyan tələbələrin siyahısı
         public ICollection<Student> Students { get; set; } = new List<Student>();
 

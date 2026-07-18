@@ -15,7 +15,7 @@
                 <h4 class="card-title mb-0" style="font-weight: 600; color: #343a40;">
                     <i class="fa-solid fa-graduation-cap me-2 text-primary"></i> Tələbələrin Siyahısı
                 </h4>
-                <a asp-controller="Student" asp-action="Create" class="btn btn-primary btn-md shadow-sm">
+                <a asp-controller="Student" asp-action="Create" asp-area="AdminPanel" class="btn btn-primary btn-md shadow-sm">
                     <i class="fa-solid fa-plus me-1"></i> Tələbə əlavə et
                 </a>
             </div>
@@ -75,7 +75,7 @@
                                     </div>
                                 </td>
                                 <td><i class="fa-regular fa-envelope me-1 text-muted"></i> @item.Email</td>
-                                <td><span class="badge bg-info text-dark opacity-75">@item.Speciality</span></td>
+                                <td><span class="badge bg-info text-dark opacity-75">@item.Speciality?.Name</span></td>
 
                                 <td>
                                     @if (item.Group != null)
@@ -95,11 +95,11 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group" role="group">
-                                        <a asp-controller="Student" asp-action="Update" asp-route-id="@item.Id"
+                                        <a asp-controller="Student" asp-area="AdminPanel" asp-action="Update" asp-route-id="@item.Id"
                                            class="btn btn-sm btn-outline-warning me-1 rounded" title="Redaktə et">
                                             <i class="fa-solid fa-pen"></i>
                                         </a>
-                                        <a asp-controller="Student" asp-action="Delete" asp-route-id="@item.Id"
+                                        <a asp-controller="Student" asp-area="AdminPanel" asp-action="Delete" asp-route-id="@item.Id"
                                            class="btn btn-sm btn-outline-danger rounded" title="Sil"
                                            onclick="return confirm('Bu tələbəni silmək istədiyinizdən əminsiniz?')">
                                             <i class="fa-solid fa-trash"></i>

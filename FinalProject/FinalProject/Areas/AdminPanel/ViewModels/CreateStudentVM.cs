@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FinalProject.Areas.AdminPanel.ViewModels
 {
@@ -12,8 +13,9 @@ namespace FinalProject.Areas.AdminPanel.ViewModels
         [EmailAddress(ErrorMessage = "Düzgün bir email ünvanı daxil edin.")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "İxtisas mütləqdir.")]
-        public string Speciality { get; set; }
+        // 🎯 DÜZƏLİŞ: Köhnə string Speciality silindi, Dropdown-dan gələcək ID üçün bu sahə əlavə olundu:
+        [Required(ErrorMessage = "Zəhmət olmasa ixtisası seçin.")]
+        public int SpecialityId { get; set; }
 
         [Required(ErrorMessage = "Ortalama bal mütləqdir.")]
         [Range(0, 100, ErrorMessage = "Bal 0-100 arası olmalıdır.")]
@@ -38,6 +40,5 @@ namespace FinalProject.Areas.AdminPanel.ViewModels
 
         [Required(ErrorMessage = "Qrup seçilməlidir.")]
         public int GroupId { get; set; } // Dropdown-dan seçilən qrupun ID-si bura gələcək
-
     }
 }

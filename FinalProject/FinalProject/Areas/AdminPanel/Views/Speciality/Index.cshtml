@@ -1,0 +1,57 @@
+﻿@model List<FinalProject.Models.Speciality>
+
+<div class="col-lg-12 grid-margin stretch-card mt-4">
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="card-title mb-0">İxtisasların Siyahısı</h4>
+                <a asp-area="AdminPanel" asp-controller="Speciality" asp-action="Create" class="btn btn-success btn-fw d-flex align-items-center">
+                    <i class="mdi mdi-plus me-1"></i> Yeni İxtisas Yarat
+                </a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th style="width: 10%">#</th>
+                            <th style="width: 65%">İxtisas Adı</th>
+                            <th style="width: 25%" class="text-center">Əməliyyatlar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Count > 0)
+                        {
+                            int count = 1;
+                            foreach (var speciality in Model)
+                            {
+                                <tr>
+                                    <td>@count</td>
+                                    <td class="font-weight-bold">@speciality.Name</td>
+                                    <td class="text-center">
+                                        <a asp-area="AdminPanel" asp-controller="Speciality" asp-action="Update" asp-route-id="@speciality.Id" class="btn btn-warning btn-sm me-2 text-white">
+                                            <i class="mdi mdi-pencil"></i> Redaktə
+                                        </a>
+                                        @* 🎯 DÜZƏLİŞ: Area və Controller təyin edildi, metodun dəqiq işləməsi təmin olundu *@
+                                        <a asp-area="AdminPanel" asp-controller="Speciality" asp-action="Delete" asp-route-id="@speciality.Id" onclick="return confirm('Bu ixtisası silmək istədiyinizdən əminsiniz?')" class="btn btn-danger btn-sm">
+                                            <i class="mdi mdi-trash-can"></i> Sil
+                                        </a>
+                                    </td>
+                                </tr>
+                                count++;
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center text-muted py-4">
+                                    Hələ ki, heç bir ixtisas əlavə edilməyib.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

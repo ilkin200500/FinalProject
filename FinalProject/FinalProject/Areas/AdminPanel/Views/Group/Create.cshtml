@@ -17,10 +17,21 @@
 
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
+                @* 1. QRUP ADI INPUTU *@
                 <div class="form-group mb-4">
                     <label asp-for="GroupName" class="form-label font-weight-bold">Qrup Adı:</label>
                     <input asp-for="GroupName" class="form-control" placeholder="Məsələn: P324, 611.23 və s." />
                     <span asp-validation-for="GroupName" class="text-danger"></span>
+                </div>
+
+                @* 🎯 2. YENİ ƏLAVƏ OLUNDU: İXTİSAS SEÇİMİ (DROPDOWN) *@
+                <div class="form-group mb-4">
+                    <label asp-for="SpecialityId" class="form-label font-weight-bold">İxtisası Seçin:</label>
+                    <select asp-for="SpecialityId" class="form-control text-dark"
+                            asp-items="@(new Microsoft.AspNetCore.Mvc.Rendering.SelectList(ViewBag.Specialities, "Id", "Name"))">
+                        <option value="">-- Bir ixtisas seçin --</option>
+                    </select>
+                    <span asp-validation-for="SpecialityId" class="text-danger"></span>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Qrupu Yarat</button>

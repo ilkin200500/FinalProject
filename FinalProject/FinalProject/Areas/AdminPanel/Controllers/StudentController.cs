@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FinalProject.Areas.AdminPanel.ViewModels;
 using FinalProject.DAL;
@@ -6,6 +8,7 @@ using FinalProject.Models;
 using FinalProject.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinalProject.Areas.AdminPanel.Controllers
@@ -22,35 +25,48 @@ namespace FinalProject.Areas.AdminPanel.Controllers
             _userManager = userManager;
         }
 
-        // Yenilənmiş Siyahı Metodu - Axtarışla Birlikdə
+        // Siyahı Metodu
         public IActionResult ShowStudentsTable(string search)
         {
-            // 1. Silinməmiş tələbələri çəkmək üçün query qururuq
             var studentQuery = _context.students
                 .Include(s => s.Group)
+                .Include(s => s.Speciality)
                 .Where(t => !t.isDeleted);
 
-            // 2. Əgər axtarış qutusuna nəsə yazılıbsa, FullName-ə görə filtrləyirik
             if (!string.IsNullOrEmpty(search))
             {
                 studentQuery = studentQuery.Where(s => s.FullName.Contains(search));
             }
 
-            // 3. ViewModel-i formalaşdırırıq
             StudentListVM vm = new StudentListVM
             {
                 SearchText = search,
-                Students = studentQuery.ToList() // Filtrlənmiş siyahını gətirir
+                Students = studentQuery.ToList()
             };
 
-            // 4. ViewModel-i View-ya göndəririk
             return View(vm);
         }
 
         // Tələbə yaratmaq üçün GET metodu
+        [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Groups = _context.Groups.Where(g => !g.isDeleted).ToList();
+            ViewBag.Groups = _context.Groups
+                .Where(g => !g.isDeleted)
+                .Select(g => new SelectListItem
+                {
+                    Value = g.Id.ToString(),
+                    Text = g.GroupName
+                }).ToList();
+
+            ViewBag.Specialities = _context.specialities
+                .Where(s => !s.isDeleted)
+                .Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Name
+                }).ToList();
+
             return View();
         }
 
@@ -61,11 +77,17 @@ namespace FinalProject.Areas.AdminPanel.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Groups = _context.Groups.Where(g => !g.isDeleted).ToList();
+                ViewBag.Groups = _context.Groups
+                    .Where(g => !g.isDeleted)
+                    .Select(g => new SelectListItem { Value = g.Id.ToString(), Text = g.GroupName }).ToList();
+
+                ViewBag.Specialities = _context.specialities
+                    .Where(s => !s.isDeleted)
+                    .Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Name }).ToList();
+
                 return View(vm);
             }
 
-            // 1. ADDIM: Identity cədvəli üçün Member obyektini qururuq
             Member newIdentityUser = new Member
             {
                 FullName = vm.FullName,
@@ -77,27 +99,24 @@ namespace FinalProject.Areas.AdminPanel.Controllers
                 EmailConfirmed = true,
             };
 
-            // Şifrəni Identity metodu ilə bazaya yazırıq
             var identityResult = await _userManager.CreateAsync(newIdentityUser, "Student123!");
 
             if (identityResult.Succeeded)
             {
-                // Tələbəyə sistemdə "Student" rolunu veririk
                 await _userManager.AddToRoleAsync(newIdentityUser, "Student");
 
-                // 2. ADDIM: Profil məlumatlarını dbo.students cədvəlinə yazırıq
                 Student newStudent = new Student
                 {
                     FullName = vm.FullName,
                     Email = vm.Email,
-                    Speciality = vm.Speciality,
                     Average = vm.Average,
                     BirthDate = vm.BirthDate,
                     PhoneNumber = vm.PhoneNumber,
                     Gender = vm.Gender,
                     GroupId = vm.GroupId,
                     StudentCode = vm.StudentCode,
-                    MemberId = newIdentityUser.Id
+                    MemberId = newIdentityUser.Id,
+                    SpecialityId = vm.SpecialityId
                 };
 
                 _context.students.Add(newStudent);
@@ -106,8 +125,14 @@ namespace FinalProject.Areas.AdminPanel.Controllers
                 return RedirectToAction("ShowStudentsTable", "Student");
             }
 
-            // Əgər Identity tərəfdə nəsə xəta olarsa
-            ViewBag.Groups = _context.Groups.Where(g => !g.isDeleted).ToList();
+            ViewBag.Groups = _context.Groups
+                .Where(g => !g.isDeleted)
+                .Select(g => new SelectListItem { Value = g.Id.ToString(), Text = g.GroupName }).ToList();
+
+            ViewBag.Specialities = _context.specialities
+                .Where(s => !s.isDeleted)
+                .Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Name }).ToList();
+
             foreach (var error in identityResult.Errors)
             {
                 ModelState.AddModelError("", error.Description);
@@ -129,7 +154,8 @@ namespace FinalProject.Areas.AdminPanel.Controllers
             return RedirectToAction("ShowStudentsTable", "Student");
         }
 
-        // Tələbəni redaktə etmək üçün GET metodu
+        // Redaktə etmək üçün GET metodu
+        [HttpGet]
         public IActionResult Update(int? id)
         {
             if (id == null) return BadRequest();
@@ -137,17 +163,27 @@ namespace FinalProject.Areas.AdminPanel.Controllers
             Student existStudent = _context.students.Where(t => !t.isDeleted).FirstOrDefault(c => c.Id == id);
             if (existStudent == null) return NotFound();
 
-            ViewBag.Groups = _context.Groups.Where(g => !g.isDeleted).ToList();
+            ViewBag.Groups = _context.Groups
+                .Where(g => !g.isDeleted)
+                .Select(g => new SelectListItem { Value = g.Id.ToString(), Text = g.GroupName }).ToList();
+
+            ViewBag.Specialities = _context.specialities
+                .Where(s => !s.isDeleted)
+                .Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Name }).ToList();
 
             UpdateStudentVM vm = new UpdateStudentVM
             {
+                Id = existStudent.Id,
                 FullName = existStudent.FullName,
                 Email = existStudent.Email,
-                Speciality = existStudent.Speciality,
                 Average = existStudent.Average,
                 PhoneNumber = existStudent.PhoneNumber,
                 Gender = existStudent.Gender,
-                GroupId = existStudent.GroupId
+                GroupId = existStudent.GroupId,
+                SpecialityId = existStudent.SpecialityId,
+                BirthDate = existStudent.BirthDate,
+                StudentCode = existStudent.StudentCode,
+                MemberId = existStudent.MemberId
             };
             return View(vm);
         }
@@ -161,7 +197,14 @@ namespace FinalProject.Areas.AdminPanel.Controllers
 
             if (!ModelState.IsValid)
             {
-                ViewBag.Groups = _context.Groups.Where(g => !g.isDeleted).ToList();
+                ViewBag.Groups = _context.Groups
+                    .Where(g => !g.isDeleted)
+                    .Select(g => new SelectListItem { Value = g.Id.ToString(), Text = g.GroupName }).ToList();
+
+                ViewBag.Specialities = _context.specialities
+                    .Where(s => !s.isDeleted)
+                    .Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Name }).ToList();
+
                 return View(vm);
             }
 
@@ -169,12 +212,13 @@ namespace FinalProject.Areas.AdminPanel.Controllers
             if (existStudent == null) return NotFound();
 
             existStudent.FullName = vm.FullName;
-            existStudent.Speciality = vm.Speciality;
             existStudent.Email = vm.Email;
             existStudent.Average = vm.Average;
             existStudent.PhoneNumber = vm.PhoneNumber;
             existStudent.Gender = vm.Gender;
             existStudent.GroupId = vm.GroupId;
+            existStudent.SpecialityId = vm.SpecialityId;
+            existStudent.BirthDate = vm.BirthDate;
 
             await _context.SaveChangesAsync();
             return RedirectToAction("ShowStudentsTable", "Student");

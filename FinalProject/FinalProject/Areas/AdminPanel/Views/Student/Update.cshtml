@@ -1,13 +1,17 @@
 ﻿@using FinalProject.Areas.AdminPanel.ViewModels
 @model UpdateStudentVM
+
 <div class="col-md-6 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Tələbə Əlavə Et</h4>
+            <h4 class="card-title">Tələbə Məlumatlarını Yenilə</h4>
 
-            <form class="forms-sample" asp-action="Create" method="post">
+            <form class="forms-sample" asp-action="Update" method="post">
                 @Html.AntiForgeryToken()
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                @* 🎯 DÜZƏLİŞ: Tələbənin ID-si post zamanı itməsin deyə gizli sahə olaraq əlavə edildi *@
+                <input type="hidden" asp-for="Id" />
 
                 <div class="form-group mb-3">
                     <label asp-for="FullName">Ad və Soyad</label>
@@ -22,9 +26,11 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label asp-for="Speciality">İxtisas</label>
-                    <input asp-for="Speciality" class="form-control" placeholder="İxtisası daxil edin" />
-                    <span asp-validation-for="Speciality" class="text-danger"></span>
+                    <label asp-for="SpecialityId">İxtisas</label>
+                    <select asp-for="SpecialityId" class="form-control" asp-items="@ViewBag.Specialities">
+                        <option value="">-- İxtisas Seçin --</option>
+                    </select>
+                    <span asp-validation-for="SpecialityId" class="text-danger"></span>
                 </div>
 
                 <div class="form-group mb-3">
@@ -35,7 +41,9 @@
 
                 <div class="form-group mb-3">
                     <label asp-for="BirthDate">Doğum Tarixi</label>
-                    <input asp-for="BirthDate" type="date" class="form-control" />
+                    @* 🎯 DÜZƏLİŞ: value atributu vasitəsilə tarix yyyy-MM-dd formatına məcburi salındı ki, 0001 problemi tamamilə həll olsun *@
+                    <input asp-for="BirthDate" type="date" class="form-control"
+                           value="@(Model.BirthDate != DateTime.MinValue ? Model.BirthDate.ToString("yyyy-MM-dd") : "")" />
                     <span asp-validation-for="BirthDate" class="text-danger"></span>
                 </div>
 
@@ -51,19 +59,19 @@
 
                 <div class="form-group mb-3">
                     <label asp-for="GroupId">Qrup</label>
-                    <select asp-for="GroupId" class="form-control"
-                            asp-items="@(new SelectList(ViewBag.Groups, "Id", "GroupName"))">
+                    <select asp-for="GroupId" class="form-control" asp-items="@ViewBag.Groups">
                         <option value="">-- Qrup Seçin --</option>
                     </select>
                     <span asp-validation-for="GroupId" class="text-danger"></span>
                 </div>
 
-                <input type="hidden" asp-for="StudentCode" value="ST-2026-001" />
-                <input type="hidden" asp-for="MemberId" value="1" />
-                <input type="hidden" asp-for="Average" value="0" />
+                @* Redaktə zamanı mövcud dəyərlərin sıfırlanmaması üçün gizli sahələr *@
+                <input type="hidden" asp-for="StudentCode" />
+                <input type="hidden" asp-for="MemberId" />
+                <input type="hidden" asp-for="Average" />
 
                 <div class="mt-4">
-                    <button type="submit" class="btn btn-primary me-2">Tələbəni Qeyd Et</button>
+                    <button type="submit" class="btn btn-primary me-2">Dəyişiklikləri Yadda Saxla</button>
                     <a class="btn btn-light" asp-controller="Student" asp-action="ShowStudentsTable">Ləğv Et</a>
                 </div>
             </form>

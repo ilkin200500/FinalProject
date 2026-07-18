@@ -20,12 +20,17 @@ namespace FinalProject.Models
 
         // --- ƏLAVƏ OLUNAN ƏLAQƏLƏR (RELATIONSHIPS) ---
 
+        // ➕ Yeni İxtisas Əlaqəsi (Bu fənn hansı ixtisasa aiddir?)
+        [Required(ErrorMessage = "Zəhmət olmasa bu fənnin aid olduğu ixtisası seçin.")]
+        public int SpecialityId { get; set; }
+        public virtual Speciality? Speciality { get; set; }
+
         // 🎯 DÜZƏLİŞ: Birbaşa müəllim əlaqəsini sildik.
         // Onun əvəzinə bu fənnin hansı dərslərdə (Schedule) istifadə olunduğunu izləmək üçün cədvəl kolleksiyası əlavə edirik.
-        public ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
+        public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
 
         // Entity Framework üçün naviqasiya property-si
         // Bu fənn üzrə yazılan bütün qiymətlərin siyahısı
-        public ICollection<Grade> Grades { get; set; } = new List<Grade>();
+        public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
     }
 }

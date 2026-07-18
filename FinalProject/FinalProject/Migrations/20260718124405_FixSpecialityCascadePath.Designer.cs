@@ -4,6 +4,7 @@ using FinalProject.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProject.Migrations
 {
     [DbContext(typeof(CourseDbContext))]
-    partial class CourseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260718124405_FixSpecialityCascadePath")]
+    partial class FixSpecialityCascadePath
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -200,15 +203,10 @@ namespace FinalProject.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("SpecialityId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("isDeleted")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SpecialityId");
 
                     b.ToTable("Groups");
                 });
@@ -456,32 +454,6 @@ namespace FinalProject.Migrations
                     b.HasIndex("SpecialityId1");
 
                     b.ToTable("students");
-                });
-
-            modelBuilder.Entity("FinalProject.Models.StudentSubject", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("SelectionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("StudentSubjects");
                 });
 
             modelBuilder.Entity("FinalProject.Models.Teacher", b =>
@@ -748,15 +720,6 @@ namespace FinalProject.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("FinalProject.Models.Group", b =>
-                {
-                    b.HasOne("FinalProject.Models.Speciality", "Speciality")
-                        .WithMany()
-                        .HasForeignKey("SpecialityId");
-
-                    b.Navigation("Speciality");
-                });
-
             modelBuilder.Entity("FinalProject.Models.Notification", b =>
                 {
                     b.HasOne("FinalProject.Models.Student", "Student")
@@ -822,25 +785,6 @@ namespace FinalProject.Migrations
                     b.Navigation("Group");
 
                     b.Navigation("Speciality");
-                });
-
-            modelBuilder.Entity("FinalProject.Models.StudentSubject", b =>
-                {
-                    b.HasOne("FinalProject.Models.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FinalProject.Models.Student", "Student")
-                        .WithMany("StudentSubjects")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("FinalProject.Models.Teacher", b =>
@@ -932,8 +876,6 @@ namespace FinalProject.Migrations
             modelBuilder.Entity("FinalProject.Models.Student", b =>
                 {
                     b.Navigation("Notifications");
-
-                    b.Navigation("StudentSubjects");
                 });
 
             modelBuilder.Entity("FinalProject.Models.Teacher", b =>

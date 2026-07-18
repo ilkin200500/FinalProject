@@ -81,7 +81,7 @@ wwwroot\AdminPanel\vendors\mdi\fonts\materialdesignicons-webfont.ttf
 wwwroot\AdminPanel\vendors\mdi\fonts\materialdesignicons-webfont.woff
 wwwroot\AdminPanel\vendors\mdi\fonts\materialdesignicons-webfont.woff2
 wwwroot\css\style.css
-wwwroot\images\studentphoto2.jpg
 wwwroot\images\Studenphoto3.jpg
+wwwroot\images\studentphoto2.jpg
 wwwroot\images\StudentPhoto5.jpg
 wwwroot\images\studentphoto6.jpg

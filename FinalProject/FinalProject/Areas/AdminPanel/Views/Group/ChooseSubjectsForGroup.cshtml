@@ -1,0 +1,79 @@
+﻿@using FinalProject.Models
+@model List<Course>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+@{
+    var group = ViewBag.Group as Group;
+    var alreadySelected = ViewBag.AlreadySelected as List<int> ?? new List<int>();
+}
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="card-title mb-0" style="font-weight: 600; color: #343a40;">
+                    <i class="fa-solid fa-book-bookmark text-primary me-2"></i> Qrup üçün Fənn/Kurs Təyini
+                </h4>
+                <a asp-action="Index" asp-controller="Group" asp-area="AdminPanel" class="btn btn-light border shadow-sm">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Geri Qayıt
+                </a>
+            </div>
+
+            <!-- Qrup haqqında məlumat kartı -->
+            <div class="alert alert-primary p-3 mb-4 border-0 shadow-sm d-flex align-items-center bg-light text-dark">
+                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
+                    <i class="fa-solid fa-users text-white"></i>
+                </div>
+                <div>
+                    <h6 class="mb-1 fw-bold text-primary" style="font-size: 1.1rem;">Qrup: @group?.GroupName</h6>
+                    <p class="mb-0 text-muted small">İxtisas: @group?.Speciality?.Name</p>
+                </div>
+            </div>
+
+            <form method="post" asp-action="ChooseSubjectsForGroup" asp-controller="Group" asp-area="AdminPanel">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="groupId" value="@group?.Id" />
+
+                <h5 class="mb-4 text-secondary" style="font-weight: 500;">
+                    <i class="fa-solid fa-layer-group me-1"></i> Bu İxtisasa Aid Aktiv Fənlər:
+                </h5>
+
+                @if (Model != null && Model.Any())
+                {
+                    <div class="row mb-4">
+                        @foreach (var course in Model)
+                        {
+                            bool isChecked = alreadySelected.Contains(course.Id);
+                            <div class="col-md-4 mb-3">
+                                <div class="card border p-3 bg-white shadow-none style-checkbox rounded">
+                                    <div class="form-check d-flex align-items-center m-0">
+                                        <input type="checkbox" name="selectedCourseIds" value="@course.Id"
+                                               class="form-check-input me-2" id="course_@course.Id" @(isChecked ? "checked" : "") style="width: 19px; height: 19px; cursor:pointer;">
+                                        <!-- 🎯 DÜZƏLİŞ: Xətanın qarşısını almaq üçün CourseName istifadə edildi -->
+                                        <label class="form-check-label fw-bold text-dark m-0 small" for="course_@course.Id" style="cursor:pointer; user-select: none;">
+                                            @course.CourseName
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <button type="submit" class="btn btn-success px-5 py-2 shadow-sm">
+                        <i class="fa-solid fa-floppy-disk me-1"></i> Bütün Qrup üçün Yadda Saxla
+                    </button>
+                }
+                else
+                {
+                    <div class="text-center py-5 bg-light rounded border">
+                        <i class="fa-regular fa-bell-slash fa-2x mb-2 text-muted"></i>
+                        <p class="mb-0 text-muted">Bu qrupun aid olduğu ixtisasa uyğun hər hansı fənn tapılmadı.</p>
+                    </div>
+                }
+            </form>
+
+        </div>
+    </div>
+</div>

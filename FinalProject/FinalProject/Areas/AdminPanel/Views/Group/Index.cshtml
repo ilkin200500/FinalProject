@@ -34,10 +34,11 @@
                 <table class="table table-bordered table-striped align-middle" width="100%" cellspacing="0">
                     <thead class="table-dark">
                         <tr>
-                            <th style="width: 100px;">ID</th>
+                            <th style="width: 80px;">ID</th>
                             <th>Qrup Adı</th>
+                            <th>İxtisas</th>
                             <th style="width: 250px;">Qrupdakı Tələbələr</th>
-                            <th class="text-center" style="width: 150px;">Əməliyyatlar</th>
+                            <th class="text-center" style="width: 220px;">Əməliyyatlar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,6 +49,17 @@
                                 <tr>
                                     <td>@item.Id</td>
                                     <td><strong>@item.GroupName</strong></td>
+
+                                    <td>
+                                        @if (item.Speciality != null)
+                                        {
+                                            <span class="badge bg-secondary text-dark font-weight-bold">@item.Speciality.Name</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted small italic">Məlumatsız</span>
+                                        }
+                                    </td>
 
                                     <td>
                                         @if (item.Students != null && item.Students.Any())
@@ -68,15 +80,24 @@
                                     </td>
 
                                     <td class="text-center">
-                                        <form asp-area="AdminPanel" asp-controller="Group" asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Bu qrupu silmək istədiyinizdən əminsiniz?');" style="display:inline-block;">
-                                            @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-sm btn-danger shadow-sm">
-                                                <i class="mdi mdi-trash-can mr-1"></i> Sil
-                                            </button>
-                                        </form>
+                                        <div class="d-flex justify-content-center align-items-center gap-1">
+                                            <!-- 🎯 YENİ ƏLAVƏ: Toplu Fənn Seçimi Düyməsi -->
+                                            <a asp-controller="Group" asp-area="AdminPanel" asp-action="ChooseSubjectsForGroup" asp-route-id="@item.Id"
+                                               class="btn btn-sm btn-success text-white shadow-sm" title="Qrupa Fənn Təyin Et">
+                                                <i class="mdi mdi-book-open-page-variant mr-1"></i> Fənn Seçimi
+                                            </a>
+
+                                            <form asp-area="AdminPanel" asp-controller="Group" asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Bu qrupu silmək istədiyinizdən əminsiniz?');" style="display:inline-block; margin:0;">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-sm btn-danger shadow-sm">
+                                                    <i class="mdi mdi-trash-can mr-1"></i> Sil
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
 
+                                @* Tələbə siyahısı üçün açılan Modal pəncərəsi *@
                                 <div class="modal fade" id="groupModal-@item.Id" tabindex="-1" aria-labelledby="modalLabel-@item.Id" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content shadow border-0" style="border-radius: 12px;">
@@ -113,7 +134,8 @@
                         else
                         {
                             <tr>
-                                <td colspan="4" class="text-center text-muted py-4">Sistemdə hələ heç bir qrup yaradılmayıb.</td>
+                                @* Sütun sayı yeniləndiyi üçün colspan 5 olaraq saxlanıldı *@
+                                <td colspan="5" class="text-center text-muted py-4">Sistemdə hələ heç bir qrup yaradılmayıb.</td>
                             </tr>
                         }
                     </tbody>

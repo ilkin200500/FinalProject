@@ -40,6 +40,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5QYW5lbFxWaWV3c1xEYXNoYm9hcmRcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/ikoya/OneDrive/Desktop/FinalProject(important)/FinalProject/FinalProject/Areas/AdminPanel/Views/Group/ChooseSubjectsForGroup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5QYW5lbFxWaWV3c1xHcm91cFxDaG9vc2VTdWJqZWN0c0Zvckdyb3VwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/ikoya/OneDrive/Desktop/FinalProject(important)/FinalProject/FinalProject/Areas/AdminPanel/Views/Group/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5QYW5lbFxWaWV3c1xHcm91cFxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -62,6 +66,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/ikoya/OneDrive/Desktop/FinalProject(important)/FinalProject/FinalProject/Areas/AdminPanel/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5QYW5lbFxWaWV3c1xTaGFyZWRcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ikoya/OneDrive/Desktop/FinalProject(important)/FinalProject/FinalProject/Areas/AdminPanel/Views/Speciality/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5QYW5lbFxWaWV3c1xTcGVjaWFsaXR5XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ikoya/OneDrive/Desktop/FinalProject(important)/FinalProject/FinalProject/Areas/AdminPanel/Views/Speciality/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5QYW5lbFxWaWV3c1xTcGVjaWFsaXR5XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ikoya/OneDrive/Desktop/FinalProject(important)/FinalProject/FinalProject/Areas/AdminPanel/Views/Student/Create.cshtml]

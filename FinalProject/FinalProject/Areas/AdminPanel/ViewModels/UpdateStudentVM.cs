@@ -1,10 +1,13 @@
-﻿
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FinalProject.Areas.AdminPanel.ViewModels
 {
     public class UpdateStudentVM
     {
+        // 🎯 TÖVSİYƏ: Redaktə edilən tələbənin ID-si post zamanı itməsin deyə bura əlavə edilməsi yaxşı olar
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Ad və Soyad mütləqdir.")]
         [StringLength(100)]
         public string FullName { get; set; }
@@ -13,8 +16,8 @@ namespace FinalProject.Areas.AdminPanel.ViewModels
         [EmailAddress(ErrorMessage = "Düzgün bir email ünvanı daxil edin.")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "İxtisas mütləqdir.")]
-        public string Speciality { get; set; }
+        [Required(ErrorMessage = "Zəhmət olmasa ixtisası seçin.")]
+        public int SpecialityId { get; set; }
 
         [Required(ErrorMessage = "Ortalama bal mütləqdir.")]
         [Range(0, 100, ErrorMessage = "Bal 0-100 arası olmalıdır.")]
@@ -28,6 +31,8 @@ namespace FinalProject.Areas.AdminPanel.ViewModels
 
         [Required(ErrorMessage = "Doğum tarixi mütləqdir.")]
         [DataType(DataType.Date)]
+        // 🎯 DÜZƏLİŞ: HTML-in (type="date") başa düşəcəyi yyyy-MM-dd formatını məcburi etdik
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime BirthDate { get; set; }
 
         [Required(ErrorMessage = "Telefon nömrəsi mütləqdir.")]
@@ -38,6 +43,6 @@ namespace FinalProject.Areas.AdminPanel.ViewModels
         public string Gender { get; set; }
 
         [Required(ErrorMessage = "Qrup seçilməlidir.")]
-        public int GroupId { get; set; } // Dropdown-dan seçilən qrupun ID-si bura gələcək
+        public int GroupId { get; set; }
     }
 }

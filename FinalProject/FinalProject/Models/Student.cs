@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FinalProject.Models
@@ -12,10 +13,6 @@ namespace FinalProject.Models
         public string Email { get; set; }
 
         [Required]
-        public string Speciality { get; set; }  // İxtisas
-
-        [Required]
-        
         public int Average { get; set; }
 
         [Required]
@@ -34,13 +31,21 @@ namespace FinalProject.Models
         public string Gender { get; set; }
 
         // --- ƏLAQƏLƏR ---
+
+        [Required(ErrorMessage = "Zəhmət olmasa ixtisası seçin.")]
+        public int SpecialityId { get; set; }
+        public virtual Speciality? Speciality { get; set; }
+
         [Required(ErrorMessage = "Zəhmət olmasa qrupu seçin.")]
         public int GroupId { get; set; }
 
-        // Validation xətası verməməsi üçün nullable (?) etdik. 
-        // Çünki tələbə yaradılan zaman bu obyekt deyil, yalnız id-si (GroupId) göndərilir.
-        public Group? Group { get; set; }
+        public virtual Group? Group { get; set; }
+
         // Tələbənin bildirişlərinin siyahısı (One-to-Many)
         public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+
+        // 🎯 YENİ ƏLAVƏ: Tələbənin seçdiyi fənlərin siyahısı (Many-to-Many əlaqə keçidi)
+        // Nullable (?) etdik ki, yeni tələbə qeydiyyatdan keçəndə validasiya problemi yaratmasın
+        public virtual ICollection<StudentSubject>? StudentSubjects { get; set; } = new List<StudentSubject>();
     }
 }
