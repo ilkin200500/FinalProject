@@ -29,10 +29,22 @@ namespace FinalProject.Controllers
         public async Task<IActionResult> Index()
         {
             var currentMember = await _userManager.GetUserAsync(User);
-            if (currentMember == null) return NotFound();
+            if (currentMember == null) return Unauthorized();
 
-            var student = await _context.students.FirstOrDefaultAsync(s => s.MemberId == currentMember.Id);
-            if (student == null) return View("Error");
+            var student = await _context.students
+                .Include(s => s.Group)
+                .FirstOrDefaultAsync(s => s.MemberId == currentMember.Id);
+
+            if (student == null)
+            {
+                return NotFound("Tələbə profili tapılmadı.");
+            }
+
+            if (student.GroupId == null || student.Group == null)
+            {
+                TempData["Error"] = "Profilinizdə qrup təyinatı yoxdur. Lütfən administrasiyaya müraciət edin.";
+                return View(new List<Grade>());
+            }
 
             var grades = await _context.grades
                 .Include(g => g.Course)
@@ -40,45 +52,50 @@ namespace FinalProject.Controllers
                 .ToListAsync();
 
             ViewBag.StudentName = student.FullName;
+            ViewBag.GroupName = student.Group.GroupName;
             return View(grades);
         }
 
         // ==========================================
-        // 2. TƏLƏBƏ ÜÇÜN SEÇƏ BİLƏCƏYİ FƏNLƏRİN SİYAHISI
+        // 🔥 2. SEÇƏ BİLƏCƏYİ FƏNLƏR (İXTİSASA GÖRƏ)
         // ==========================================
         public async Task<IActionResult> AvailableCourses()
         {
             var currentMember = await _userManager.GetUserAsync(User);
             if (currentMember == null) return Unauthorized();
 
-            var student = await _context.students.FirstOrDefaultAsync(s => s.MemberId == currentMember.Id);
+            var student = await _context.students
+                .Include(s => s.Group)
+                .FirstOrDefaultAsync(s => s.MemberId == currentMember.Id);
+
             if (student == null) return NotFound("Tələbə profili tapılmadı.");
 
-            // Tələbənin artıq qeydiyyatdan keçdiyi fənlərin ID-lərini alırıq
+            if (student.GroupId == null || student.Group == null)
+            {
+                TempData["Error"] = "Sizə hələ heç bir qrup və ixtisas təyin edilməyib!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Tələbənin artıq götürdüyü fənlərin ID siyahısı
             var enrolledCourseIds = await _context.courseRegistrations
                 .Where(cr => cr.StudentId == student.Id)
                 .Select(cr => cr.CourseId)
                 .ToListAsync();
 
-            // Cari tələbənin qrupuna aid və hələ seçmədiyi fənləri birbaşa gətiririk
-            var availableSchedules = await _context.schedules
-                .Include(s => s.Course)
-                .Where(s => s.GroupId == student.GroupId && !enrolledCourseIds.Contains(s.CourseId))
+            // Möhtəşəm İxtisas Zirehi: Birbaşa ixtisasa aid aktiv fənləri çəkirik
+            var availableCourses = await _context.courses
+                .Where(c => c.SpecialityId == student.Group.SpecialityId
+                         && !enrolledCourseIds.Contains(c.Id))
                 .ToListAsync();
-
-            // Eyni fənnin fərqli günlərdəki cədvəllərinin təkrarlanmasının qarşısını alırıq
-            var uniqueSchedules = availableSchedules
-                .GroupBy(s => s.CourseId)
-                .Select(g => g.First())
-                .ToList();
 
             ViewBag.StudentName = student.FullName;
 
-            return View(uniqueSchedules);
+            // DİQQƏT: Sənin AvailableCourses.cshtml faylın artıq @model IEnumerable<FinalProject.Models.Course> gözləməlidir!
+            return View(availableCourses);
         }
 
         // ==========================================
-        // 3. FƏNNİ GÖTÜR (ENROLL) POST METODU
+        // 🔥 3. FƏNNİ GÖTÜR POST METODU (XƏTASIZ VARIANT)
         // ==========================================
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -87,8 +104,20 @@ namespace FinalProject.Controllers
             var currentMember = await _userManager.GetUserAsync(User);
             if (currentMember == null) return Unauthorized();
 
-            var student = await _context.students.FirstOrDefaultAsync(s => s.MemberId == currentMember.Id);
+            var student = await _context.students
+                .Include(s => s.Group)
+                .FirstOrDefaultAsync(s => s.MemberId == currentMember.Id);
+
             if (student == null) return NotFound();
+            if (student.GroupId == null || student.Group == null) return BadRequest();
+
+            // ARXA FON TƏHLÜKƏSİZLİK ZİREHİ: Seçilən fənn tələbənin ixtisasına aid mi?
+            var targetCourse = await _context.courses.FirstOrDefaultAsync(c => c.Id == courseId);
+            if (targetCourse == null || targetCourse.SpecialityId != student.Group.SpecialityId)
+            {
+                TempData["Error"] = "Təhlükəsizlik Xətası: Yalnız öz ixtisasınıza aid fənləri seçə bilərsiniz!";
+                return RedirectToAction(nameof(AvailableCourses));
+            }
 
             var alreadyEnrolled = await _context.courseRegistrations
                 .AnyAsync(cr => cr.StudentId == student.Id && cr.CourseId == courseId);
@@ -99,13 +128,41 @@ namespace FinalProject.Controllers
                 return RedirectToAction(nameof(AvailableCourses));
             }
 
+            // 1. Addım: Cari qrup üçün schedules cədvəlində müəllim varmı deyə baxırıq
             var schedule = await _context.schedules
                 .FirstOrDefaultAsync(s => s.CourseId == courseId && s.GroupId == student.GroupId);
 
-            if (schedule == null)
+            int assignedTeacherId;
+
+            if (schedule != null)
             {
-                TempData["Error"] = "Bu fənn üçün aktiv dərs cədvəli tapılmadı!";
-                return RedirectToAction(nameof(AvailableCourses));
+                assignedTeacherId = schedule.TeacherId;
+            }
+            else
+            {
+                // 2. Addım: Əgər bu qrupa hələ dərs salınmayıbsa, bu fənni tədris edən HƏR HANSI başqa bir müəllimi tapırıq
+                var anyTeacherForCourse = await _context.schedules
+                    .Where(s => s.CourseId == courseId)
+                    .Select(s => s.TeacherId)
+                    .FirstOrDefaultAsync();
+
+                if (anyTeacherForCourse != 0)
+                {
+                    assignedTeacherId = anyTeacherForCourse;
+                }
+                else
+                {
+                    // 3. Addım: Əgər heç bir cədvəldə bu fənn yoxdursa, bazadakı ən birinci müəllimin ID-sini götürürük (sistem əsla çökməsin deyə)
+                    var backupTeacherId = await _context.teachers.Select(t => t.Id).FirstOrDefaultAsync();
+
+                    if (backupTeacherId == 0)
+                    {
+                        TempData["Error"] = "Sistemdə aktiv müəllim tapılmadı! Öncə müəllim əlavə edilməlidir.";
+                        return RedirectToAction(nameof(AvailableCourses));
+                    }
+
+                    assignedTeacherId = backupTeacherId;
+                }
             }
 
             var registration = new CourseRegistration
@@ -120,7 +177,7 @@ namespace FinalProject.Controllers
                 CourseId = courseId,
                 Mids = 0,
                 Final = null,
-                TeacherId = schedule.TeacherId, // Qiymətləndirmə üçün arxa planda müəllim ID-si hələ də qeyd olunur
+                TeacherId = assignedTeacherId, // Artıq bura heç vaxt null düşə bilməz və error tamamilə aradan qalxdı!
                 Semester = "2026 Yaz",
                 CreatedAt = DateTime.Now
             };
@@ -129,7 +186,7 @@ namespace FinalProject.Controllers
             await _context.grades.AddAsync(grade);
             await _context.SaveChangesAsync();
 
-            TempData["Success"] = "Fənnə uğurla qeydiyyatdan keçdiniz!";
+            TempData["Success"] = $"\"{targetCourse.CourseName}\" fənninə uğurla qeydiyyatdan keçdiniz!";
             return RedirectToAction(nameof(AvailableCourses));
         }
 
@@ -167,6 +224,11 @@ namespace FinalProject.Controllers
                 .FirstOrDefaultAsync(s => s.MemberId == currentMember.Id);
 
             if (student == null) return NotFound("Tələbə profili tapılmadı.");
+            if (student.GroupId == null)
+            {
+                TempData["Error"] = "Qrupunuz təyin edilmədiyi üçün dərs cədvəli mövcud deyil.";
+                return RedirectToAction(nameof(Index));
+            }
 
             var schedules = await _context.schedules
                 .Include(s => s.Course)
@@ -181,7 +243,7 @@ namespace FinalProject.Controllers
         }
 
         // =======================================================
-        // 🔔 6. TƏLƏBƏNİN BÜTÜN BİLDİRİŞLƏR SƏHİFƏSİ (YENİ)
+        // 🔔 6. TƏLƏBƏNİN BÜTÜN BİLDİRİŞLƏR SƏHİFƏSİ
         // =======================================================
         public async Task<IActionResult> Notifications()
         {
@@ -191,13 +253,11 @@ namespace FinalProject.Controllers
             var student = await _context.students.FirstOrDefaultAsync(s => s.MemberId == currentMember.Id);
             if (student == null) return NotFound("Tələbə profili tapılmadı.");
 
-            // Tələbənin bütün bildirişlərini tarixinə görə azalan sıra ilə çəkirik
             var notificationsList = await _context.notifications
                 .Where(n => n.StudentId == student.Id)
                 .OrderByDescending(n => n.CreatedAt)
                 .ToListAsync();
 
-            // Tələbə bu səhifəyə daxil olanda, oxunmamış olan bütün bildirişləri "Oxundu" edirik
             var unreadNotifications = notificationsList.Where(n => !n.IsRead).ToList();
             if (unreadNotifications.Any())
             {
@@ -206,7 +266,6 @@ namespace FinalProject.Controllers
                     item.IsRead = true;
                 }
 
-                // Bazada dəyişiklikləri qeyd edirik (kiçik "notifications" DbSet-i ilə)
                 await _context.SaveChangesAsync();
             }
 

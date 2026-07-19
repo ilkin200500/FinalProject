@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FinalProject.Areas.AdminPanel.Controllers
 {
     [Area("AdminPanel")]
-    [Authorize(Roles = "Admin")] // Yalnız Admin rolunda olanlar daxil ola bilər
+    [Authorize(Roles = "Admin")]
     public class CourseController : Controller
     {
         private readonly CourseDbContext _context;
@@ -25,8 +25,10 @@ namespace FinalProject.Areas.AdminPanel.Controllers
         // ==========================================
         public async Task<IActionResult> Index()
         {
-            // 🎯 DÜZƏLİŞ: .Include(c => c.Teacher) silindi, fənlər müstəqil siyahılanır
-            var courses = await _context.courses.ToListAsync();
+            var courses = await _context.courses
+                .Include(c => c.Speciality)
+                .Where(c => !c.isDeleted)
+                .ToListAsync();
 
             return View(courses);
         }
@@ -34,9 +36,9 @@ namespace FinalProject.Areas.AdminPanel.Controllers
         // ==========================================
         // 2. YENİ FƏNNİN YARADILMASI (GET)
         // ==========================================
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            // 🎯 DÜZƏLİŞ: Müəllim asılılığı silindiyi üçün müəllim siyahısını yükləməyə ehtiyac qalmadı
+            ViewBag.Specialities = await _context.specialities.Where(s => !s.isDeleted).ToListAsync();
             return View();
         }
 
@@ -47,19 +49,24 @@ namespace FinalProject.Areas.AdminPanel.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateCourseVM vm)
         {
-            // Gələn ViewModel-in doğruluğunu (Validation) yoxlayırıq
+            ModelState.Remove("Speciality");
+
+            if (vm.SpecialityId == 0)
+            {
+                ModelState.AddModelError("SpecialityId", "Zəhmət olmasa, bir ixtisas seçin!");
+            }
+
             if (ModelState.IsValid)
             {
-                // ViewModel-dən gələn təhlükəsiz datanı əsl data modelimizə (Course) köçürürük
                 Course newCourse = new Course
                 {
                     CourseName = vm.CourseName,
                     CourseCode = vm.CourseCode,
-                    Credits = vm.Credits
-                    // 🎯 DÜZƏLİŞ: TeacherId mənimsədilməsi silindi
+                    Credits = vm.Credits,
+                    SpecialityId = vm.SpecialityId,
+                    isDeleted = false
                 };
 
-                // Bazaya əlavə edib yadda saxlayırıq
                 await _context.courses.AddAsync(newCourse);
                 await _context.SaveChangesAsync();
 
@@ -67,6 +74,7 @@ namespace FinalProject.Areas.AdminPanel.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            ViewBag.Specialities = await _context.specialities.Where(s => !s.isDeleted).ToListAsync();
             return View(vm);
         }
     }

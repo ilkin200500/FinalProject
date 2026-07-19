@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FinalProject.Models.Schedule>
+﻿@model IEnumerable<FinalProject.Models.Course>
 
 @{
     ViewData["Title"] = "Fənn Seçimi";
@@ -8,7 +8,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <h2 class="text-dark font-weight-bold" style="font-size: 26px; margin: 0;">
-                <i class="mdi mdi-book-open-page-variant text-success mr-2"></i> Yeni Semestr Fənn Seçimi
+                <i class="mdi mdi-book-open-page-variant text-success me-2"></i> Yeni Semestr Fənn Seçimi
             </h2>
             <p class="text-muted small mb-0">Cari semestr üzrə qeydiyyatdan keçə biləcəyiniz aktiv dərslər</p>
         </div>
@@ -17,14 +17,14 @@
     @if (TempData["Success"] != null)
     {
         <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert" style="border-radius: 8px;">
-            <i class="mdi mdi-check-circle mr-2"></i> <strong>@TempData["Success"]</strong>
+            <i class="mdi mdi-check-circle me-2"></i> <strong>@TempData["Success"]</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
     @if (TempData["Error"] != null)
     {
         <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert" style="border-radius: 8px;">
-            <i class="mdi mdi-alert-circle mr-2"></i> <strong>@TempData["Error"]</strong>
+            <i class="mdi mdi-alert-circle me-2"></i> <strong>@TempData["Error"]</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
@@ -53,30 +53,34 @@
                         }
                         else
                         {
-                            foreach (var schedule in Model)
+                            foreach (var course in Model)
                             {
                                 <tr>
+                                    <!-- Fənn Kodu -->
                                     <td style="padding: 15px; vertical-align: middle;">
                                         <span class="d-inline-block text-success border px-2 py-1 font-weight-bold"
                                               style="background-color: #f8f9fc; border-radius: 6px; font-size: 12px; border-color: #28a745 !important; min-width: 80px; text-align: center;">
-                                            @(string.IsNullOrEmpty(schedule.Course?.CourseCode) ? $"#{schedule.CourseId.ToString("D4")}" : schedule.Course.CourseCode)
+                                            @(string.IsNullOrEmpty(course.CourseCode) ? $"#{course.Id.ToString("D4")}" : course.CourseCode)
                                         </span>
                                     </td>
 
+                                    <!-- Fənnin Adı -->
                                     <td style="padding: 15px; vertical-align: middle;" class="font-weight-bold text-dark">
-                                        @(schedule.Course?.CourseName ?? "Bilinməyən Fənn")
+                                        @course.CourseName
                                     </td>
 
+                                    <!-- Kredit -->
                                     <td style="padding: 15px; text-align: center; vertical-align: middle;" class="text-muted font-weight-medium">
-                                        3 Kredit
+                                        @course.Credits Kredit
                                     </td>
 
+                                    <!-- Fənni Götür Düyməsi -->
                                     <td style="padding: 15px; text-align: center; vertical-align: middle;">
                                         <form asp-action="EnrollCourse" asp-controller="Student" method="post" class="m-0">
                                             @Html.AntiForgeryToken()
-                                            <input type="hidden" name="courseId" value="@schedule.CourseId" />
+                                            <input type="hidden" name="courseId" value="@course.Id" />
                                             <button type="submit" class="btn btn-sm btn-success text-white font-weight-bold shadow-sm" style="border-radius: 6px; white-space: nowrap;">
-                                                <i class="mdi mdi-plus mr-1"></i> Fənni Götür
+                                                <i class="mdi mdi-plus me-1"></i> Fənni Götür
                                             </button>
                                         </form>
                                     </td>

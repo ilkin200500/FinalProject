@@ -10,7 +10,7 @@
             <i class="fa-solid fa-arrow-left me-1"></i> Fənlərə Geri Dön
         </a>
         <h2 class="text-dark font-weight-bold mb-1" style="font-size: 26px;">
-            @(ViewBag.CourseName ?? "Fənnin Qiymət Cədvəli")
+            @(ViewBag.CourseName ?? "Fənnin Qiymət Cədvəli") - <span class="text-primary">@(ViewBag.GroupName)</span>
         </h2>
         <p class="text-muted small mb-0">Bu fənni götürən tələbələrin akademik göstəriciləri</p>
     </div>
@@ -50,11 +50,14 @@
                             foreach (var student in Model)
                             {
                                 <tr style="transition: background-color 0.2s;">
+                                    <!-- HTML standartlarına tam uyğun olaraq Form elementini bütün TD-ləri əhatə edəcək şəkildə saxlayırıq -->
                                     <form asp-action="AssignGrade" asp-controller="Teacher" method="post" class="m-0">
                                         @Html.AntiForgeryToken()
 
+                                        <!-- Gizli Məlumatlar -->
                                         <input type="hidden" name="studentId" value="@student.StudentId" />
                                         <input type="hidden" name="courseId" value="@student.CourseId" />
+                                        <input type="hidden" name="groupId" value="@ViewBag.GroupId" />
                                         <input type="hidden" name="semester" value="@student.Semester" />
 
                                     <td class="ps-4 py-3 text-dark font-weight-bold" style="text-align: left; vertical-align: middle;">
@@ -64,7 +67,7 @@
                                     <td class="text-center py-3" style="vertical-align: middle;">
                                         <input type="number" name="mids" value="@student.Mids"
                                                class="form-control form-control-sm text-center mx-auto"
-                                               style="max-width: 75px; border-radius: 6px; font-weight: 600; border: 1px solid #ced4da;" min="0" max="50" />
+                                               style="max-width: 75px; border-radius: 6px; font-weight: 600; border: 1px solid #ced4da;" min="0" max="50" required />
                                     </td>
 
                                     <td class="text-center py-3" style="vertical-align: middle;">
@@ -108,7 +111,7 @@
                         {
                             <tr>
                                 <td colspan="6" class="text-center text-muted py-5">
-                                    Bu fənn üzrə qeydiyyatdan keçmiş tələbə tapılmadı.
+                                    Bu fənn və qrup üzrə qeydiyyatdan keçmiş tələbə tapılmadı.
                                 </td>
                             </tr>
                         }

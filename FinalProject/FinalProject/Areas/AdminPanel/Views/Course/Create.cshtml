@@ -1,54 +1,47 @@
 ﻿@model FinalProject.ViewModels.CreateCourseVM
 
 @{
-    ViewData["Title"] = "Yeni Fənn Əlavə Et";
+    ViewData["Title"] = "Yeni Fənn Yarat";
 }
 
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8 grid-margin stretch-card">
-            <div class="card shadow-sm border-0" style="border-radius: 15px;">
-                <div class="card-header bg-primary text-white py-3 d-flex align-items-center" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                    <h4 class="mb-0 font-weight-bold">
-                        <i class="mdi mdi-book-plus mr-2"></i> Yeni Fənn / Kurs Yaradılması
-                    </h4>
-                </div>
-                <div class="card-body p-4 bg-white">
-                    <form asp-action="Create" method="post" class="forms-sample">
-                        @Html.AntiForgeryToken()
+<div class="row mt-4">
+    <div class="col-md-6 offset-md-3 grid-margin stretch-card">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h4 class="card-title mb-4" style="font-weight: 600; color: #343a40;">Yeni Fənn Yarat</h4>
 
-                        <div class="form-group mb-3">
-                            <label asp-for="CourseName" class="font-weight-bold text-dark">Fənnin Adı</label>
-                            <input asp-for="CourseName" class="form-control" style="border-radius: 8px;" placeholder="Məs: C# ilə Proqramlaşdırma" required />
-                            <span asp-validation-for="CourseName" class="text-danger small"></span>
-                        </div>
+                <form method="post" asp-action="Create" asp-controller="Course" asp-area="AdminPanel">
+                    @Html.AntiForgeryToken()
 
-                        <div class="row">
-                            <div class="col-md-6 form-group mb-3">
-                                <label asp-for="CourseCode" class="font-weight-bold text-dark">Fənn Kodu</label>
-                                <input asp-for="CourseCode" class="form-control" style="border-radius: 8px;" placeholder="Məs: COMP201" required />
-                                <span asp-validation-for="CourseCode" class="text-danger small"></span>
-                            </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="CourseName" class="form-label fw-bold">Fənnin Adı</label>
+                        <input asp-for="CourseName" class="form-control" placeholder="Məs: Riyaziyyat" />
+                        <span asp-validation-for="CourseName" class="text-danger"></span>
+                    </div>
 
-                            <div class="col-md-6 form-group mb-3">
-                                <label asp-for="Credits" class="font-weight-bold text-dark">Kredit Sayı</label>
-                                <input asp-for="Credits" type="number" class="form-control" style="border-radius: 8px;" min="1" max="10" required />
-                                <span asp-validation-for="Credits" class="text-danger small"></span>
-                            </div>
-                        </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="CourseCode" class="form-label fw-bold">Fənn Kodu</label>
+                        <input asp-for="CourseCode" class="form-control" placeholder="Məs: MATH101" />
+                        <span asp-validation-for="CourseCode" class="text-danger"></span>
+                    </div>
 
-                        @* 🎯 DÜZƏLİŞ: 'TeacherId' (Müəllim seçimi) dropdown bloku bu səhifədən tamamilə təmizləndi! *@
+                    <div class="form-group mb-3">
+                        <label asp-for="Credits" class="form-label fw-bold">Kredit Miqdarı</label>
+                        <input asp-for="Credits" type="number" class="form-control" placeholder="Məs: 6" />
+                        <span asp-validation-for="Credits" class="text-danger"></span>
+                    </div>
 
-                        <div class="d-flex justify-content-between align-items-center mt-4 border-top pt-3">
-                            <a asp-action="Index" class="btn btn-light btn-icon-text font-weight-bold" style="border-radius: 8px;">
-                                <i class="mdi mdi-arrow-left mr-2"></i> Siyahıya Qayıt
-                            </a>
-                            <button type="submit" class="btn btn-primary btn-icon-text font-weight-bold text-white shadow-sm" style="border-radius: 8px;">
-                                <i class="mdi mdi-plus-circle mr-2"></i> Fənni Yarat
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="SpecialityId" class="form-label fw-bold">Aid Olduğu İxtisas</label>
+                        <select asp-for="SpecialityId" class="form-control form-select" asp-items="@(new SelectList(ViewBag.Specialities, "Id", "Name"))">
+                            <option value="0">-- İxtisas Seçin --</option>
+                        </select>
+                        <span asp-validation-for="SpecialityId" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary px-4">Yadda Saxla</button>
+                    <a asp-action="Index" class="btn btn-light border ms-2">Ləğv Et</a>
+                </form>
             </div>
         </div>
     </div>

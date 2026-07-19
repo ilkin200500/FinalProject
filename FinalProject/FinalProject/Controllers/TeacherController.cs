@@ -25,7 +25,7 @@ namespace FinalProject.Controllers
         }
 
         // =======================================================
-        // 1. MÜƏLLİMİN ÖZ FƏNLƏRİNİN SİYAHISI (Index.cshtml-i açır)
+        // 1. MÜƏLLİMİN ÖZ FƏNLƏRİNİN VƏ QRUPLARININ SİYAHISI
         // =======================================================
         public async Task<IActionResult> Index()
         {
@@ -35,36 +35,59 @@ namespace FinalProject.Controllers
             var teacher = await _context.teachers.FirstOrDefaultAsync(t => t.MemberId == currentMember.Id);
             if (teacher == null) return View("Error");
 
-            var myCourses = await _context.schedules
+            // Müəllimin dərs keçdiyi cədvəl qeydlərini (Fənn və Qrup daxil) çəkirik
+            var myClasses = await _context.schedules
                 .Include(s => s.Course)
-                .Where(s => s.TeacherId == teacher.Id && s.Course != null)
-                .Select(s => s.Course)
-                .Distinct()
+                .Include(s => s.Group)
+                .Where(s => s.TeacherId == teacher.Id && s.Course != null && s.Group != null)
                 .ToListAsync();
 
-            return View(myCourses);
+            // Eyni fənn və qrup kombinasiyalarını qruplaşdırıb tək siyahıya salırıq
+            var uniqueClasses = myClasses
+                .GroupBy(s => new { s.CourseId, s.GroupId })
+                .Select(g => g.First())
+                .ToList();
+
+            ViewBag.TeacherName = teacher.FullName;
+            return View(uniqueClasses);
         }
 
         // =======================================================
-        // 2. SEÇİLMİŞ FƏNN ÜZRƏ TƏLƏBƏLƏRİN SİYAHISI (Qiymət Səhifəsi)
+        // 2. SEÇİLMİŞ FƏNN VƏ QRUP ÜZRƏ TƏLƏBƏLƏRİN SİYAHISI (Jurnal)
         // =======================================================
-        public async Task<IActionResult> StudentsReportCard(int courseId)
+        public async Task<IActionResult> StudentsReportCard(int courseId, int groupId)
         {
+            var currentMember = await _userManager.GetUserAsync(User);
+            if (currentMember == null) return Unauthorized();
+
+            var teacher = await _context.teachers.FirstOrDefaultAsync(t => t.MemberId == currentMember.Id);
+            if (teacher == null) return View("Error");
+
+            // Təhlükəsizlik: Müəllim həqiqətən bu qrupa və fənnə dərs keçirmi?
+            bool hasAccess = await _context.schedules
+                .AnyAsync(s => s.TeacherId == teacher.Id && s.CourseId == courseId && s.GroupId == groupId);
+
+            if (!hasAccess) return Forbid();
+
             var course = await _context.courses.FirstOrDefaultAsync(c => c.Id == courseId);
-            if (course == null) return NotFound();
+            var group = await _context.Groups.FirstOrDefaultAsync(g => g.Id == groupId);
+            if (course == null || group == null) return NotFound();
 
             ViewBag.CourseId = courseId;
+            ViewBag.GroupId = groupId;
             ViewBag.CourseName = course.CourseName;
+            ViewBag.GroupName = group.GroupName;
 
+            // Yalnız bu qrupda olan və bu fənni götürən tələbələri seçirik
             var registeredStudents = await _context.courseRegistrations
                 .Include(cr => cr.Student)
-                .Where(cr => cr.CourseId == courseId && cr.Student != null)
+                .Where(cr => cr.CourseId == courseId && cr.Student != null && cr.Student.GroupId == groupId)
                 .Select(cr => cr.Student)
                 .ToListAsync();
 
             if (registeredStudents == null || !registeredStudents.Any())
             {
-                TempData["Error"] = "Diqqət: Bu fənnə qeydiyyatdan keçmiş tələbə tapılmadı.";
+                TempData["Error"] = $"Diqqət: '{group.GroupName}' qrupundan bu fənnə qeydiyyatdan keçmiş tələbə tapılmadı.";
                 return RedirectToAction("Index");
             }
 
@@ -72,8 +95,6 @@ namespace FinalProject.Controllers
                 .Where(g => g.CourseId == courseId)
                 .ToListAsync();
 
-            // Select daxilindən LetterGrade təyinini tamamilə qaldırdıq.
-            // Model obyekti yaradılan kimi Total və LetterGrade-i özü hesablayacaq.
             var jurnals = registeredStudents.Select(student => {
                 var grade = currentGrades.FirstOrDefault(g => g.StudentId == student.Id);
                 return new Grade
@@ -83,7 +104,7 @@ namespace FinalProject.Controllers
                     Student = student,
                     CourseId = courseId,
                     Mids = grade?.Mids ?? 0,
-                    Final = grade?.Final, // Əgər yoxdursa null gedir
+                    Final = grade?.Final,
                     Semester = grade?.Semester ?? "2026 Yaz"
                 };
             }).ToList();
@@ -91,17 +112,17 @@ namespace FinalProject.Controllers
             return View(jurnals);
         }
 
-        // ==========================================
+        // =======================================================
         // 3. QİYMƏT DAXİL ETMƏK VƏ YA YENİLƏMƏK (FORM POST)
-        // ==========================================
+        // =======================================================
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AssignGrade(int studentId, int courseId, int mids, int? final, string semester = "2026 Yaz")
+        public async Task<IActionResult> AssignGrade(int studentId, int courseId, int groupId, int mids, int? final, string semester = "2026 Yaz")
         {
-            if (studentId <= 0 || courseId <= 0)
+            if (studentId <= 0 || courseId <= 0 || groupId <= 0)
             {
-                TempData["Error"] = "Tələbə və ya Fənn məlumatı düzgün deyil!";
-                return RedirectToAction("StudentsReportCard", new { courseId = courseId });
+                TempData["Error"] = "Məlumatlar tam deyil və ya düzgün ötürülməyib!";
+                return RedirectToAction("StudentsReportCard", new { courseId = courseId, groupId = groupId });
             }
 
             var currentMember = await _userManager.GetUserAsync(User);
@@ -113,7 +134,7 @@ namespace FinalProject.Controllers
             if (mids < 0 || mids > 50 || (final.HasValue && (final.Value < 0 || final.Value > 50)))
             {
                 TempData["Error"] = "Giriş balı və Final balı 0 ilə 50 arasında olmalıdır!";
-                return RedirectToAction("StudentsReportCard", new { courseId = courseId });
+                return RedirectToAction("StudentsReportCard", new { courseId = courseId, groupId = groupId });
             }
 
             try
@@ -126,7 +147,6 @@ namespace FinalProject.Controllers
 
                 bool isNewGrade = existingGrade == null;
 
-                // Bildiriş üçün müvəqqəti obyekt yaradıb hərfi qiyməti modelin özündən öyrənirik
                 var tempGradeForNotif = new Grade { Mids = mids, Final = final };
                 string letterGrade = tempGradeForNotif.LetterGrade;
                 int total = tempGradeForNotif.Total;
@@ -158,7 +178,7 @@ namespace FinalProject.Controllers
 
                 await _context.SaveChangesAsync();
 
-                // 🔔 Bildiriş göndərmə məntiqi
+                // 🔔 Tələbə üçün bildiriş paneli məntiqi
                 try
                 {
                     string notifTitle = isNewGrade ? "Yeni Qiymət Daxil Edildi" : "Qiymətiniz Yeniləndi";
@@ -180,16 +200,16 @@ namespace FinalProject.Controllers
                     await _context.notifications.AddAsync(notification);
                     await _context.SaveChangesAsync();
                 }
-                catch (Exception) { /* Log xətası */ }
+                catch (Exception) { /* Xəta gizlədilir */ }
 
                 TempData["Success"] = "Ballar uğurla yadda saxlanıldı.";
             }
             catch (Exception ex)
             {
-                TempData["Error"] = "Verilənlər bazası xətası: " + (ex.InnerException?.Message ?? ex.Message);
+                TempData["Error"] = "Baza xətası: " + (ex.InnerException?.Message ?? ex.Message);
             }
 
-            return RedirectToAction("StudentsReportCard", new { courseId = courseId });
+            return RedirectToAction("StudentsReportCard", new { courseId = courseId, groupId = groupId });
         }
     }
 }

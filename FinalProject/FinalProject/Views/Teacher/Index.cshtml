@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FinalProject.Models.Course>
+﻿@model IEnumerable<FinalProject.Models.Schedule>
 
 @{
     ViewData["Title"] = "Mənim Dərslərim";
@@ -34,7 +34,7 @@
     <div class="row">
         @if (Model != null && Model.Any())
         {
-            foreach (var course in Model)
+            foreach (var item in Model)
             {
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 shadow-sm border-0" style="border-radius: 12px; transition: transform 0.2s; border-top: 4px solid #4e73df !important;">
@@ -43,20 +43,24 @@
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <span class="d-inline-block text-primary border px-2 py-1 font-weight-bold"
                                           style="font-size: 11px; border-color: #4e73df !important; background-color: #f8f9fc; border-radius: 6px;">
-                                        @course.CourseCode
+                                        @item.Course.CourseCode
                                     </span>
-                                    <small class="text-muted"><i class="fa-solid fa-star text-warning"></i> @course.Credits Kredit</small>
+                                    <span class="badge bg-secondary text-white font-weight-bold" style="font-size: 11px; border-radius: 6px; padding: 5px 8px;">
+                                        <i class="fa-solid fa-users me-1"></i> @item.Group.GroupName
+                                    </span>
                                 </div>
-                                <h4 class="card-title text-dark font-weight-bold mb-3" style="font-size: 18px; line-height: 1.4;">
-                                    @course.CourseName
+                                <h4 class="card-title text-dark font-weight-bold mb-1" style="font-size: 18px; line-height: 1.4;">
+                                    @item.Course.CourseName
                                 </h4>
+                                <small class="text-muted d-block mb-3"><i class="fa-solid fa-star text-warning"></i> @item.Course.Credits Kredit</small>
                             </div>
 
                             <div class="mt-4 border-top pt-3">
                                 <div class="d-flex gap-2">
                                     <a asp-controller="Teacher"
                                        asp-action="StudentsReportCard"
-                                       asp-route-courseId="@course.Id"
+                                       asp-route-courseId="@item.CourseId"
+                                       asp-route-groupId="@item.GroupId"
                                        class="btn btn-primary flex-fill font-weight-bold text-white d-flex align-items-center justify-content-center"
                                        style="border-radius: 8px; padding: 10px; font-size: 14px;">
                                         <i class="fa-solid fa-star me-2"></i> Qiymət
@@ -64,7 +68,8 @@
 
                                     <a asp-controller="Attendance"
                                        asp-action="MarkAttendance"
-                                       asp-route-courseId="@course.Id"
+                                       asp-route-courseId="@item.CourseId"
+                                       asp-route-groupId="@item.GroupId"
                                        class="btn btn-success flex-fill font-weight-bold text-white d-flex align-items-center justify-content-center"
                                        style="border-radius: 8px; padding: 10px; font-size: 14px;">
                                         <i class="fa-solid fa-calendar-check me-2"></i> Davamiyyət

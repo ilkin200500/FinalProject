@@ -16,7 +16,8 @@ namespace FinalProject.ViewModels
         [Range(1, 10, ErrorMessage = "Kredit 1 ilə 10 arasında olmalıdır!")]
         public int Credits { get; set; }
 
-        [Required(ErrorMessage = "Fənnə müəllim təyin edilməlidir!")]
-        public int TeacherId { get; set; }
+        [Required(ErrorMessage = "Zəhmət olmasa, fənn üçün bir ixtisas seçin!")]
+        [Range(1, int.MaxValue, ErrorMessage = "Zəhmət olmasa, etibarlı bir ixtisas seçin!")]
+        public int SpecialityId { get; set; }
     }
 }
