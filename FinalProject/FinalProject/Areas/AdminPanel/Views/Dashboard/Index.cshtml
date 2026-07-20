@@ -1,1 +1,103 @@
-﻿<h1>Dashboard</h1>
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <!-- Başlıq Hissəsi -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="text-dark font-weight-bold" style="font-size: 28px; margin: 0;">
+                <i class="mdi mdi-view-dashboard text-primary me-2"></i> İdarəetmə Paneli
+            </h2>
+            <p class="text-muted small mb-0">Sistemin ümumi cari vəziyyəti və statistikaları</p>
+        </div>
+    </div>
+
+    <!-- Statistika Kartları -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-4">
+
+        <!-- Tələbə Sayı Kartı -->
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm custom-card text-white" style="background: linear-gradient(135deg, #1572E8, #0B52B3); border-radius: 15px;">
+                <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                    <div>
+                        <p class="mb-1 text-uppercase font-weight-bold" style="font-size: 12px; opacity: 0.8; letter-spacing: 1px;">Ümumi Tələbələr</p>
+                        <h3 class="mb-0 font-weight-bold" style="font-size: 32px;">@ViewBag.TotalStudents</h3>
+                    </div>
+                    <div class="icon-circle shadow-sm" style="background: rgba(255,255,255,0.2); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="mdi mdi-account-graduation" style="font-size: 30px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Müəllim Sayı Kartı -->
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm custom-card text-white" style="background: linear-gradient(135deg, #48AB15, #34820B); border-radius: 15px;">
+                <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                    <div>
+                        <p class="mb-1 text-uppercase font-weight-bold" style="font-size: 12px; opacity: 0.8; letter-spacing: 1px;">Ümumi Müəllimlər</p>
+                        <h3 class="mb-0 font-weight-bold" style="font-size: 32px;">@ViewBag.TotalTeachers</h3>
+                    </div>
+                    <div class="icon-circle shadow-sm" style="background: rgba(255,255,255,0.2); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="mdi mdi-account-tie" style="font-size: 30px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Qrup Sayı Kartı -->
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm custom-card text-white" style="background: linear-gradient(135deg, #FF9E27, #D97A07); border-radius: 15px;">
+                <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                    <div>
+                        <p class="mb-1 text-uppercase font-weight-bold" style="font-size: 12px; opacity: 0.8; letter-spacing: 1px;">Aktiv Qruplar</p>
+                        <h3 class="mb-0 font-weight-bold" style="font-size: 32px;">@ViewBag.TotalGroups</h3>
+                    </div>
+                    <div class="icon-circle shadow-sm" style="background: rgba(255,255,255,0.2); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="mdi mdi-account-group" style="font-size: 30px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fənn Sayı Kartı -->
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm custom-card text-white" style="background: linear-gradient(135deg, #F25961, #C93940); border-radius: 15px;">
+                <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                    <div>
+                        <p class="mb-1 text-uppercase font-weight-bold" style="font-size: 12px; opacity: 0.8; letter-spacing: 1px;">Mövcud Fənlər</p>
+                        <h3 class="mb-0 font-weight-bold" style="font-size: 32px;">@ViewBag.TotalCourses</h3>
+                    </div>
+                    <div class="icon-circle shadow-sm" style="background: rgba(255,255,255,0.2); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="mdi mdi-book-open-variant" style="font-size: 30px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Sistem Vəziyyəti Mesajı -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="p-5 bg-white shadow-sm text-center text-muted" style="border-radius: 15px;">
+                <i class="mdi mdi-rocket-launch d-block mb-3 text-primary" style="font-size: 40px;"></i>
+                <h5 class="text-dark font-weight-bold">Sistem Aktivdir və Uğurla İşləyir</h5>
+                <p class="small mb-0">Sol menyudan tələbə, müəllim, fənn və cədvəl idarəetməsinə sürətli keçid edə bilərsiniz.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Kartların üzərinə gələndə animasiya effekti */
+    .custom-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .custom-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+        }
+</style>
