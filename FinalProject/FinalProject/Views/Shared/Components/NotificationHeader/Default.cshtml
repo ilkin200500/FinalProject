@@ -1,33 +1,38 @@
 ﻿@model IEnumerable<FinalProject.Models.Notification>
 
 <li class="nav-item dropdown list-unstyled">
-    <a class="nav-link dropdown-toggle position-relative notification-bell-btn text-secondary" href="#" id="alertsDropdown" role="button"
+    <a class="nav-link dropdown-toggle position-relative notification-bell-btn text-white" href="#" id="alertsDropdown" role="button"
        data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fa-solid fa-bell"></i>
+        <i class="fa-solid fa-bell fs-5"></i>
 
         @if (ViewBag.UnreadCount > 0)
         {
-            <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 9px; top: 5px; padding: 3px 6px;">
+            <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 10px; top: 5px; padding: 4px 7px;">
                 @ViewBag.UnreadCount
             </span>
         }
     </a>
 
-    <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-0" aria-labelledby="alertsDropdown" style="width: 320px; border-radius: 12px; overflow: hidden; margin-top: 15px;">
-        <li class="dropdown-header bg-primary text-white py-3 font-weight-bold d-flex justify-content-between align-items-center" style="font-size: 14px;">
-            <span><i class="fa-solid fa-bell mr-2"></i> Son Bildirişlər</span>
+    <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 p-0" aria-labelledby="alertsDropdown"
+        style="width: 320px; border-radius: 12px; overflow: hidden; margin-top: 15px; background-color: #1e293b; border: 1px solid rgba(255, 255, 255, 0.15) !important;">
+
+        <!-- PANEL BAŞLIĞI -->
+        <li class="dropdown-header py-3 font-weight-bold d-flex justify-content-between align-items-center"
+            style="font-size: 14px; background: rgba(59, 130, 246, 0.25); color: #93c5fd; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+            <span class="d-flex align-items-center gap-2"><i class="fa-solid fa-bell"></i> Son Bildirişlər</span>
             @if (ViewBag.UnreadCount > 0)
             {
-                <span class="badge bg-light text-primary font-weight-bold">@ViewBag.UnreadCount yeni</span>
+                <span class="badge bg-primary text-white font-weight-bold">@ViewBag.UnreadCount yeni</span>
             }
         </li>
 
         <div style="max-height: 280px; overflow-y: auto;">
             @if (Model == null || !Model.Any())
             {
-                <div class="text-center py-4 text-muted small">
-                    <i class="fa-regular fa-bell-slash d-block mb-2 text-secondary" style="font-size: 24px;"></i>
-                    Yeni bildirişiniz yoxdur.
+                <!-- 🔥 BURA DÜZƏLDİ: Bildiriş yoxdursa parlaq və clear görünən xəbərdarlıq -->
+                <div class="text-center py-4 px-3" style="color: #cbd5e1;">
+                    <i class="fa-regular fa-bell-slash d-block mb-2" style="font-size: 28px; color: #94a3b8;"></i>
+                    <span style="font-size: 13px; font-weight: 500;">Yeni bildirişiniz yoxdur.</span>
                 </div>
             }
             else
@@ -35,12 +40,15 @@
                 foreach (var notif in Model)
                 {
                 <li>
-                    <a class="dropdown-item py-2 px-3 border-bottom @(notif.IsRead ? "bg-white" : "bg-light")" href="/Student/Notifications" style="white-space: normal;">
+                    <!-- 🔥 BURA DÜZƏLDİ: Bildirişlərin siyahısı üçün tünd fona uyğun rənglər -->
+                    <a class="dropdown-item py-2.5 px-3 border-bottom text-wrap" href="/Student/Notifications"
+                       style="border-color: rgba(255, 255, 255, 0.08) !important; background: @(notif.IsRead ? "transparent" : "rgba(255, 255, 255, 0.05)"); transition: background 0.2s;">
+
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <span class="font-weight-bold text-dark" style="font-size: 13px;">@notif.Title</span>
-                            <span class="text-muted" style="font-size: 10px;">@notif.CreatedAt.ToString("HH:mm")</span>
+                            <span class="font-weight-bold" style="font-size: 13px; color: #f8fafc;">@notif.Title</span>
+                            <span style="font-size: 10px; color: #94a3b8;">@notif.CreatedAt.ToString("HH:mm")</span>
                         </div>
-                        <p class="text-secondary m-0 text-truncate-2" style="font-size: 12px; line-height: 1.4;">
+                        <p class="m-0 text-truncate-2" style="font-size: 12px; line-height: 1.4; color: #cbd5e1;">
                             @notif.Message
                         </p>
                     </a>
@@ -49,9 +57,10 @@
         }
         </div>
 
-        <li class="text-center py-2 bg-light border-top">
-            <a href="/Student/Notifications" class="text-primary font-weight-bold text-decoration-none small">
-                Bütün Bildirişlərə Bax <i class="fa-solid fa-arrow-right ml-1"></i>
+        <!-- AŞAĞIDAKI DÜYMƏ -->
+        <li class="text-center py-2.5" style="background: rgba(0, 0, 0, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.1);">
+            <a href="/Student/Notifications" class="font-weight-bold text-decoration-none small" style="color: #60a5fa;">
+                Bütün Bildirişlərə Bax <i class="fa-solid fa-arrow-right ms-1"></i>
             </a>
         </li>
     </ul>

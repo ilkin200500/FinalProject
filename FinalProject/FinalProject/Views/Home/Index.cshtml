@@ -2,7 +2,7 @@
 @model List<Member>
 
 @{
-    ViewData["Title"] = "Admin Dashboard";
+    ViewData["Title"] = "Ana Səhifə";
 }
 
 <main class="main-content position-relative" style="z-index: 2; background: transparent; min-height: 100vh; overflow: hidden; margin: 0; padding: 0;">
@@ -14,7 +14,8 @@
     <header class="topbar-modern">
         <div class="topbar-left">
             <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
-            <h2 class="welcome-text-modern">Xoş gəldiniz, Admin!</h2>
+            <!-- 🔥 DƏYİŞDİ: Controllers-dən gələn ViewBag.FullName burada göstərilir -->
+            <h2 class="welcome-text-modern">Xoş gəldiniz, @(ViewBag.FullName ?? "Qonaq")</h2>
         </div>
         <div class="topbar-right d-flex align-items-center gap-3">
 
@@ -22,8 +23,9 @@
                 @await Component.InvokeAsync("NotificationHeader")
             </div>
 
+            <!-- 🔥 DƏYİŞDİ: Tarix dinamik olaraq avtomatik sistemdən götürülür -->
             <span class="date-text-modern">
-                <i class="fa-regular fa-calendar"></i> 4 İyul, 2026
+                <i class="fa-regular fa-calendar"></i> @DateTime.Now.ToString("d MMMM, yyyy")
             </span>
         </div>
     </header>
@@ -71,8 +73,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1.5rem 2.5rem; /* Üst boşluğu bir qədər azaltdıq */
-        margin-top: 0 !important; /* Yuxarıda heç bir zolaq qalmaması üçün */
+        padding: 1.5rem 2.5rem;
+        margin-top: 0 !important;
         color: #fff;
     }
 
@@ -132,7 +134,7 @@
 
         /* Bildiriş Paneli Fonu */
         .modern-notification-wrapper .dropdown-menu {
-            background: rgba(15, 23, 42, 0.98) !important; /* Tünd və aydın görünən fon */
+            background: rgba(15, 23, 42, 0.98) !important;
             backdrop-filter: blur(20px) !important;
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
             border-radius: 14px !important;
@@ -148,7 +150,7 @@
             .modern-notification-wrapper .dropdown-menu li:first-child,
             .modern-notification-wrapper .dropdown-menu li:first-child a {
                 background: rgba(59, 130, 246, 0.2) !important;
-                color: #93c5fd !important; /* Başlıq yazısı açıq mavi */
+                color: #93c5fd !important;
                 font-weight: 700 !important;
                 font-size: 0.95rem !important;
                 padding: 12px 16px !important;
@@ -160,11 +162,11 @@
                 border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
             }
 
-                /* Bildirişlərin Mətni (Yazıların tam görünməsi üçün əsas hissə) */
+                /* Bildirişlərin Mətni */
                 .modern-notification-wrapper .dropdown-menu li a,
                 .modern-notification-wrapper .dropdown-menu .dropdown-item {
                     background: transparent !important;
-                    color: #f1f5f9 !important; /* Yazılar tam ağ-boz rəngdə (parlaq) */
+                    color: #f1f5f9 !important;
                     font-size: 0.88rem !important;
                     line-height: 1.4 !important;
                     padding: 12px 16px !important;
@@ -178,7 +180,6 @@
                     white-space: normal !important;
                 }
 
-                    /* Bildiriş mətni daxilində ola biləcək kiçik göy yazıları da ağ rəngə məcbur edirik */
                     .modern-notification-wrapper .dropdown-menu li a *,
                     .modern-notification-wrapper .dropdown-menu .dropdown-item * {
                         color: #f1f5f9 !important;
