@@ -105,6 +105,14 @@
                                 <i class="fa-solid fa-chalkboard-user"></i>
                                 <span>Tədris Fənlərim</span>
                             </a>
+
+                            <a asp-area=""
+                               asp-controller="Teacher"
+                               asp-action="Assignments"
+                               class="nav-item @(currentController == "teacher" && (currentAction == "assignments" || currentAction == "createassignment") ? "active" : "")">
+                                <i class="fa-solid fa-tasks"></i>
+                                <span>Ev Tapşırıqları</span>
+                            </a>
                         }
 
                         @* ==========================================
@@ -125,6 +133,11 @@
                             <a asp-area="" asp-controller="Student" asp-action="Schedules" class="nav-item @(currentController == "student" && currentAction == "schedules" ? "active" : "")">
                                 <i class="fa-solid fa-calendar-days"></i>
                                 <span>Dərs Cədvəlim</span>
+                            </a>
+
+                            <a asp-area="" asp-controller="Student" asp-action="Assignments" class="nav-item @(currentController == "student" && currentAction == "assignments" ? "active" : "")">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                <span>Ev Tapşırıqlarım</span>
                             </a>
 
                             <a asp-area="" asp-controller="Attendance" asp-action="StudentReport" class="nav-item @(currentController == "attendance" && currentAction == "studentreport" ? "active" : "")">

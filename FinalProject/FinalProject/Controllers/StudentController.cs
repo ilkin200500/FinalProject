@@ -90,12 +90,11 @@ namespace FinalProject.Controllers
 
             ViewBag.StudentName = student.FullName;
 
-            // DİQQƏT: Sənin AvailableCourses.cshtml faylın artıq @model IEnumerable<FinalProject.Models.Course> gözləməlidir!
             return View(availableCourses);
         }
 
         // ==========================================
-        // 🔥 3. FƏNNİ GÖTÜR POST METODU (XƏTASIZ VARIANT)
+        // 🔥 3. FƏNNİ GÖTÜR POST METODU
         // ==========================================
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -152,7 +151,7 @@ namespace FinalProject.Controllers
                 }
                 else
                 {
-                    // 3. Addım: Əgər heç bir cədvəldə bu fənn yoxdursa, bazadakı ən birinci müəllimin ID-sini götürürük (sistem əsla çökməsin deyə)
+                    // 3. Addım: Əgər heç bir cədvəldə bu fənn yoxdursa, bazadakı ən birinci müəllimin ID-sini götürürük
                     var backupTeacherId = await _context.teachers.Select(t => t.Id).FirstOrDefaultAsync();
 
                     if (backupTeacherId == 0)
@@ -177,7 +176,7 @@ namespace FinalProject.Controllers
                 CourseId = courseId,
                 Mids = 0,
                 Final = null,
-                TeacherId = assignedTeacherId, // Artıq bura heç vaxt null düşə bilməz və error tamamilə aradan qalxdı!
+                TeacherId = assignedTeacherId,
                 Semester = "2026 Yaz",
                 CreatedAt = DateTime.Now
             };
@@ -271,6 +270,40 @@ namespace FinalProject.Controllers
 
             ViewBag.StudentName = student.FullName;
             return View(notificationsList);
+        }
+
+        // =======================================================
+        // 📚 7. TƏLƏBƏNİN EV TAPŞIRIQLARI SƏHİFƏSİ (ASSIGNMENTS)
+        // =======================================================
+        public async Task<IActionResult> Assignments()
+        {
+            var currentMember = await _userManager.GetUserAsync(User);
+            if (currentMember == null) return Unauthorized();
+
+            var student = await _context.students
+                .Include(s => s.Group)
+                .FirstOrDefaultAsync(s => s.MemberId == currentMember.Id);
+
+            if (student == null) return NotFound("Tələbə profili tapılmadı.");
+
+            if (student.GroupId == null)
+            {
+                TempData["Error"] = "Qrupunuz təyin edilmədiyi üçün ev tapşırıqları görünmür.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Tələbənin öz qrupuna verilmiş bütün tapşırıqları çəkirik
+            var studentAssignments = await _context.assignments
+                .Include(a => a.Course)
+                .Include(a => a.Teacher)
+                .Where(a => a.GroupId == student.GroupId)
+                .OrderByDescending(a => a.CreatedAt)
+                .ToListAsync();
+
+            ViewBag.StudentName = student.FullName;
+            ViewBag.GroupName = student.Group?.GroupName;
+
+            return View(studentAssignments);
         }
     }
 }

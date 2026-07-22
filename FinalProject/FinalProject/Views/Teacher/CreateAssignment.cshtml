@@ -1,0 +1,83 @@
+﻿@model FinalProject.Models.Assignment
+
+@{
+    ViewData["Title"] = "Yeni Tapşırıq Yaradın";
+    var courses = ViewBag.Courses as List<FinalProject.Models.Course> ?? new List<FinalProject.Models.Course>();
+    var groups = ViewBag.Groups as List<FinalProject.Models.Group> ?? new List<FinalProject.Models.Group>();
+
+    // Tarix xətası yaşanmasın deyə standart default və min tarixlərini ISO formatında təyin edirik
+    var minDate = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
+    var defaultDueDate = DateTime.Now.AddDays(1).ToString("yyyy-MM-ddTHH:mm");
+}
+
+<div class="container mt-4" style="max-width: 700px;">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Yeni Ev Tapşırığı Yaradın</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="CreateAssignment" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label font-weight-bold">Başlıq</label>
+                    <input asp-for="Title" class="form-control" placeholder="Məsələn: Həftəlik Tapşırıq 1" required />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">Təsvir / Tapşırığın Şərti</label>
+                    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Tapşırıq haqqında ətraflı məlumat..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="CourseId" class="form-label">Fənn Seçin</label>
+                        <select asp-for="CourseId" class="form-select" required>
+                            <option value="">-- Fənn seçin --</option>
+                            @foreach (var c in courses)
+                            {
+                                <option value="@c.Id">@c.CourseName</option>
+                            }
+                        </select>
+                        <span asp-validation-for="CourseId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="GroupId" class="form-label">Qrup Seçin</label>
+                        <select asp-for="GroupId" class="form-select" required>
+                            <option value="">-- Qrup seçin --</option>
+                            @foreach (var g in groups)
+                            {
+                                <option value="@g.Id">@g.GroupName</option>
+                            }
+                        </select>
+                        <span asp-validation-for="GroupId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="DueDate" class="form-label">Son Təhvil Tarixi</label>
+                    <input asp-for="DueDate"
+                           type="datetime-local"
+                           class="form-control"
+                           value="@defaultDueDate"
+                           min="@minDate"
+                           required />
+                    <span asp-validation-for="DueDate" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Assignments" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-1"></i> Geri Qayıt
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-1"></i> Yadda Saxla
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

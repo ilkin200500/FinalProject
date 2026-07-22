@@ -44,5 +44,6 @@ namespace FinalProject.Models
 
         // Müəllimin göndərdiyi bildirişlərin siyahısı (One-to-Many)
         public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+        public virtual ICollection<Assignment> Assignments { get; set; } = new List<Assignment>();
     }
 }

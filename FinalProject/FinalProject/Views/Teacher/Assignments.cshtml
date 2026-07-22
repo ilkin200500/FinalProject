@@ -1,0 +1,87 @@
+﻿@model IEnumerable<FinalProject.Models.Assignment>
+
+@{
+    ViewData["Title"] = "Ev Tapşırıqları";
+}
+
+<div class="container-fluid mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="fas fa-tasks text-primary me-2"></i>Ev Tapşırıqları</h2>
+        <a asp-action="CreateAssignment" class="btn btn-success">
+            <i class="fas fa-plus me-1"></i> Yeni Tapşırıq Əlavə Et
+        </a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>@TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            @if (!Model.Any())
+            {
+                <div class="text-center py-4 text-muted">
+                    <i class="fas fa-folder-open fa-3x mb-3"></i>
+                    <p class="mb-0">Hələ ki heç bir ev tapşırığı əlavə edilməyib.</p>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Başlıq</th>
+                                <th>Fənn</th>
+                                <th>Qrup</th>
+                                <th>Verilmə Tarixi</th>
+                                <th>Bitmə Tarixi</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int count = 1;
+                            }
+                            @foreach (var item in Model)
+                            {
+                                bool isExpired = item.DueDate < DateTime.Now;
+                                <tr>
+                                    <td>@(count++)</td>
+                                    <td>
+                                        <strong>@item.Title</strong>
+                                        @if (!string.IsNullOrEmpty(item.Description))
+                                        {
+                                            <br />
+                                
+                                            <small class="text-muted">@item.Description</small>
+                                        }
+                                    </td>
+                                    <td><span class="badge bg-info text-dark">@(item.Course?.CourseName ?? "—")</span></td>
+                                    <td><span class="badge bg-secondary">@(item.Group?.GroupName ?? "—")</span></td>
+                                    <td>@item.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+                                    <td>@item.DueDate.ToString("dd.MM.yyyy HH:mm")</td>
+                                    <td>
+                                        @if (isExpired)
+                                        {
+                                            <span class="badge bg-danger">Müddət bitib</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success">Aktiv</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -211,5 +211,116 @@ namespace FinalProject.Controllers
 
             return RedirectToAction("StudentsReportCard", new { courseId = courseId, groupId = groupId });
         }
+
+        // =======================================================
+        // 4. MÜƏLLİMİN VERDİYİ EV TAPŞIRIQLARI (LIST)
+        // =======================================================
+        public async Task<IActionResult> Assignments()
+        {
+            var currentMember = await _userManager.GetUserAsync(User);
+            if (currentMember == null) return Unauthorized();
+
+            var teacher = await _context.teachers.FirstOrDefaultAsync(t => t.MemberId == currentMember.Id);
+            if (teacher == null) return View("Error");
+
+            var assignmentsList = await _context.assignments
+                .Include(a => a.Course)
+                .Include(a => a.Group)
+                .Where(a => a.TeacherId == teacher.Id)
+                .OrderByDescending(a => a.CreatedAt)
+                .ToListAsync();
+
+            return View(assignmentsList);
+        }
+
+        // =======================================================
+        // 5. YENİ EV TAPŞIRIĞI YARATMAQ (GET)
+        // =======================================================
+        public async Task<IActionResult> CreateAssignment()
+        {
+            var currentMember = await _userManager.GetUserAsync(User);
+            if (currentMember == null) return Unauthorized();
+
+            var teacher = await _context.teachers.FirstOrDefaultAsync(t => t.MemberId == currentMember.Id);
+            if (teacher == null) return View("Error");
+
+            var myClasses = await _context.schedules
+                .Include(s => s.Course)
+                .Include(s => s.Group)
+                .Where(s => s.TeacherId == teacher.Id && s.Course != null && s.Group != null)
+                .ToListAsync();
+
+            ViewBag.Courses = myClasses.Select(s => s.Course).DistinctBy(c => c.Id).ToList();
+            ViewBag.Groups = myClasses.Select(s => s.Group).DistinctBy(g => g.Id).ToList();
+
+            return View();
+        }
+
+        // =======================================================
+        // 6. YENİ EV TAPŞIRIĞI YARATMAQ (POST)
+        // =======================================================
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAssignment(Assignment assignment)
+        {
+            var currentMember = await _userManager.GetUserAsync(User);
+            if (currentMember == null) return Unauthorized();
+
+            var teacher = await _context.teachers.FirstOrDefaultAsync(t => t.MemberId == currentMember.Id);
+            if (teacher == null) return View("Error");
+
+            if (assignment.DueDate <= DateTime.Now)
+            {
+                ModelState.AddModelError("DueDate", "Bitmə tarixi keçmiş bir tarix ola bilməz!");
+            }
+
+            if (ModelState.IsValid)
+            {
+                assignment.TeacherId = teacher.Id;
+                assignment.CreatedAt = DateTime.Now;
+
+                await _context.assignments.AddAsync(assignment);
+                await _context.SaveChangesAsync();
+
+                // 🔔 Tapşırıq yaradılan kimi həmin qrupun tələbələrinə bildiriş daxil olur
+                try
+                {
+                    var course = await _context.courses.FindAsync(assignment.CourseId);
+                    var studentsInGroup = await _context.students
+                        .Where(s => s.GroupId == assignment.GroupId)
+                        .ToListAsync();
+
+                    foreach (var student in studentsInGroup)
+                    {
+                        var notification = new Notification
+                        {
+                            StudentId = student.Id,
+                            TeacherId = teacher.Id,
+                            Title = "Yeni Ev Tapşırığı!",
+                            Message = $"\"{course?.CourseName}\" fənnindən yeni tapşırıq: \"{assignment.Title}\". Son tarix: {assignment.DueDate:dd.MM.yyyy HH:mm}",
+                            IsRead = false,
+                            CreatedAt = DateTime.Now
+                        };
+                        await _context.notifications.AddAsync(notification);
+                    }
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception) { /* Xəta idarə olunur */ }
+
+                TempData["Success"] = "Ev tapşırığı uğurla yaradıldı!";
+                return RedirectToAction(nameof(Assignments));
+            }
+
+            var myClasses = await _context.schedules
+                .Include(s => s.Course)
+                .Include(s => s.Group)
+                .Where(s => s.TeacherId == teacher.Id && s.Course != null && s.Group != null)
+                .ToListAsync();
+
+            ViewBag.Courses = myClasses.Select(s => s.Course).DistinctBy(c => c.Id).ToList();
+            ViewBag.Groups = myClasses.Select(s => s.Group).DistinctBy(g => g.Id).ToList();
+
+            return View(assignment);
+        }
     }
 }

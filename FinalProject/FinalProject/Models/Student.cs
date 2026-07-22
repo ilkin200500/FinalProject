@@ -47,5 +47,7 @@ namespace FinalProject.Models
         // 🎯 YENİ ƏLAVƏ: Tələbənin seçdiyi fənlərin siyahısı (Many-to-Many əlaqə keçidi)
         // Nullable (?) etdik ki, yeni tələbə qeydiyyatdan keçəndə validasiya problemi yaratmasın
         public virtual ICollection<StudentSubject>? StudentSubjects { get; set; } = new List<StudentSubject>();
+
+        public virtual ICollection<Assignment>? Assignments { get; set; } = new List<Assignment>();
     }
 }

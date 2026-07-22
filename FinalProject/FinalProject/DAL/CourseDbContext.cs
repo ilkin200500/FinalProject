@@ -24,6 +24,8 @@ namespace FinalProject.DAL
         public DbSet<Speciality> specialities { get; set; }
         public DbSet<StudentSubject> StudentSubjects { get; set; }
 
+        public DbSet<Assignment> assignments { get; set; }
+
         // 🎯 Cəncirvari silinmə (Cascade) xətasını həll edən konfiqurasiya metodu:
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
